@@ -1,6 +1,7 @@
 \documentclass{kththesis}
 \usepackage{csquotes} % Recommended by biblatex
 \usepackage[style=numeric,sorting=none,backend=biber]{biblatex}
+\usepackage[swedish]{babel}
 \addbibresource{references.bib} % The file containing our references, in BibTeX format
 
 \title{English title}
@@ -37,32 +38,45 @@
 % Mainmatter is where the actual contents of the thesis goes
 \mainmatter
 
-\chapter{Introduction}
-We use the \emph{biblatex} package to handle our references.  We therefore use the
-command \texttt{parencite} to get a reference in parenthesis, like this
-\parencite{heisenberg2015}.  It is also possible to include the author
-as part of the sentence using \texttt{textcite}, like talking about
-the work of \textcite{einstein2016}. slut.
+% Citera med \texttt{} och \parencite{}
 
-\section{Research Question}
+\chapter{Introduktion}
+Information om ämnet, leda in läsaren samt förklara uppsatsens relevans \parencite{heisenberg2015}. 
+Vi borde sikta på ungefär 40 sidor totalt.
 
-\chapter{Background}
+  \section{Problemformulering}
+  Vad är syftet med uppsatsen? Vad vill ni uppnå
 
-\chapter{Methods}
+  \section{Frågeställning}
+  Vår frågeställning
 
-\chapter{Results}
+  \section{Avgränsningar}
+  Vilka avgränsningar vi gjort i datamängder, testpersoner samt modeller.
 
-\chapter{Discussion}
+\chapter{Bakgrund}
+Teorin som tillhör vårt område. Främst ergonomi, maskininlärning, djupinlärning och CNN. Tidigare forskning inom området. ANN. 
+Alla olika tekniker vi kommer att använda. Relaterade arbeten. 
 
-\chapter{Conclusions}
+  \section{Maskininlärmning}
+  Supervised learning. Image classification.
 
+\chapter{Metod}
+Hur vi gått tillväga. Vilka dataset, hur implementation gått till (verktyg, klassificerare, parametrar), hur vi valt features.
+Hur evalueringen har gått till (traning, test, validation set).
+
+\chapter{Resultat}
+Presentation av resultatet från våra olika tekniker och evalueringar. i tabeller och grafer. Även beräkningstid. 
+
+\chapter{Diskussion}
+Diskutera resultatet och hur olika delar kan ha påverkat eller påverkade. Diskutera eventuell framtida forskning. Begränsningar med resultatet.
+Etiska aspekter. Hållbarhet. 
+
+\chapter{Slutsats}
+Slutsats av vad vi kom fram till.
 
 \printbibliography[heading=bibintoc]
 \appendix
+  \chapter{Appendix A}
 
-\chapter{Something Extra}
-
-% Tailmatter inserts the back cover page (if enabled)
 \tailmatter
-
 \end{document}
