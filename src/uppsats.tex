@@ -2,11 +2,13 @@
 \usepackage{csquotes} % Recommended by biblatex
 \usepackage[style=numeric,sorting=none,backend=biber]{biblatex}
 \usepackage[swedish]{babel}
+\usepackage{graphicx}
+
 \addbibresource{references.bib} % The file containing our references, in BibTeX format
 
 \title{Find objects in real estate images with convolutional neural networks}
 \alttitle{Hitta object i fastighetsbilder med convolutional neural networks}
-\author{Oscar Råhlén och Sacharias Sjöqvist}
+\author{Oskar Råhlén och Sacharias Sjöqvist}
 \email{orahlen@kth.se och sacsjo@kth.se}
 \supervisor{Handledare}
 \examiner{Examinator}
@@ -41,14 +43,30 @@
 % Citera med \texttt{} och \parencite{}
 
 \chapter{Introduktion}
-Information om ämnet, leda in läsaren samt förklara uppsatsens relevans \parencite{heisenberg2015}. 
-Vi borde sikta på ungefär 40 sidor totalt.
+
+Koppla första mening till titel.
+
+söka på speicfika saker i en annons.
+mysig inledning.
+
+Deeplearning bildanalys - google grejer.
+
+Ai och hur automatisering vuxit fram. 
+Lite fakta på hur viktig sökfunktioner är för att hitta bostäder? Hur många sökningar /tidsenehet
+
+Om folk enklare hittar bostad på ett mer effektivt sätt så effektiviseras hela köp och sälj processen och därmed hela marknaden.
+
 
   \section{Problemformulering}
-  Vad är syftet med uppsatsen? Vad vill ni uppnå
+  För att hitta nyckelord kopplade till en bild idag så behöver någon manuellt bestämma nyckelord till bilden. Uppgiften är tidskrävande och det är svårt att i efterhand producera relevanta nyckelord utan att gå igenom allt manuellt igen. 
+
+  Det är också för bostadssökare tidskrävande att leta efter bostäder. Om man kan förfina sökningen än mer skulle detta effektivisera processen.
+
+  Syftet med den här studien är att titta på hur maskininlärningsmetoder kan användas för att hitta relevanta nyckelord till bilder på lägenhetsannonser. 
 
   \section{Frågeställning}
-  Vår frågeställning
+  Går det med nuvarande verktyg inom maskininlärning hitta attribut i bilder från lägenhetsannonser?
+
 
   \section{Avgränsningar}
   Vilka avgränsningar vi gjort i datamängder, testpersoner samt modeller.
@@ -108,9 +126,20 @@ Hur vi kan använda oss av preprocessing kan vi  läsa i kapitel 12 av Goodfello
 \chapter{Resultat}
 Presentation av resultatet från våra olika tekniker och evalueringar. i tabeller och grafer. Även beräkningstid. 
 
+\includegraphics[width=10cm]{../images/1.png}
+
+\includegraphics[width=10cm]{../images/2.png}
+
+\includegraphics[width=10cm]{../images/3.png}
+
+\includegraphics[width=10cm]{../images/4.png}
+
 \chapter{Diskussion}
 Diskutera resultatet och hur olika delar kan ha påverkat eller påverkade. Diskutera eventuell framtida forskning. Begränsningar med resultatet.
 Etiska aspekter. Hållbarhet. 
+
+  \section{Fortsätt forskning}
+  Vid värdering så är det också intressant att få ut attribut, så kan man räkna med det i värderingskalkylen.
 
 \chapter{Slutsats}
 Slutsats av vad vi kom fram till.
