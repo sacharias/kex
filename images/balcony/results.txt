@@ -1,0 +1,23 @@
+batch_size = 32
+num_epochs = 30
+feature_extract = True
+
+# balcony - feature extractor
+
+model      time    best val acc
+--------------------------------
+resnet     3m 37s  0.946360
+alexnet    3m 18s  0.942748
+vgg        6m 21s  0.938697
+densenet   5m 59s  0.969466
+inception  9m 4s   0.958015
+
+# balcony - finetuning
+
+model      time    best val acc
+-------------------------------
+resnet     6m 6s   0.965649
+alexnet    3m 37s  0.954198
+vgg        15m 55s 0.973282
+densenet   13m 55s 0.977099
+inception  21m 54s 0.980916
