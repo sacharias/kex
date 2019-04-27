@@ -130,9 +130,16 @@ De vanligaste verktygen inom modern bildkategorisering bygger på djupinlärning
   [FORMEL PÅ MOMENTUM]
 
   \section{Convolutional Neural Network}
-  BÖRJA HÄR SAKI
+  Convolutional neural networks (CNN) är en viss typ av neurala nätverk för att processera data som har indata som är placerat i ett rutnät. Det inkluderar data om tidsserier men även bilddata, som kan ses som ett rutnät av pixlar. CNN har fått stort genomslagskraft i praktiska tillämpningar. Convolution är en viss typ av linjär operation och CNN är då neurala nätverk där minst ett av dess lager är ett convolutional layer. 
 
     \subsection{Lager}
+    Här presenteras de lager som vanligtvis används i ett CNN. 
+    Detta för att sedan kunna gå in på hur de olika arktitekterna inom CNN är uppbyggda.
+    Även om CNN kan användas till olika typer av data, så fokuserar vi här i texten på dess kontext med bilder.
+
+      \subsubsection{Input}
+      Detta lager håller de råa pixelvärdena från bilden via skickar. 
+
 
     \subsection{Tekniker inom djupinlärning}
 
@@ -206,11 +213,11 @@ Prestandan av de olika modeller kommer presenteras här.
       \begin{tabular}{|l|r|r|}
         Modell & Tid & Max. noggrannhet \\ 
         \hline
-        Resnet       & 3m 37s & .9463 \\
-        Alexnet      & 3m 18s & .9427 \\
-        VGG-11       & 6m 21s & .9386 \\
-        Densenet     & 5m 59s & .9694 \\
-        Inception V3 & 9m 04s  & .9580 \\
+        Resnet       & 3m 37s & 94.63 \\
+        Alexnet      & 3m 18s & 94.27 \\
+        VGG-11       & 6m 21s & 93.86 \\
+        Densenet     & 5m 59s & 96.94 \\
+        Inception V3 & 9m 04s & 95.80 \\
       \end{tabular}
       \caption{Sammanställning av feature extraction} \label{tab:sometab}
     \end{table}
@@ -260,19 +267,126 @@ Prestandan av de olika modeller kommer presenteras här.
       \begin{tabular}{|l|r|r|}
         Modell & Tid & Max. noggrannhet \\ 
         \hline
-        Resnet       & 06m 06s & .9656 \\
-        Alexnet      & 03m 37s & .9541 \\
-        VGG-11       & 15m 55s & .9732 \\
-        Densenet     & 13m 55s & .9770 \\
-        Inception V3 & 21m 54s & .9809 \\
+        Resnet       & 06m 06s & 96.56 \\
+        Alexnet      & 03m 37s & 95.41 \\
+        VGG-11       & 15m 55s & 97.32 \\
+        Densenet     & 13m 55s & 97.70 \\
+        Inception V3 & 21m 54s & 98.09 \\
       \end{tabular}
       \caption{Sammanställning av finetuning} \label{tab:sometab}
     \end{table}
   
 
-  
   \section{Eldstäder}
-  Resultat från Eldstäder
+  Här nedan presenteras resultatet av bilderna med eldstäder.
+
+  \subsection{Feature extractor}
+  Detta var när vi bara tränade det sista lagret med eldstäder.
+
+  \begin{figure}
+    \centering
+    \includegraphics[width=0.49\textwidth]{"./fireplace/fireplace-classification - acc - resnet - feature extractor"}
+    \includegraphics[width=0.49\textwidth]{"./fireplace/fireplace-classification - loss - resnet - feature extractor"}
+    \caption{Arkitekturen ResNet-11}
+  \end{figure}
+
+  \begin{figure}
+    \centering
+    \includegraphics[width=0.49\textwidth]{"./fireplace/fireplace-classification - acc - alexnet - feature extractor"}
+    \includegraphics[width=0.49\textwidth]{"./fireplace/fireplace-classification - loss - alexnet - feature extractor"}
+    \caption{Arkitekturen Alexnet}
+  \end{figure}
+
+  \begin{figure}
+    \centering
+    \includegraphics[width=0.49\textwidth]{"./fireplace/fireplace-classification - acc - vgg - feature extractor"}
+    \includegraphics[width=0.49\textwidth]{"./fireplace/fireplace-classification - loss - vgg - feature extractor"}
+    \caption{Arkitekturen VGG-11 med batch normalization}
+  \end{figure}
+
+  \begin{figure}
+    \centering
+    \includegraphics[width=0.49\textwidth]{"./fireplace/fireplace-classification - acc - densenet - feature extractor"}
+    \includegraphics[width=0.49\textwidth]{"./fireplace/fireplace-classification - loss - densenet - feature extractor"}
+    \caption{Arkitekturen Densenet}
+  \end{figure}
+
+  \begin{figure}
+    \centering
+    \includegraphics[width=0.49\textwidth]{"./fireplace/fireplace-classification - acc - inception - feature extractor"}
+    \includegraphics[width=0.49\textwidth]{"./fireplace/fireplace-classification - loss - inception - feature extractor"}
+    \caption{Arkitekturen Inception V3}
+  \end{figure}
+
+  \begin{table}
+    \centering
+    \begin{tabular}{|l|r|r|}
+      Modell & Tid & Max. noggrannhet \\ 
+      \hline
+      Resnet       & 02m 06s & 80.50 \\
+      Alexnet      & 01m 55s & 80.50 \\
+      VGG-11       & 03m 45s & 77.35 \\
+      Densenet     & 03m 35s & 73.58 \\
+      Inception V3 & 05m 15s & 79.24 \\
+    \end{tabular}
+    \caption{Sammanställning av feature extraction} \label{tab:sometab}
+  \end{table}
+
+  \subsection{Finetuning}
+  Detta var när vi bara tränade alla lager för eldstäder.
+
+  \begin{figure}
+    \centering
+    \includegraphics[width=0.49\textwidth]{"./fireplace/fireplace-classification - acc - resnet - finetuning"}
+    \includegraphics[width=0.49\textwidth]{"./fireplace/fireplace-classification - loss - resnet - finetuning"}
+    \caption{Arkitekturen ResNet-11}
+  \end{figure}
+
+  \begin{figure}
+    \centering
+    \includegraphics[width=0.49\textwidth]{"./fireplace/fireplace-classification - acc - alexnet - finetuning"}
+    \includegraphics[width=0.49\textwidth]{"./fireplace/fireplace-classification - loss - alexnet - finetuning"}
+    \caption{Arkitekturen Alexnet}
+  \end{figure}
+
+  \begin{figure}
+    \centering
+    \includegraphics[width=0.49\textwidth]{"./fireplace/fireplace-classification - acc - vgg - finetuning"}
+    \includegraphics[width=0.49\textwidth]{"./fireplace/fireplace-classification - loss - vgg - finetuning"}
+    \caption{Arkitekturen VGG-11 med batch normalization}
+  \end{figure}
+
+  \begin{figure}
+    \centering
+    \includegraphics[width=0.49\textwidth]{"./fireplace/fireplace-classification - acc - densenet - finetuning"}
+    \includegraphics[width=0.49\textwidth]{"./fireplace/fireplace-classification - loss - densenet - finetuning"}
+    \caption{Arkitekturen Densenet}
+  \end{figure}
+
+  \begin{figure}
+    \centering
+    \includegraphics[width=0.49\textwidth]{"./fireplace/fireplace-classification - acc - inception - finetuning"}
+    \includegraphics[width=0.49\textwidth]{"./fireplace/fireplace-classification - loss - inception - finetuning"}
+    \caption{Arkitekturen Inception V3}
+  \end{figure}
+
+  Här nedan är sammanställningen av modellerna för finetuning.
+
+  \begin{table}
+    \centering
+    \begin{tabular}{|l|r|r|}
+      Modell & Tid & Max. noggrannhet \\ 
+      \hline
+      Resnet       & 03m 31s & 79.24 \\
+      Alexnet      & 02m 08s & 77.35 \\
+      VGG-11       & 08m 56s & 81.13 \\
+      Densenet     & 07m 55s & 85.53 \\
+      Inception V3 & 12m 54s & 83.64 \\
+    \end{tabular}
+    \caption{Sammanställning av finetuning} \label{tab:sometab}
+  \end{table}
+
+
 
   \section{Rum}
   Resultat från olika rum.
