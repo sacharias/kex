@@ -114,6 +114,7 @@ Fully-connected layers är den typen av lager som vanligast i normala neurala n�
 \subsection{Arkitekturer}
 Här kommer ett urval av de vanligaste arkitekturerna för CNN för bildkategorisering att presenteras.
 
+
 \subsubsection{Resnet}
 Det finns flera olika varianter av ResNet, Resnet18, Resnet34, Resnet50, Resnet101 och Resnet152, beroende på storlek. Vi fokuserar här på Resnet18. ResNet bygger på en struktur med convolutional layers, pooling layers och fully-connected layers. Trenden har varit att CNN blir djupare med fler lager.
 
@@ -158,7 +159,7 @@ Vi kan se kostnaden för båda tränings och valideringsdatan i figur \ref{fig:b
     Densenet     & 5m 59s & 96.94 \\
     Inception V3 & 9m 04s & 95.80 \\
   \end{tabular}
-  \caption{Sammanställning av feature extraction}
+  \caption{Sammanställning av feature extraction för balkonger}
 \end{table}
 
 \begin{figure}[h]
@@ -194,7 +195,7 @@ Vi kan se hur kostnadsfunktionen såg ut för varje epoch i figur \ref{fig:b_l_2
     Densenet     & 13m 55s & 97.70 \\
     Inception V3 & 21m 54s & 98.09 \\
   \end{tabular}
-  \caption{Sammanställning av finetuning}
+  \caption{Sammanställning av finetuning för balkonger}
 \end{table}
 
 \begin{figure}[h]
@@ -232,7 +233,7 @@ Vi kan se kostnaden för båda tränings och valideringsdatan i figur \ref{fig:f
     Densenet     & 03m 35s & 73.58 \\
     Inception V3 & 05m 15s & 79.24 \\
   \end{tabular}
-  \caption{Sammanställning av feature extraction}
+  \caption{Sammanställning av feature extraction för eldstäder}
 \end{table}
 
 \begin{figure}[h]
@@ -268,7 +269,7 @@ Vi kan se hur kostnadsfunktionen såg ut för varje epoch i figur \ref{fig:f_l_2
     Densenet     & 07m 55s & 85.53 \\
     Inception V3 & 12m 54s & 83.64 \\
   \end{tabular}
-  \caption{Sammanställning av finetuning}
+  \caption{Sammanställning av finetuning för eldstäder}
 \end{table}
 
 \begin{figure}[h]
@@ -306,7 +307,7 @@ Vi kan se kostnaden för båda tränings och valideringsdatan i figur \ref{fig:r
     Densenet     & 04m 20s & 96.87 \\
     inception V3 & 06m 28s & 93.75 \\
   \end{tabular}
-  \caption{Sammanställning av feature extraction}
+  \caption{Sammanställning av feature extraction för rum}
 \end{table}
 
 \begin{figure}[h]
@@ -342,7 +343,7 @@ Vi kan se hur kostnadsfunktionen såg ut för varje epoch i figur \ref{fig:r_l_2
     Densenet     & 09m 53s & 97.91 \\
     Inception V3 & 16m 10s & 97.39 \\
   \end{tabular}
-  \caption{Sammanställning av feature extraction}
+  \caption{Sammanställning av finetuning för rum}
 \end{table}
 
 \begin{figure}[h]
@@ -363,7 +364,6 @@ Vi kan se hur kostnadsfunktionen såg ut för varje epoch i figur \ref{fig:r_l_2
   \caption{Träffsäkerhet för rum med finetuning}
   \label{fig:r_a_2}
 \end{figure}
-
 
 \chapter{Diskussion}
 Diskutera resultatet och hur olika delar kan ha påverkat eller påverkade. Diskutera eventuell framtida forskning. Begränsningar med resultatet. Etiska aspekter. Hållbarhet.
