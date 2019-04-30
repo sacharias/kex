@@ -1,61 +1,46 @@
 
-@misc{um_most_2019,
-	title = {The most cited deep learning papers. {Contribute} to terryum/awesome-deep-learning-papers development by creating an account on {GitHub}},
-	url = {https://github.com/terryum/awesome-deep-learning-papers},
+@article{ioffe_batch_2015,
+	title = {Batch {Normalization}: {Accelerating} {Deep} {Network} {Training} by {Reducing} {Internal} {Covariate} {Shift}},
+	shorttitle = {Batch {Normalization}},
+	url = {http://arxiv.org/abs/1502.03167},
+	abstract = {Training Deep Neural Networks is complicated by the fact that the distribution of each layer's inputs changes during training, as the parameters of the previous layers change. This slows down the training by requiring lower learning rates and careful parameter initialization, and makes it notoriously hard to train models with saturating nonlinearities. We refer to this phenomenon as internal covariate shift, and address the problem by normalizing layer inputs. Our method draws its strength from making normalization a part of the model architecture and performing the normalization for each training mini-batch. Batch Normalization allows us to use much higher learning rates and be less careful about initialization. It also acts as a regularizer, in some cases eliminating the need for Dropout. Applied to a state-of-the-art image classification model, Batch Normalization achieves the same accuracy with 14 times fewer training steps, and beats the original model by a significant margin. Using an ensemble of batch-normalized networks, we improve upon the best published result on ImageNet classification: reaching 4.9\% top-5 validation error (and 4.8\% test error), exceeding the accuracy of human raters.},
 	urldate = {2019-03-22},
-	author = {Um, Terry Taewoong},
+	journal = {arXiv:1502.03167 [cs]},
+	author = {Ioffe, Sergey and Szegedy, Christian},
+	month = feb,
+	year = {2015},
+	note = {arXiv: 1502.03167},
+	keywords = {Computer Science - Machine Learning},
+	file = {arXiv\:1502.03167 PDF:/Users/sacharias/Zotero/storage/SUMXANIT/Ioffe and Szegedy - 2015 - Batch Normalization Accelerating Deep Network Tra.pdf:application/pdf;arXiv.org Snapshot:/Users/sacharias/Zotero/storage/FGC3JKSS/1502.html:text/html}
+}
+
+@article{razavian_cnn_2014,
+	title = {{CNN} {Features} off-the-shelf: an {Astounding} {Baseline} for {Recognition}},
+	shorttitle = {{CNN} {Features} off-the-shelf},
+	url = {http://arxiv.org/abs/1403.6382},
+	abstract = {Recent results indicate that the generic descriptors extracted from the convolutional neural networks are very powerful. This paper adds to the mounting evidence that this is indeed the case. We report on a series of experiments conducted for different recognition tasks using the publicly available code and model of the {\textbackslash}overfeat network which was trained to perform object classification on ILSVRC13. We use features extracted from the {\textbackslash}overfeat network as a generic image representation to tackle the diverse range of recognition tasks of object image classification, scene recognition, fine grained recognition, attribute detection and image retrieval applied to a diverse set of datasets. We selected these tasks and datasets as they gradually move further away from the original task and data the {\textbackslash}overfeat network was trained to solve. Astonishingly, we report consistent superior results compared to the highly tuned state-of-the-art systems in all the visual classification tasks on various datasets. For instance retrieval it consistently outperforms low memory footprint methods except for sculptures dataset. The results are achieved using a linear SVM classifier (or \$L2\$ distance in case of retrieval) applied to a feature representation of size 4096 extracted from a layer in the net. The representations are further modified using simple augmentation techniques e.g. jittering. The results strongly suggest that features obtained from deep learning with convolutional nets should be the primary candidate in most visual recognition tasks.},
+	urldate = {2019-03-25},
+	journal = {arXiv:1403.6382 [cs]},
+	author = {Razavian, Ali Sharif and Azizpour, Hossein and Sullivan, Josephine and Carlsson, Stefan},
 	month = mar,
-	year = {2019},
-	note = {original-date: 2016-06-03T06:48:30Z}
-}
-
-@inproceedings{ayers_home_2007,
-	title = {Home {Interior} {Classification} using {SIFT} {Keypoint} {Histograms}},
-	doi = {10.1109/CVPR.2007.383485},
-	abstract = {Semantic scene classification, the process of categorizing photographs into a discrete set of classes using pattern recognition techniques, is a useful ability for image annotation, organization and retrieval. The literature has focused on classifying outdoor scenes such as beaches and sunsets. Here, we focus on a much more difficult problem, that of differentiating between typical rooms in home interiors, such as bedrooms or kitchens. This requires robust image feature extraction and classification techniques, such as SIFT (scale-invariant feature transform) features and Adaboost classifiers. To this end, we derived SIFT keypoint histograms, an efficient image representation that utilizes variance information from linear discriminant analysis. We compare SIFT keypoint histograms with other features such as spatial color moments and compare Adaboost with support vector machine classifiers. We outline the various techniques used, show their advantages, disadvantages, and actual performance, and determine the most effective algorithm of those tested for home interior classification. Furthermore, we present results of pairwise classification of 7 rooms typically found in homes.},
-	booktitle = {2007 {IEEE} {Conference} on {Computer} {Vision} and {Pattern} {Recognition}},
-	author = {Ayers, B. and Boutell, M.},
-	month = jun,
-	year = {2007},
-	keywords = {categorizing photographs, feature extraction, Feature extraction, Histograms, home interior classification, image annotation, image classification, image feature extraction, image organization, Image representation, image retrieval, Image retrieval, Layout, linear discriminant analysis, Linear discriminant analysis, pattern recognition, Pattern recognition, Robustness, scale-invariant feature transform, semantic scene classification, SIFT keypoint histograms, support vector machine classification, Support vector machine classification, support vector machines, Support vector machines},
-	pages = {1--6},
-	file = {IEEE Xplore Abstract Record:/Users/sacharias/Zotero/storage/3AW4Y7NV/4270483.html:text/html;IEEE Xplore Full Text PDF:/Users/sacharias/Zotero/storage/SFV7W9PK/Ayers and Boutell - 2007 - Home Interior Classification using SIFT Keypoint H.pdf:application/pdf}
-}
-
-@incollection{krizhevsky_imagenet_2012,
-	title = {{ImageNet} {Classification} with {Deep} {Convolutional} {Neural} {Networks}},
-	url = {http://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf},
-	urldate = {2019-03-22},
-	booktitle = {Advances in {Neural} {Information} {Processing} {Systems} 25},
-	publisher = {Curran Associates, Inc.},
-	author = {Krizhevsky, Alex and Sutskever, Ilya and Hinton, Geoffrey E},
-	editor = {Pereira, F. and Burges, C. J. C. and Bottou, L. and Weinberger, K. Q.},
-	year = {2012},
-	pages = {1097--1105},
-	file = {NIPS Snapshot:/Users/sacharias/Zotero/storage/N8Q547NT/4824-imagenet-classification-with-deep-convolutional-neural-networ.html:text/html}
-}
-
-@article{howard_mobilenets:_2017,
-	title = {{MobileNets}: {Efficient} {Convolutional} {Neural} {Networks} for {Mobile} {Vision} {Applications}},
-	shorttitle = {{MobileNets}},
-	url = {http://arxiv.org/abs/1704.04861},
-	abstract = {We present a class of efficient models called MobileNets for mobile and embedded vision applications. MobileNets are based on a streamlined architecture that uses depth-wise separable convolutions to build light weight deep neural networks. We introduce two simple global hyper-parameters that efficiently trade off between latency and accuracy. These hyper-parameters allow the model builder to choose the right sized model for their application based on the constraints of the problem. We present extensive experiments on resource and accuracy tradeoffs and show strong performance compared to other popular models on ImageNet classification. We then demonstrate the effectiveness of MobileNets across a wide range of applications and use cases including object detection, finegrain classification, face attributes and large scale geo-localization.},
-	urldate = {2019-03-22},
-	journal = {arXiv:1704.04861 [cs]},
-	author = {Howard, Andrew G. and Zhu, Menglong and Chen, Bo and Kalenichenko, Dmitry and Wang, Weijun and Weyand, Tobias and Andreetto, Marco and Adam, Hartwig},
-	month = apr,
-	year = {2017},
-	note = {arXiv: 1704.04861},
-	keywords = {Computer Science - Computer Vision and Pattern Recognition},
-	file = {arXiv\:1704.04861 PDF:/Users/sacharias/Zotero/storage/GK3G3Y5Z/Howard et al. - 2017 - MobileNets Efficient Convolutional Neural Network.pdf:application/pdf;arXiv.org Snapshot:/Users/sacharias/Zotero/storage/IFSTMSJT/1704.html:text/html}
-}
-
-@inproceedings{oquab_learning_2014,
-	title = {Learning and {Transferring} {Mid}-{Level} {Image} {Representations} using {Convolutional} {Neural} {Networks}},
-	url = {http://openaccess.thecvf.com/content_cvpr_2014/html/Oquab_Learning_and_Transferring_2014_CVPR_paper.html},
-	urldate = {2019-03-22},
-	author = {Oquab, Maxime and Bottou, Leon and Laptev, Ivan and Sivic, Josef},
 	year = {2014},
-	pages = {1717--1724},
-	file = {Full Text PDF:/Users/sacharias/Zotero/storage/IS9CJK8Z/Oquab et al. - 2014 - Learning and Transferring Mid-Level Image Represen.pdf:application/pdf;Snapshot:/Users/sacharias/Zotero/storage/BV6XWUUV/Oquab_Learning_and_Transferring_2014_CVPR_paper.html:text/html}
+	note = {arXiv: 1403.6382},
+	keywords = {Computer Science - Computer Vision and Pattern Recognition},
+	annote = {Comment: version 3 revisions: 1)Added results using feature processing and data augmentation 2)Referring to most recent efforts of using CNN for different visual recognition tasks 3) updated text/caption},
+	file = {arXiv\:1403.6382 PDF:/Users/sacharias/Zotero/storage/LBVYVM7C/Razavian et al. - 2014 - CNN Features off-the-shelf an Astounding Baseline.pdf:application/pdf;arXiv.org Snapshot:/Users/sacharias/Zotero/storage/G8J8YX7J/1403.html:text/html}
+}
+
+@article{he_deep_2015,
+	title = {Deep {Residual} {Learning} for {Image} {Recognition}},
+	url = {http://arxiv.org/abs/1512.03385},
+	abstract = {Deeper neural networks are more difficult to train. We present a residual learning framework to ease the training of networks that are substantially deeper than those used previously. We explicitly reformulate the layers as learning residual functions with reference to the layer inputs, instead of learning unreferenced functions. We provide comprehensive empirical evidence showing that these residual networks are easier to optimize, and can gain accuracy from considerably increased depth. On the ImageNet dataset we evaluate residual nets with a depth of up to 152 layers---8x deeper than VGG nets but still having lower complexity. An ensemble of these residual nets achieves 3.57\% error on the ImageNet test set. This result won the 1st place on the ILSVRC 2015 classification task. We also present analysis on CIFAR-10 with 100 and 1000 layers. The depth of representations is of central importance for many visual recognition tasks. Solely due to our extremely deep representations, we obtain a 28\% relative improvement on the COCO object detection dataset. Deep residual nets are foundations of our submissions to ILSVRC \& COCO 2015 competitions, where we also won the 1st places on the tasks of ImageNet detection, ImageNet localization, COCO detection, and COCO segmentation.},
+	urldate = {2019-04-28},
+	journal = {arXiv:1512.03385 [cs]},
+	author = {He, Kaiming and Zhang, Xiangyu and Ren, Shaoqing and Sun, Jian},
+	month = dec,
+	year = {2015},
+	note = {arXiv: 1512.03385},
+	keywords = {Computer Science - Computer Vision and Pattern Recognition},
+	annote = {Comment: Tech report},
+	file = {arXiv\:1512.03385 PDF:/Users/sacharias/Zotero/storage/ETFULNGE/He et al. - 2015 - Deep Residual Learning for Image Recognition.pdf:application/pdf;arXiv.org Snapshot:/Users/sacharias/Zotero/storage/PZRX4VEI/1512.html:text/html}
 }

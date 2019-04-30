@@ -132,20 +132,89 @@ De vanligaste verktygen inom modern bildkategorisering bygger på djupinlärning
   \section{Convolutional Neural Network}
   Convolutional neural networks (CNN) är en viss typ av neurala nätverk för att processera data som har indata som är placerat i ett rutnät. Det inkluderar data om tidsserier men även bilddata, som kan ses som ett rutnät av pixlar. CNN har fått stort genomslagskraft i praktiska tillämpningar. Convolution är en viss typ av linjär operation och CNN är då neurala nätverk där minst ett av dess lager är ett convolutional layer. 
 
+
     \subsection{Lager}
     Här presenteras de lager som vanligtvis används i ett CNN. 
     Detta för att sedan kunna gå in på hur de olika arktitekterna inom CNN är uppbyggda.
     Även om CNN kan användas till olika typer av data, så fokuserar vi här i texten på dess kontext med bilder.
+    En vanlig ordningsföljd av lager för bildkategorisering är input, convolutional layer, ReLU, pooling layer och sist ett fully-connected layer.
 
       \subsubsection{Input}
-      Detta lager håller de råa pixelvärdena från bilden via skickar. 
+      Detta lager håller de råa pixelvärdena från bilden via skickar in.
+      I ett vanligt neuralt nätverk med resnet-arkitekturen så är det 224 x 224 x 3.
+      Då är det en rektangulär bild med 224 pixlar i höjd, 224 pixlar i bred och 3 färgkanaler, RGB.
 
+      \subsubsection{Convolutional layer}
+      Ett convolutional layer består av en mängd filter som har parametrar som går att träna.
+      Varje filter är kvadratiskt och små mått i höjd och bredd, men har alltid samma djup som vår indata.
+      En vanlig storlek på ett filter är 5x5x3, det vill säga 5 pixlar brett och högt och 3 färgkanaler.
+      Vid forward pass så glider vi (convolve) detta filter över vår indata-bild.
+      Vi beräknar skalärprodukten av filtret och den 5x5x3-bit av indatan som filter ligger på.
+      Efter beräkningen så glider vi filtret åt sidan.
+      Vanligtvis en pixel, men det kan även vara flera.
+      Utdata från varje filter blir en tvådimensionell activation map.
+      Djupet på utdata motsvarar antal filter vi använt i vårt convolutional layer.
+      Höjd och bredd på utdata beror på storleken på filter.
+
+      Storleken på utdata från ett convolutional layer beror på tre hyperparametrar: djup, stride och zero-padding.
+      Djup motsvarar antal filter som används och blir djupet på vår utdata.
+      Stride består hur många pixlar vi förflyttar oss vid varje glidning. 
+      Zero-padding bestämmer om vi ska bygga en ram runt bilden med nollor.
+      Detta användas för att kunna behålla storleken på bilden igenom flera convolutional layers men är också bra för att inte bortse viktig information i utkanten av bilden.
+
+      \subsubsection{Activation Layer / ReLU}
+      Activation Layer består av en elementvis funktion.
+      Det finns flera olika typer av dessa, men det som vanligtvis används inom bildkategorisering är Rectified Linear Units (ReLU). 
+      Den applicerar funktionen max(0,x) på varje element i indata.
+      Detta betyder varje element som är positivt är opåverkat och varje negativt värde får värdet noll.
+      Utdata har samma storlek som indata.
+
+      \subsubsection{Pooling layer}
+      Ett pooling layer applicerar en nedsampling (eng: downsampling) på indata.
+      Detta sker längs de spatiala dimensionerna, bredd och höjd.
+      Detta sker vanligtvis för att minska antalet parametrar i nätverket och för att minska på beräkningskraften som behövs.
+      Det är även en teknik för att undvika overfitting.
+      Vanligaste typen är max pooling, då man tar ett område, till exempel 2x2 pixlar och väljer den pixel med högst värde.
+      Vanligast är max pooling på 2x2 pixlars filter med en stride på 2. Indata minskar då med 75\%.
+
+      \subsubsection{Fully-Connected Layer}
+      Fully-connected layers är den typen av lager som vanligast i normala neurala nätverk.
+      I detta lager har varje neuron en full koppling till alla aktiveringar från det tidigare lagret.
+      Dessa har då vanligtvis en tillhörande matris med vikter och bias, vilket kan beräknas med matrismultiplikation.
+      Storleken på utdata beror på storleken på viktmatrisen.
+      Vanligtvis så byggs det sista FC layer upp så att det har samma storlek som vi vill ha kategorier.
+      Om vi vill klassifiera en bild i tio kategorier, så kan utdata från vårt sista lager ha storleken 10x1, där varje element motsvarar sannolikheten för att bilden tillhör en viss kategori.
 
     \subsection{Tekniker inom djupinlärning}
 
+      \subsubsection{Batch normalization}
+
+      \subsubsection{Data augmentation}
+
     \subsection{Arkitekturer}
+    Här kommer ett urval av de vanligaste arkitekturerna för CNN för bildkategorisering att presenteras.
+
+      \subsubsection{ResNet}
+      Det finns flera olika varianter av ResNet, Resnet18, Resnet34, Resnet50, Resnet101 och Resnet152, beroende på storlek. Vi fokuserar här på Resnet18.
+      ResNet bygger på en struktur med convolutional layers, pooling layers och fully-connected layers.
+      De använder sig också av något som kallas för
+
+      \subsubsection{AlexNet}
+
+      \subsubsection{VGG}
+      VGG-11
+
+      \subsubsection{DenseNet}
+
+      \subsubsection{Inception V3}
 
   \section{Transfer Learning}
+
+    \subsection{ImageNet}
+
+    \subsection{Feature Extraction}
+
+    \subsection{Finetuning}
 
 
 
@@ -179,35 +248,30 @@ Prestandan av de olika modeller kommer presenteras här.
       \includegraphics[width=0.49\textwidth]{"./balcony/balcony-20split - loss - resnet - feature extractor"}
       \caption{Arkitekturen ResNet-11}
     \end{figure}
-
     \begin{figure}
       \centering
       \includegraphics[width=0.49\textwidth]{"./balcony/balcony-20split - acc - alexnet - feature extractor"}
       \includegraphics[width=0.49\textwidth]{"./balcony/balcony-20split - loss - alexnet - feature extractor"}
       \caption{Arkitekturen Alexnet}
     \end{figure}
-
     \begin{figure}
       \centering
       \includegraphics[width=0.49\textwidth]{"./balcony/balcony-20split - acc - vgg - feature extractor"}
       \includegraphics[width=0.49\textwidth]{"./balcony/balcony-20split - loss - vgg - feature extractor"}
       \caption{Arkitekturen VGG-11 med batch normalization}
     \end{figure}
-
     \begin{figure}
       \centering
       \includegraphics[width=0.49\textwidth]{"./balcony/balcony-20split - acc - densenet - feature extractor"}
       \includegraphics[width=0.49\textwidth]{"./balcony/balcony-20split - loss - densenet - feature extractor"}
       \caption{Arkitekturen Densenet}
     \end{figure}
-
     \begin{figure}
       \centering
       \includegraphics[width=0.49\textwidth]{"./balcony/balcony-20split - acc - inception - feature extractor"}
       \includegraphics[width=0.49\textwidth]{"./balcony/balcony-20split - loss - inception - feature extractor"}
       \caption{Arkitekturen Inception V3}
     \end{figure}
-
     \begin{table}
       \centering
       \begin{tabular}{|l|r|r|}
@@ -387,9 +451,103 @@ Prestandan av de olika modeller kommer presenteras här.
   \end{table}
 
 
-
   \section{Rum}
   Resultat från olika rum.
+
+    \subsection{Feature Extractor}
+    Resultat från 3 olika rum, när vi frysta alla lager förutom det sista.
+
+    \begin{figure}
+      \centering
+      \includegraphics[width=0.49\textwidth]{"./room/room-classification - acc - resnet - feature extractor"}
+      \includegraphics[width=0.49\textwidth]{"./room/room-classification - loss - resnet - feature extractor"}
+      \caption{Arkitekturen ResNet-11}
+    \end{figure}
+    \begin{figure}
+      \centering
+      \includegraphics[width=0.49\textwidth]{"./room/room-classification - acc - alexnet - feature extractor"}
+      \includegraphics[width=0.49\textwidth]{"./room/room-classification - loss - alexnet - feature extractor"}
+      \caption{Arkitekturen Alexnet}
+    \end{figure}
+    \begin{figure}
+      \centering
+      \includegraphics[width=0.49\textwidth]{"./room/room-classification - acc - vgg - feature extractor"}
+      \includegraphics[width=0.49\textwidth]{"./room/room-classification - loss - vgg - feature extractor"}
+      \caption{Arkitekturen VGG-11 med batch normalization}
+    \end{figure}
+    \begin{figure}
+      \centering
+      \includegraphics[width=0.49\textwidth]{"./room/room-classification - acc - densenet - feature extractor"}
+      \includegraphics[width=0.49\textwidth]{"./room/room-classification - loss - densenet - feature extractor"}
+      \caption{Arkitekturen Densenet}
+    \end{figure}
+    \begin{figure}
+      \centering
+      \includegraphics[width=0.49\textwidth]{"./room/room-classification - acc - inception - feature extractor"}
+      \includegraphics[width=0.49\textwidth]{"./room/room-classification - loss - inception - feature extractor"}
+      \caption{Arkitekturen Inception V3}
+    \end{figure}
+    \begin{table}
+      \centering
+      \begin{tabular}{|l|r|r|}
+        Modell & Tid & Max. noggrannhet \\ 
+        \hline
+        Resnet       & 02m 33s & 93.75 \\
+        Alexnet      & 02m 18s & 93.22 \\
+        VGG-11       & 04m 31s & 93.75 \\
+        Densenet     & 04m 20s & 96.87 \\
+        inception V3 & 06m 28s & 93.75 \\
+      \end{tabular}
+      \caption{Sammanställning av feature extraction} \label{tab:sometab}
+    \end{table}
+
+    \subsection{Finetuning}
+
+    \begin{figure}
+      \centering
+      \includegraphics[width=0.49\textwidth]{"./room/room-classification - acc - resnet - feature extractor"}
+      \includegraphics[width=0.49\textwidth]{"./room/room-classification - loss - resnet - feature extractor"}
+      \caption{Arkitekturen ResNet-11}
+    \end{figure}
+    \begin{figure}
+      \centering
+      \includegraphics[width=0.49\textwidth]{"./room/room-classification - acc - alexnet - feature extractor"}
+      \includegraphics[width=0.49\textwidth]{"./room/room-classification - loss - alexnet - feature extractor"}
+      \caption{Arkitekturen Alexnet}
+    \end{figure}
+    \begin{figure}
+      \centering
+      \includegraphics[width=0.49\textwidth]{"./room/room-classification - acc - vgg - feature extractor"}
+      \includegraphics[width=0.49\textwidth]{"./room/room-classification - loss - vgg - feature extractor"}
+      \caption{Arkitekturen VGG-11 med batch normalization}
+    \end{figure}
+    \begin{figure}
+      \centering
+      \includegraphics[width=0.49\textwidth]{"./room/room-classification - acc - densenet - feature extractor"}
+      \includegraphics[width=0.49\textwidth]{"./room/room-classification - loss - densenet - feature extractor"}
+      \caption{Arkitekturen Densenet}
+    \end{figure}
+    \begin{figure}
+      \centering
+      \includegraphics[width=0.49\textwidth]{"./room/room-classification - acc - inception - feature extractor"}
+      \includegraphics[width=0.49\textwidth]{"./room/room-classification - loss - inception - feature extractor"}
+      \caption{Arkitekturen Inception V3}
+    \end{figure}
+    \begin{table}
+      \centering
+      \begin{tabular}{|l|r|r|}
+        Modell & Tid & Max. noggrannhet \\ 
+        \hline
+        Resnet       & 04m 16s & 96.35 \\
+        Alexnet      & 02m 34s & 94.79 \\
+        VGG-11       & 11m 02s & 97.91 \\
+        Densenet     & 09m 53s & 97.91 \\
+        Inception V3 & 16m 10s & 97.39 \\
+      \end{tabular}
+      \caption{Sammanställning av feature extraction} \label{tab:sometab}
+    \end{table}
+
+
 
 
 \chapter{Diskussion}
