@@ -3,6 +3,7 @@
 \usepackage[style=numeric,sorting=none,backend=biber]{biblatex}
 \usepackage[swedish]{babel}
 \usepackage{graphicx}
+
 \graphicspath{ {../images/} }
 
 \addbibresource{references.bib} % The file containing our references, in BibTeX format
@@ -197,7 +198,19 @@ De vanligaste verktygen inom modern bildkategorisering bygger på djupinlärning
       \subsubsection{ResNet}
       Det finns flera olika varianter av ResNet, Resnet18, Resnet34, Resnet50, Resnet101 och Resnet152, beroende på storlek. Vi fokuserar här på Resnet18.
       ResNet bygger på en struktur med convolutional layers, pooling layers och fully-connected layers.
-      De använder sig också av något som kallas för
+
+      Trenden har varit att CNN blir djupare med fler lager.
+      Men till slut kom modellerna till ett tak när det handlar om accuracy.
+      ResNet är en lösning på det här problemet genom att introducera "identity shortcut connections".
+      Detta betyder att det finns kopplingar som hoppar över vissa convolutional layers.
+      Det betyder att om modellen inte behöver utnyttja alla convolutional layers så kan den bara använda sig av identiteten istället för ett convolutional layer.
+      Det betyder att nätverket borde kunna vara hur stort som helst, för det går alltid att bara använda indentiteten.
+
+      Modellerna med residuala funktioner ska även vara enklare att optimera \parencite{he2016deep}.
+
+      Resnet beskär bilderna till storleken 224 x 224 pixlar, och huvudsakliga målet var att kategorisera bland 1000 kategorier i imageNet 2012 classification dataset. 
+
+      Det finns flera olika versioner av ResNet, beroende på antal lager. ResNet-18 ser ut så här:
 
       \subsubsection{AlexNet}
 
@@ -283,7 +296,7 @@ Prestandan av de olika modeller kommer presenteras här.
         Densenet     & 5m 59s & 96.94 \\
         Inception V3 & 9m 04s & 95.80 \\
       \end{tabular}
-      \caption{Sammanställning av feature extraction} \label{tab:sometab}
+      \caption{Sammanställning av feature extraction}
     \end{table}
 
     \subsection{Finetuning}
@@ -337,7 +350,7 @@ Prestandan av de olika modeller kommer presenteras här.
         Densenet     & 13m 55s & 97.70 \\
         Inception V3 & 21m 54s & 98.09 \\
       \end{tabular}
-      \caption{Sammanställning av finetuning} \label{tab:sometab}
+      \caption{Sammanställning av finetuning}
     \end{table}
   
 
@@ -393,7 +406,7 @@ Prestandan av de olika modeller kommer presenteras här.
       Densenet     & 03m 35s & 73.58 \\
       Inception V3 & 05m 15s & 79.24 \\
     \end{tabular}
-    \caption{Sammanställning av feature extraction} \label{tab:sometab}
+    \caption{Sammanställning av feature extraction}
   \end{table}
 
   \subsection{Finetuning}
@@ -447,7 +460,7 @@ Prestandan av de olika modeller kommer presenteras här.
       Densenet     & 07m 55s & 85.53 \\
       Inception V3 & 12m 54s & 83.64 \\
     \end{tabular}
-    \caption{Sammanställning av finetuning} \label{tab:sometab}
+    \caption{Sammanställning av finetuning}
   \end{table}
 
 
@@ -498,7 +511,7 @@ Prestandan av de olika modeller kommer presenteras här.
         Densenet     & 04m 20s & 96.87 \\
         inception V3 & 06m 28s & 93.75 \\
       \end{tabular}
-      \caption{Sammanställning av feature extraction} \label{tab:sometab}
+      \caption{Sammanställning av feature extraction}
     \end{table}
 
     \subsection{Finetuning}
@@ -544,7 +557,7 @@ Prestandan av de olika modeller kommer presenteras här.
         Densenet     & 09m 53s & 97.91 \\
         Inception V3 & 16m 10s & 97.39 \\
       \end{tabular}
-      \caption{Sammanställning av feature extraction} \label{tab:sometab}
+      \caption{Sammanställning av feature extraction}
     \end{table}
 
 
