@@ -83,12 +83,16 @@ Modellen testas sedan för att få ett score på hur bra modellen är.
 
   \section{Avgränsningar}
   För att sätta en rimlig avgränsningar på denna uppsats kommer tre olika sorters attribut undersökas och jämföras med tre olika sorters deeplearningmodeller. 
-  Attributen som kommer– användas är ”Balkong”, ”Kakelugn” samt ”Typ av rum” och deelearningmodellerna som kommer användas är ”keras”, ”smartAI”, samt ”blabla”. 
+  Attributen som kommer– användas är ”Balkong”, ”Kakelugn” samt ”Typ av rum” (Kök, badrum eller sovrum) och deelearningmodellerna som kommer användas är ”keras”, ”smartAI”, samt ”blabla”. 
   Anledningen till att flera attribut eller flera sorters modeller inte valdes är att det är resurskrävande att både samla in och sortera testdata samt att implementera modellerna. 
   Anledningen till att färre inte valdes var för att få spridning på attributen och modellerna, för kunna svara på om klassifiseringen fungerar i allmänhet och inte bara i enstaka testfall. 
   En annan avgräsning som gjort är att mäklarbilderna som används endast kommer från bostadsrätter, då det kan skilja sig ganska mycket på hur villor och bostadsrätter ser ut.
 
 \chapter{Bakgrund}
+  \section{Definitioner}
+    \subsection{Mäklarbild}
+    En mäklarbild är en bild tagen ämnad för att användas för försäljning av en fastighet. 
+
   \section{Maskininlärning}
   En maskininlärningsalgoritm är en algoritm som kan lära sig och bli bättre från data \parencite{Goodfellow-et-al-2016}. Det kan beskrivas som ett datorprogram som kan följa en grupp med uppgifter T och lära sig med hjälp av erfarenhet E och dess prestanda P är mätbar. Maskininlärning hjälper oss att läsa problem som är för svåra för program skrivna och designade av människor att lösa. 
 
@@ -129,6 +133,73 @@ Modellen testas sedan för att få ett score på hur bra modellen är.
     \subsection{Dropout}
 
 \chapter{Metod}
+Detta kapitel kommer att beskriva metoden som användes för att ge mäklarbilder attribut.
+
+
+\section{Datainsamling}
+För att kunna träna modeller för de olika attributen ”balkong”, ”kakelugn” samt ”typ av rum” behövdes ett antal bilder som både uppfyllde dessa attribut samt ”negativa” bilder som inte uppfyllde dessa attribut.
+Detta gjordes med ett pythonscript som heter Google Images Download (https://github.com/hardikvasa/google-images-download) och fungerar på det sättet att man som input ger den ett sökord samt hur många bilder som ska laddas ner (X) och output blir då en mapp med de första X bilderna som google hittar. 
+
+I pythonscriptets input ställdes också in att den enda godkända bildkällan är https://hemnet.se.
+
+Sökorden samt antalen som användes för detta beskrivs här:
+
+\begin{center}
+  \begin{tabular}{ |c|c|c| } 
+   \hline
+   Sökord & Antal \\ 
+   \hline
+   balkong hemnet & 400  \\ 
+   \hline
+   balkong vasastan & 400 \\ 
+   \hline
+   balkong inspiration & 400 \\ 
+   \hline
+   hemnet vardagsrum & 400  \\ 
+   \hline
+   hemnet badrum & 400 \\ 
+   \hline
+
+   Hemnet braskamin & 400  \\ 
+
+   \hline
+   hemnet öppen spis & 400 \\ 
+   \hline
+   vardagsrum braskamin & 400 \\ 
+   
+   \hline
+   hemnet hall & 400 \\ 
+   \hline
+   hemnet kök & 400 \\ 
+   \hline
+   hemnet uteplats & 400   \\ 
+   \hline 
+  \end{tabular}
+  \end{center}
+
+Eftersom denna data inte är validerade mäklarbilder med det attribut som sökes påbörjades ett valideringsarbete där alla bilder manuellt validerades och sorterades enligt följande:
+\begin{itemize}
+  \item Alla bilder som inte uppfattades som mäklarbilder enligt definitionen ovan raderades
+  \item Alla bilder som inte var tagna på lägenheter raderades
+  \item Alla bilder med en eldstad las i en mapp med eldstäder
+  \item Alla bilder med en balkong las i en mapp
+  \item Alla bilder på ett kök las i en mapp
+  \item Alla bilder på ett vardagsrum las i en mapp
+  \item Alla bilder på ett badrum las i en mapp
+  \item Negativa bilder skapades för samtliga mappar. Alltså skapades en mapp med bilder utan eldstad, en mapp med bilder utan balkong etc. Dessa skapades med hjälp av bilder i övriga mappar. 
+\end{itemize} 
+
+I varje mapp låg det slutligen runt 400 bilder. 
+
+När detta var slutfört delades varje mapp i ytterligare två delar, en som kallades ”training” och en som kallades ”validation”.
+I training palcerades de första 80\% av bilderna och i validation de sista 20\%.
+Detta gjordes för att kunna testa hur modellerna presterade när de var färdigtränade med 20\% av den totala bildmassan.
+
+
+\section{Modeller}
+För att träna modellerna användes Python 3.X med 
+
+
 Hur vi gått tillväga. Vilka dataset, hur implementation gått till (verktyg, klassificerare, parametrar), hur vi valt features.
 Hur evalueringen har gått till (traning, test, validation set).
 
