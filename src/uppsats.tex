@@ -49,26 +49,27 @@ Dit kommer 2,8 miljoner (https://www.hemnet.se/om) unika besökare varje vecka o
 Detta ställer höga krav på filtreringsfunktionerna för att potentiella köpare snabbt ska kunna hitta sin drömbostad.
 Idag erbjuds redan filtreringsfunktionerna ”antal rum”, ”boarea”, ”pris” samt ”område”. 
 Det finns också en fritextsöka där man kan söka på vad mäklaren har skrivit i texten.
-Exempel på detta kan vara ”balkong”, ”kakelugn” och ”sjöutsikt”. 
+Exempel på sökord är ”balkong”, ”kakelugn” och ”sjöutsikt”. 
 
-Problemet med att söka i mäklartexter är att det tvingar mäklaren att i texten nämna samtliga attribut som han eller hon vill lyfta fram. 
-Detta gör att vissa attribut blir utelämnade vilket i sin tur gör fritextrutan sämre.
+Problemet med att söka i mäklartexter är att det tvingar mäklaren att i texten nämna samtliga attribut som han eller hon vill göra sökbara. 
+Detta gör att vissa attribut kan bli utelämnade vilket i sin tur gör fritextrutan sämre.
 
-Exempelvis är det ofta självklart om det finns en balkong eller kakelugn på mäklarbilderna.
+Exempelvis är det ofta självklart om det finns en balkong eller kakelugn på mäklarbilderna men det är inte alltid mäklaren väljer att skriva detta i den löpande texten.
 Det hade därför varit intressant att utifrån mäklarbilderna automatiskt generera ett sökindex där varje bild knyts till ett antal attribut.
 Dessa attribut skulle sedan kunna användas för att lägga till filtreringsalternativ i sökfunktionen och därmed skapa en bättre användarupplevelse.
 
 Det skulle också gå att använda sig av denna metod för att knyta attribut såsom skick och typ av rum (Sovrum, badrum eller kök) till varje bild.
-Kombineras sedan skulle det gå att göra sökningar såsom ”Kök i gott skick”.  
+Kombinationen skulle göra sökningar såsom ”Kök i gott skick” möjligt.  
 
 Denna data kan också vara användbar vid värdering av bostäder, då det enkelt skulle gå att jämföra priser på bostäder med olika attribut, tillexempel lägenheter med sköutsikt mot lägenheter utan sköutsikt eller lägenheter med ett kök i gott skick mot lägenheter med ett kök i sämre skick.
 
-VET INTE RIKTIGT HUR JAG SKA FORMULERA MIG HÄR!!
+VET INTE RIKTIGT HUR JAG SKA FORMULERA MIG HÄR!! Känns Som ett halvbra stycke
 För att på ett effektivt och precist sätt kunna knyta attribut till mäklarbilder behöver man använda sig av någon form av automatisk bildbehandling.
 Detta går att göra med hjälp av maskininlärning och djupa neurala nätverk.
-Det går till så att man tränar en modell på ett antal bilder som innehåller det givna attributet och ett antal bilder som inte innehåller det givna attributet.
-Modellen testas sedan för att få ett score på hur bra modellen är.
- kan man sedan lägga in en bild som input och så berättar modellen om den innehåller attributet eller ej.
+Sättet som detta görs på är att man tränar ett antal bilder som innehåller det givna attributet och ett antal som inte innehåller attributet.
+Modellen tränas sedan med hjälpt av ett djupt neuralt nätverk. 
+Efter varje träning så testas modellen för att mäta hur många träningar som krävs för bästa resultat.
+När modellen är färdigtränad kan man använda denna genom att skicka in en bild som input och modellen berättar om bilden innhåller attributet eller inte.
  
 
 
@@ -138,9 +139,9 @@ Detta kapitel kommer att beskriva metoden som användes för att ge mäklarbilde
 
 \section{Datainsamling}
 För att kunna träna modeller för de olika attributen ”balkong”, ”kakelugn” samt ”typ av rum” behövdes ett antal bilder som både uppfyllde dessa attribut samt ”negativa” bilder som inte uppfyllde dessa attribut.
-Detta gjordes med ett pythonscript som heter Google Images Download (https://github.com/hardikvasa/google-images-download) och fungerar på det sättet att man som input ger den ett sökord samt hur många bilder som ska laddas ner (X) och output blir då en mapp med de första X bilderna som google hittar. 
+Detta gjordes med ett pythonscript som heter Google Images Download (https://github.com/hardikvasa/google-images-download) och tar ett sökord, hur många bilder som ska laddas ner (X) samt från vilken källa bilderna ska hämtas från som input och ger tillbaka en mapp med de första X antal bilderna som hittas på Google från den givna källan. 
 
-I pythonscriptets input ställdes också in att den enda godkända bildkällan är https://hemnet.se.
+Bildkällan som valdes var https://hemnet.se då det är Sveriges största bostadsförmedlingssite med mängder av bilder.
 
 Sökorden samt antalen som användes för detta beskrivs här:
 
@@ -159,14 +160,11 @@ Sökorden samt antalen som användes för detta beskrivs här:
    \hline
    hemnet badrum & 400 \\ 
    \hline
-
    Hemnet braskamin & 400  \\ 
-
    \hline
    hemnet öppen spis & 400 \\ 
    \hline
    vardagsrum braskamin & 400 \\ 
-   
    \hline
    hemnet hall & 400 \\ 
    \hline
@@ -197,7 +195,28 @@ Detta gjordes för att kunna testa hur modellerna presterade när de var färdig
 
 
 \section{Modeller}
-För att träna modellerna användes Python 3.X med 
+För att träna modellerna användes Python 3.6 med deeplearningramverket Pytorch 1.0.0. 
+Modellerna tränades med  hjälp av pytorch i de olika ramverken ”Resnet”, ”Alexnet”, ”VGG-11”, ”Densenet” samt ”inception V3”.
+Efter varje träningsrund (Epoch) kördes en validering för att se hur förbättringskurvan ser ut efter varje Epoch och när modellen börjar bli ”overfitted”.
+
+Dessa modeller kördes ett antal epochs? och bla bla bla bla
+
+\section{Uppföljning}
+När modellerna var färdigtränade gjordes ett utdrag av statistik för att kunna jämföra modellerna sinsemellan.
+Datan som hämtades för varje modell var
+
+
+\section{Hårdvara}
+Hårdvaran som användes när modellerna tränades var följande:
+
+\subsection{Graphical processing unit (GPU)}
+GPUn som användes var av modell Tesla K80 och hade tillgång till 128GB grafikminne.
+
+\subsection{Central processing unit (CPU)}
+CPUn som användes hade fyra kärnor 
+
+\subsection{Random Access Memory (RAM)}
+Det fanns tillgång till 61GB RAM-minne.
 
 
 Hur vi gått tillväga. Vilka dataset, hur implementation gått till (verktyg, klassificerare, parametrar), hur vi valt features.
