@@ -42,48 +42,18 @@
 \chapter{Introduktion}
 Koppla första mening till titel. söka på speicfika saker i en annons. mysig inledning. Deeplearning bildanalys - google grejer. Ai och hur automatisering vuxit fram. Lite fakta på hur viktig sökfunktioner är för att hitta bostäder? Hur många sökningar /tidsenehet. Om folk enklare hittar bostad på ett mer effektivt sätt så effektiviseras hela köp och sälj processen och därmed hela marknaden.
 
-Just nu (april 2019) finns över 20 000 bostadsrätter (https://www.hemnet.se/statistik) till salu på Sveriges största mäklarsite (https://www.hemnet.se/om), där nästan hälften av dessa ligger i Stockholm. 
-Dit kommer 2,8 miljoner (https://www.hemnet.se/om) unika besökare varje vecka och gör tillsammans över 2000 sökningar i minuten.
-Detta ställer höga krav på filtreringsfunktionerna för att potentiella köpare snabbt ska kunna hitta sin drömbostad.
-Idag erbjuds redan filtreringsfunktionerna ”antal rum”, ”boarea”, ”pris” samt ”område”. 
-Det finns också en fritextsöka där man kan söka på vad mäklaren har skrivit i texten.
-Exempel på sökord är ”balkong”, ”kakelugn” och ”sjöutsikt”. 
+\section{Problemformulering}
+För att hitta nyckelord kopplade till en bild idag så behöver någon manuellt bestämma nyckelord till bilden. Uppgiften är tidskrävande och det är svårt att i efterhand producera relevanta nyckelord utan att gå igenom allt manuellt igen. 
 
-Problemet med att söka i mäklartexter är att det tvingar mäklaren att i texten nämna samtliga attribut som han eller hon vill göra sökbara. 
-Detta gör att vissa attribut kan bli utelämnade vilket i sin tur gör fritextrutan sämre.
+Det är också för bostadssökare tidskrävande att leta efter bostäder. Om man kan förfina sökningen än mer skulle detta effektivisera processen.
 
-Exempelvis är det ofta självklart om det finns en balkong eller kakelugn på mäklarbilderna men det är inte alltid mäklaren väljer att skriva detta i den löpande texten.
-Det hade därför varit intressant att utifrån mäklarbilderna automatiskt generera ett sökindex där varje bild knyts till ett antal attribut.
-Dessa attribut skulle sedan kunna användas för att lägga till filtreringsalternativ i sökfunktionen och därmed skapa en bättre användarupplevelse.
-
-Det skulle också gå att använda sig av denna metod för att knyta attribut såsom skick och typ av rum (Sovrum, badrum eller kök) till varje bild.
-Kombinationen skulle göra sökningar såsom ”Kök i gott skick” möjligt.  
-
-Denna data kan också vara användbar vid värdering av bostäder, då det enkelt skulle gå att jämföra priser på bostäder med olika attribut, tillexempel lägenheter med sköutsikt mot lägenheter utan sköutsikt eller lägenheter med ett kök i gott skick mot lägenheter med ett kök i sämre skick.
-
-VET INTE RIKTIGT HUR JAG SKA FORMULERA MIG HÄR!! Känns Som ett halvbra stycke
-För att på ett effektivt och precist sätt kunna knyta attribut till mäklarbilder behöver man använda sig av någon form av automatisk bildbehandling.
-Detta går att göra med hjälp av maskininlärning och djupa neurala nätverk.
-Sättet som detta görs på är att man tränar ett antal bilder som innehåller det givna attributet och ett antal som inte innehåller attributet.
-Modellen tränas sedan med hjälpt av ett djupt neuralt nätverk. 
-Efter varje träning så testas modellen för att mäta hur många träningar som krävs för bästa resultat.
-När modellen är färdigtränad kan man använda denna genom att skicka in en bild som input och modellen berättar om bilden innhåller attributet eller inte.
- 
-
-
-
-\section{Syfte}
-Syftet med denna studie är att titta på hur olika maskininlärningsmetoder kan användas för att hitta relevanta nyckelord till bilder på lägenhetsannonser. 
+Syftet med den här studien är att titta på hur maskininlärningsmetoder kan användas för att hitta relevanta nyckelord till bilder på lägenhetsannonser. 
 
 \section{Frågeställning}
 Går det med nuvarande verktyg inom maskininlärning hitta attribut i bilder från lägenhetsannonser?
 
 \section{Avgränsningar}
-För att sätta en rimlig avgränsningar på denna uppsats kommer tre olika sorters attribut undersökas och jämföras med tre olika sorters deeplearningmodeller. 
-Attributen som kommer– användas är ”Balkong”, ”Kakelugn” samt ”Typ av rum” (Kök, badrum eller sovrum) och deelearningmodellerna som kommer användas är ”keras”, ”smartAI”, samt ”blabla”. 
-Anledningen till att flera attribut eller flera sorters modeller inte valdes är att det är resurskrävande att både samla in och sortera testdata samt att implementera modellerna. 
-Anledningen till att färre inte valdes var för att få spridning på attributen och modellerna, för kunna svara på om klassifiseringen fungerar i allmänhet och inte bara i enstaka testfall. 
-En annan avgräsning som gjort är att mäklarbilderna som används endast kommer från bostadsrätter, då det kan skilja sig ganska mycket på hur villor och bostadsrätter ser ut.
+Vilka avgränsningar vi gjort i datamängder, testpersoner samt modeller.
 
 \chapter{Bakgrund}
 I det här kapitlet presenteras teori som är relevant för bildklassificering. Målet är att ge läsaren förståelse för de byggstenar som används för att konstruera en modern algoritm för bildklassificering. De vanligaste verktygen inom modern bildkategorisering bygger på djupinlärning, som är en del inom
@@ -96,7 +66,6 @@ Maskininlärning brukar delas in i två överkategorier: Unsupervised learning o
 
 \section{Artificella Neurala Nätverk}
 Ett område med många tillämpningsområden inom maskininlärning är artificella neurala nätverk. Neurala nätverk var från början ett försök till att bygga en digital modell av hur det biologiska neuronsystem fungerar. Forskningen inom områden avvek sedan från att efterlikna den biologiska varianten så mycket som möjligt och fokuserade istället på att konstruera neurala nätverk som fungerade så bra som möjligt på maskininlärningsproblem. Grundbyggstenarna i neurala nätverk är dock fortfarande baserade på dess biologiska variant. Den enklaste beräkningsenheten i hjärnan är en neuron och dessa neuroner är ihopkopplade med synapser. En neuron får signal in och skickar sedan signaler ut via synapserna. Hur stark utsignal är simuleras i en dator med hjälp av vikter, (engelska: weights, W). Målet är att träna modellen och göra den bättre genom att justera vikterna. Om summan av flera av dessa viktade insignaler når en viss gräns, så skickar neuronerna vidare en signal. Detta simuleras i en dator med en aktiveringsfunktion. Neurala nätverk är dessa neuroner i en acyklisk graf.
-  
 
 [BILD PÅ NEURALT NÄTVERK]
 
@@ -115,10 +84,6 @@ En förbättring till learning rate är the momentum method. Stochastic gradient
 
 \section{Convolutional Neural Network}
 Convolutional neural networks (CNN) är en viss typ av neurala nätverk för att processera data som har indata som är placerat i ett rutnät. Det inkluderar data om tidsserier men även bilddata, som kan ses som ett rutnät av pixlar. CNN har fått stort genomslagskraft i praktiska tillämpningar. Convolution är en viss typ av linjär operation och CNN är då neurala nätverk där minst ett av dess lager är ett convolutional layer.
-
-CNN har blivit den dominanta approachen inom maskininlärning för igenkänning av visuella objekt \parencite{huang2017densely}. Även om CNN introducerades för 20 år sedan, så har förbättringar i hårdvara och nätverksstruktur gjort det nyss möjligt att träna djupa CNN \parencite{huang2017densely}.
-
-
 
 \subsection{Lager}
 Här presenteras de lager som vanligtvis används i ett CNN. Detta för att sedan kunna gå in på hur de olika arktitekterna inom CNN är uppbyggda. Även om CNN kan användas till olika typer av data, så fokuserar vi här i texten på dess kontext med bilder. En vanlig ordningsföljd av lager för bildkategorisering är input, convolutional layer, ReLU, pooling layer och sist ett fully-connected layer.
@@ -147,7 +112,7 @@ Fully-connected layers är den typen av lager som är vanligast i normala neural
 \subsubsection{Data augmentation}
 
 \subsection{Arkitekturer}
-Här kommer ett urval av de vanligaste arkitekturerna för CNN för bildkategorisering att presenteras. Nätverk med conv-lager har blivit djupare och djupare, från LeNet \parencite{lecun1998gradient} med fem lager, VGG med 19 lager \parencite{simonyan2014very} och Residual Networks (ResNet) med över 100 lager \parencite{he2016deep}. Ett problem med detta är att viktig information i indata försvinner innan det hinner nå slutet av nätverket \parencite{huang2017densely}. Det har därför kommit arkitekturen som försöker lösa dessa problem. ResNet löser det genom att förbikoppla vissa lager med identitetskopplingar. DenseNet skapar flera olika förbikopplingar inne i nätverket.
+Här kommer ett urval av de vanligaste arkitekturerna för CNN för bildkategorisering att presenteras.
 
 \subsubsection{Resnet}
 Det finns flera olika varianter av ResNet, Resnet18, Resnet34, Resnet50, Resnet101 och Resnet152, beroende på storlek. Vi fokuserar här på Resnet18. ResNet bygger på en struktur med convolutional layers, pooling layers och fully-connected layers. Trenden har varit att CNN blir djupare med fler lager.
@@ -163,16 +128,10 @@ Enligt \cite{simonyan2014very} så har VGG högre noggrannhet än Alexnet och up
 Enligt \cite{simonyan2014very} ser arkitekturen ut som följande: Under träning så består indata av RGB-bilder av fixerad storlek 224 x 224. Den enda förbehandlingen är att medelvärdet av RGB-värdena som beräknas på träningsmängden subtraheras från varje pixel. Bilden skickas sedan igenom en stack av conv-lager med filter av storlek 3 x 3. I en av konfigurationerna används även 1 x 1-filter, som kan ses som en linjär transformation av indatakanalerna. Kliven, Stride, är 1 pixel och padding beror på filterstorlek, men ska se till att indata och utdata är i samma storlek. Padding är 1 pixel vid 3 x 3-filter. Spatial pooling sker med fem stycken max-pooling lager, där vissa följer efter conv-lager. Det är inte alla conv-lager som följs av max-pooling. Max-pooling sker med ett 2 x 2-filter med stride 2. En stack av conv-lager, som är olika djup beroende på vilken typ av VGG, följs sedan av tre stycken FC-lager. De första två har 4096 kanaler var och det sista har 1000-kanaler, för att motsvara klasserna i ILSVRC-problemet. Det sista lagret är ett soft-max-lager. Alla gömda lager är utrustade med ReLU icke-linjäritet. 
 
 \subsubsection{Densenet}
-Tidigare forskning har visat att nätverk bestående av conv-lager kan vara djupare, har högre noggrannhet och är mer effektiva att träna om det finns kortare vägar mellan indata och utdata \parencite{huang2017densely}. Därför skapades DenseNet, vilket kopplar ihop varje lager i nätverk med varje lager framför. Det betyder att om ett tradionellt nätverk med conv-lager har totalt L antal lager, så har det även L kopplingar. DenseNet har istället L(L+1)/2 antal direkta kopplingar. Enligt \cite{huang2017densely} så har DenseNet uppnått signifikanta förbättringar på Cifar-10 och ImageNet jämfört med andra state-of-the-art-modeller. Det betyder att alla lager har en direkt koppling till alla lager framför. DenseNet har olika intern arkitektur beroende på storlek. Gemensamt är dock att indata består av RGB-bilder av storlek 224 x 224. Därefter kommer en stack med conv-lager där första lagret har filterstorlek 7 x 7 och stride 2. Efterkommande conv-lager kommer i par, där det första i paret har storlek 1 x 1 och den andra har filterstorlek 3 x 3. Stride 1 och padding för att behålla storleken på indata. Mellan dessa lager sker först max-pooling med storlek 3 x 3 och stride 2 och sedan average pooling med storlek 2 x 2 och stride 2. Sista lagret, som är klassificeringslagret, består av global average pooling med storlek 7 x 7 och ett FC-lager med 1000 kanaler som ett soft-max-lager.
 
-\subsubsection{Inception-v2}
-Inception har en mycket lägre beräkningskostnad än VGG \parencite{szegedy2016rethinking}. Detta har lett till att den används i big-data-sammanhang, där modeller med större beräkningskraft inte har kunnat användas. Inception-v2 består av en stack med conv-lager där alla har filterstorlek 3 x 3 med stride 1 eller 2. Det finns även mellan conv-lagren ett max pooling med storlek 3 x 3 och stride 2. Padding är så data ska behålla storleken. Därefter kommer tre stycken inception-lager. Ett inception-lager är ett lager som kombinerar resultatet från flera olika conv-lager i olika storlekar (vanligtvis 1 x 1, 3 x 3 och 5 x 5) ihop med ett max pooling-lager. Efter inception-lagren kommer klassificeringslagren som består av ett max pooling med storlek 8 x 8, ett FC-lager med 2048 kanaler och sist ett FC-lager med 1000 kanaler med softmax.
-
-Inception-v2 är unikt då det består av två utdatalager vid träning. \parencite{szegedy2016rethinking} Det primära lagret är ett linjärt lager i slutet av nätverk medan det sekundära lagret kallas för auxiliary output. Vid testning så används bara det primära lagret.
+\subsubsection{Inception V3}
 
 \section{Transfer Learning}
-Enligt \cite{yosinski2014transferable} så har många djupa neurala nätverk som har tränats på naturliga bilder visar att de har en gemensam sak. Det är att i de första lagren så lär de sig egenskaper som motsvarar Gabor-filter och färgklickar. Gabor-filter är ett typ av filter som används för att beskriva textur. 
-
 
 \subsection{ImageNet}
 
@@ -181,93 +140,8 @@ Enligt \cite{yosinski2014transferable} så har många djupa neurala nätverk som
 \subsection{Finetuning}
 
 \chapter{Metod}
-Detta kapitel kommer att beskriva metoden som användes för att ge mäklarbilder attribut.
+Hur vi gått tillväga. Vilka dataset, hur implementation gått till (verktyg, klassificerare, parametrar), hur vi valt features. Hur evalueringen har gått till (traning, test, validation set). Vi vill mäta både precision och recall. Plotta en PR curve. Vi kan även plotta hur precisionen har gått om i förhållande till mer data, för att skapa en uppfattning av om modellen kan bli bättre med mer data. Vanligtvis gör man detta i log-skala \parencite{Goodfellow-et-al-2016}. Gör även att göra en grid search på hyperparametrar. Hur vi kan använda oss av preprocessing kan vi  läsa i kapitel 12 av Goodfellow.
 
-
-\section{Datainsamling}
-För att kunna träna modeller för de olika attributen ”balkong”, ”kakelugn” samt ”typ av rum” behövdes ett antal bilder som både uppfyllde dessa attribut samt ”negativa” bilder som inte uppfyllde dessa attribut.
-Detta gjordes med ett pythonscript som heter Google Images Download (https://github.com/hardikvasa/google-images-download) och tar ett sökord, hur många bilder som ska laddas ner (X) samt från vilken källa bilderna ska hämtas från som input och ger tillbaka en mapp med de första X antal bilderna som hittas på Google från den givna källan. 
-
-Bildkällan som valdes var https://hemnet.se då det är Sveriges största bostadsförmedlingssite med mängder av bilder.
-
-Sökorden samt antalen som användes för detta beskrivs här:
-
-\begin{center}
-  \begin{tabular}{ |c|c|c| } 
-   \hline
-   Sökord & Antal \\ 
-   \hline
-   balkong hemnet & 400  \\ 
-   \hline
-   balkong vasastan & 400 \\ 
-   \hline
-   balkong inspiration & 400 \\ 
-   \hline
-   hemnet vardagsrum & 400  \\ 
-   \hline
-   hemnet badrum & 400 \\ 
-   \hline
-   Hemnet braskamin & 400  \\ 
-   \hline
-   hemnet öppen spis & 400 \\ 
-   \hline
-   vardagsrum braskamin & 400 \\ 
-   \hline
-   hemnet hall & 400 \\ 
-   \hline
-   hemnet kök & 400 \\ 
-   \hline
-   hemnet uteplats & 400   \\ 
-   \hline 
-  \end{tabular}
-  \end{center}
-
-Eftersom denna data inte är validerade mäklarbilder med det attribut som sökes påbörjades ett valideringsarbete där alla bilder manuellt validerades och sorterades enligt följande:
-\begin{itemize}
-  \item Alla bilder som inte uppfattades som mäklarbilder enligt definitionen ovan raderades
-  \item Alla bilder som inte var tagna på lägenheter raderades
-  \item Alla bilder med en eldstad las i en mapp med eldstäder
-  \item Alla bilder med en balkong las i en mapp
-  \item Alla bilder på ett kök las i en mapp
-  \item Alla bilder på ett vardagsrum las i en mapp
-  \item Alla bilder på ett badrum las i en mapp
-  \item Negativa bilder skapades för samtliga mappar. Alltså skapades en mapp med bilder utan eldstad, en mapp med bilder utan balkong etc. Dessa skapades med hjälp av bilder i övriga mappar. 
-\end{itemize} 
-
-I varje mapp låg det slutligen runt 400 bilder. 
-
-När detta var slutfört delades varje mapp i ytterligare två delar, en som kallades ”training” och en som kallades ”validation”.
-I training palcerades de första 80\% av bilderna och i validation de sista 20\%.
-Detta gjordes för att kunna testa hur modellerna presterade när de var färdigtränade med 20\% av den totala bildmassan.
-
-
-\section{Modeller}
-För att träna modellerna användes Python 3.6 med deeplearningramverket Pytorch 1.0.0. 
-Modellerna tränades med  hjälp av pytorch i de olika ramverken ”Resnet”, ”Alexnet”, ”VGG-11”, ”Densenet” samt ”inception V3”.
-Efter varje träningsrund (Epoch) kördes en validering för att se hur förbättringskurvan ser ut efter varje Epoch och när modellen börjar bli ”overfitted”.
-
-Dessa modeller kördes ett antal epochs? och bla bla bla bla
-
-\section{Uppföljning}
-När modellerna var färdigtränade gjordes ett utdrag av statistik för att kunna jämföra modellerna sinsemellan.
-Datan som hämtades för varje modell var
-
-
-\section{Hårdvara}
-Hårdvaran som användes när modellerna tränades var följande:
-
-\subsection{Graphical processing unit (GPU)}
-GPUn som användes var av modell Tesla K80 och hade tillgång till 128GB grafikminne.
-
-\subsection{Central processing unit (CPU)}
-CPUn som användes hade fyra kärnor 
-
-\subsection{Random Access Memory (RAM)}
-Det fanns tillgång till 61GB RAM-minne.
-
-
-Hur vi gått tillväga. Vilka dataset, hur implementation gått till (verktyg, klassificerare, parametrar), hur vi valt features.
-Hur evalueringen har gått till (traning, test, validation set).
 \chapter{Resultat}
 Prestandan av de olika modeller kommer presenteras här.
 
@@ -500,7 +374,7 @@ Diskutera resultatet och hur olika delar kan ha påverkat eller påverkade. Disk
 \section{Fortsatt forskning}
 Vid värdering så är det också intressant att få ut attribut, så kan man räkna med det i värderingskalkylen.
 
-\chapter{Slutsats}  
+\chapter{Slutsats}
 Slutsats av vad vi kom fram till.
 
 \printbibliography[heading=bibintoc]
