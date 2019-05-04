@@ -85,10 +85,6 @@ En förbättring till learning rate är the momentum method. Stochastic gradient
 \section{Convolutional Neural Network}
 Convolutional neural networks (CNN) är en viss typ av neurala nätverk för att processera data som har indata som är placerat i ett rutnät. Det inkluderar data om tidsserier men även bilddata, som kan ses som ett rutnät av pixlar. CNN har fått stort genomslagskraft i praktiska tillämpningar. Convolution är en viss typ av linjär operation och CNN är då neurala nätverk där minst ett av dess lager är ett convolutional layer.
 
-CNN har blivit den dominanta approachen inom maskininlärning för igenkänning av visuella objekt \parencite{huang2017densely}. Även om CNN introducerades för 20 år sedan, så har förbättringar i hårdvara och nätverksstruktur gjort det nyss möjligt att träna djupa CNN \parencite{huang2017densely}.
-
-
-
 \subsection{Lager}
 Här presenteras de lager som vanligtvis används i ett CNN. Detta för att sedan kunna gå in på hur de olika arktitekterna inom CNN är uppbyggda. Även om CNN kan användas till olika typer av data, så fokuserar vi här i texten på dess kontext med bilder. En vanlig ordningsföljd av lager för bildkategorisering är input, convolutional layer, ReLU, pooling layer och sist ett fully-connected layer.
 
@@ -116,7 +112,7 @@ Fully-connected layers är den typen av lager som är vanligast i normala neural
 \subsubsection{Data augmentation}
 
 \subsection{Arkitekturer}
-Här kommer ett urval av de vanligaste arkitekturerna för CNN för bildkategorisering att presenteras. Nätverk med conv-lager har blivit djupare och djupare, från LeNet \parencite{lecun1998gradient} med fem lager, VGG med 19 lager \parencite{simonyan2014very} och Residual Networks (ResNet) med över 100 lager \parencite{he2016deep}. Ett problem med detta är att viktig information i indata försvinner innan det hinner nå slutet av nätverket \parencite{huang2017densely}. Det har därför kommit arkitekturen som försöker lösa dessa problem. ResNet löser det genom att förbikoppla vissa lager med identitetskopplingar. DenseNet skapar flera olika förbikopplingar inne i nätverket.
+Här kommer ett urval av de vanligaste arkitekturerna för CNN för bildkategorisering att presenteras.
 
 \subsubsection{Resnet}
 Det finns flera olika varianter av ResNet, Resnet18, Resnet34, Resnet50, Resnet101 och Resnet152, beroende på storlek. Vi fokuserar här på Resnet18. ResNet bygger på en struktur med convolutional layers, pooling layers och fully-connected layers. Trenden har varit att CNN blir djupare med fler lager.
@@ -132,16 +128,10 @@ Enligt \cite{simonyan2014very} så har VGG högre noggrannhet än Alexnet och up
 Enligt \cite{simonyan2014very} ser arkitekturen ut som följande: Under träning så består indata av RGB-bilder av fixerad storlek 224 x 224. Den enda förbehandlingen är att medelvärdet av RGB-värdena som beräknas på träningsmängden subtraheras från varje pixel. Bilden skickas sedan igenom en stack av conv-lager med filter av storlek 3 x 3. I en av konfigurationerna används även 1 x 1-filter, som kan ses som en linjär transformation av indatakanalerna. Kliven, Stride, är 1 pixel och padding beror på filterstorlek, men ska se till att indata och utdata är i samma storlek. Padding är 1 pixel vid 3 x 3-filter. Spatial pooling sker med fem stycken max-pooling lager, där vissa följer efter conv-lager. Det är inte alla conv-lager som följs av max-pooling. Max-pooling sker med ett 2 x 2-filter med stride 2. En stack av conv-lager, som är olika djup beroende på vilken typ av VGG, följs sedan av tre stycken FC-lager. De första två har 4096 kanaler var och det sista har 1000-kanaler, för att motsvara klasserna i ILSVRC-problemet. Det sista lagret är ett soft-max-lager. Alla gömda lager är utrustade med ReLU icke-linjäritet. 
 
 \subsubsection{Densenet}
-Tidigare forskning har visat att nätverk bestående av conv-lager kan vara djupare, har högre noggrannhet och är mer effektiva att träna om det finns kortare vägar mellan indata och utdata \parencite{huang2017densely}. Därför skapades DenseNet, vilket kopplar ihop varje lager i nätverk med varje lager framför. Det betyder att om ett tradionellt nätverk med conv-lager har totalt L antal lager, så har det även L kopplingar. DenseNet har istället L(L+1)/2 antal direkta kopplingar. Enligt \cite{huang2017densely} så har DenseNet uppnått signifikanta förbättringar på Cifar-10 och ImageNet jämfört med andra state-of-the-art-modeller. Det betyder att alla lager har en direkt koppling till alla lager framför. DenseNet har olika intern arkitektur beroende på storlek. Gemensamt är dock att indata består av RGB-bilder av storlek 224 x 224. Därefter kommer en stack med conv-lager där första lagret har filterstorlek 7 x 7 och stride 2. Efterkommande conv-lager kommer i par, där det första i paret har storlek 1 x 1 och den andra har filterstorlek 3 x 3. Stride 1 och padding för att behålla storleken på indata. Mellan dessa lager sker först max-pooling med storlek 3 x 3 och stride 2 och sedan average pooling med storlek 2 x 2 och stride 2. Sista lagret, som är klassificeringslagret, består av global average pooling med storlek 7 x 7 och ett FC-lager med 1000 kanaler som ett soft-max-lager.
 
-\subsubsection{Inception-v2}
-Inception har en mycket lägre beräkningskostnad än VGG \parencite{szegedy2016rethinking}. Detta har lett till att den används i big-data-sammanhang, där modeller med större beräkningskraft inte har kunnat användas. Inception-v2 består av en stack med conv-lager där alla har filterstorlek 3 x 3 med stride 1 eller 2. Det finns även mellan conv-lagren ett max pooling med storlek 3 x 3 och stride 2. Padding är så data ska behålla storleken. Därefter kommer tre stycken inception-lager. Ett inception-lager är ett lager som kombinerar resultatet från flera olika conv-lager i olika storlekar (vanligtvis 1 x 1, 3 x 3 och 5 x 5) ihop med ett max pooling-lager. Efter inception-lagren kommer klassificeringslagren som består av ett max pooling med storlek 8 x 8, ett FC-lager med 2048 kanaler och sist ett FC-lager med 1000 kanaler med softmax.
-
-Inception-v2 är unikt då det består av två utdatalager vid träning. \parencite{szegedy2016rethinking} Det primära lagret är ett linjärt lager i slutet av nätverk medan det sekundära lagret kallas för auxiliary output. Vid testning så används bara det primära lagret.
+\subsubsection{Inception V3}
 
 \section{Transfer Learning}
-Enligt \cite{yosinski2014transferable} så har många djupa neurala nätverk som har tränats på naturliga bilder visar att de har en gemensam sak. Det är att i de första lagren så lär de sig egenskaper som motsvarar Gabor-filter och färgklickar. Gabor-filter är ett typ av filter som används för att beskriva textur. 
-
 
 \subsection{ImageNet}
 
