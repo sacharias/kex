@@ -20,9 +20,11 @@
 
 % Uncomment the next line to include cover generated at https://intra.kth.se/kth-cover?l=en
 % \kthcover{kth-cover.pdf}
+% källor: \textcite och \parencite
 
 \begin{document}
 \frontmatter
+\titlepage
 
 \begin{abstract}
     English abstract goes here
@@ -67,9 +69,6 @@ Sättet som detta görs på är att man tränar ett antal bilder som innehåller
 Modellen tränas sedan med hjälpt av ett djupt neuralt nätverk. 
 Efter varje träning så testas modellen för att mäta hur många träningar som krävs för bästa resultat.
 När modellen är färdigtränad kan man använda denna genom att skicka in en bild som input och modellen berättar om bilden innhåller attributet eller inte.
- 
-
-
 
 \section{Syfte}
 Syftet med denna studie är att titta på hur olika maskininlärningsmetoder kan användas för att hitta relevanta nyckelord till bilder på lägenhetsannonser. 
@@ -85,8 +84,8 @@ Anledningen till att färre inte valdes var för att få spridning på attribute
 En annan avgräsning som gjort är att mäklarbilderna som används endast kommer från bostadsrätter, då det kan skilja sig ganska mycket på hur villor och bostadsrätter ser ut.
 
 \chapter{Bakgrund}
-I det här kapitlet presenteras teori som är relevant för bildklassificering. Målet är att ge läsaren förståelse för de byggstenar som används för att konstruera en modern algoritm för bildklassificering. De vanligaste verktygen inom modern bildkategorisering bygger på djupinlärning, som är en del inom
-artificella neurala nätverk.
+I det här kapitlet presenteras teori som är relevant för bildklassificering. Målet är att ge läsaren förståelse för de byggstenar som används för att konstruera en modern algoritm för bildklassificering. De vanligaste verktygen inom modern bildkategorisering bygger på djupinlärning, som är en del inom artificella neurala nätverk.
+test i \cite{Goodfellow-et-al-2016}. test 2 \textcite{Goodfellow-et-al-2016}.
 
 \section{Maskininlärning}
 Maskininlärning är ett aktivt forskningsfält inom datalogi och en maskininlärningsalgoritm kan förklaras som en algoritm som lär sig att bli bättre med hjälp utav data \parencite{Goodfellow-et-al-2016}. Inom maskininlärning så brukar lärandeprocessen se ut på följande sätt: Om ett datorprogam har som uppgift att med hjälp av en viss erfarenhet E, lära sig vissa förutbestämda uppgifter T, vilket kan mätas med måttet P. Om programmets prestanda P blir bättre, det vill säga att programmet blir bättre på att lösa uppgifterna T, med hjälp av erfarenheten E, då lär sig programmet.
@@ -148,7 +147,6 @@ Batch-normaliserring har visat sig vara extra viktigt för lyckad träning och k
 
 \subsubsection{Data augmentation}
 Djupa neurala nätverk behöver en stor mängd data för att lära sig effektivt. Insamlingen av denna data är oftast dyrt och tidskrävande. Data augmentation (Dataförstärkning) genom att öka datamängden artificiellt genom att göra förändringar på befintlig data \parencite{taylor2017improving}. Det har visat sig att generell data augmentation har ökat prestandan på convolutional neurala nätverk. En viktig del av data augmentation är att indata fortfarande ska tillhöra samma klass som den tillhörde innan. Inom bildkategorisering så sker förändringen med geometriska och fotometriska transformationer. Geometriska transformationer ändrar geometrin i bilden med målet att vårt CNN ska vara oberoende av objektets position eller orientering \parencite{taylor2017improving}. Dessa transformationer inkluderar att flippa, beskära, skala och rotera bilden. Fotometriska transformationer förändrar istället färgkanalerna och målet är att vårt CNN ska vara oförändligt till skillnader i belysning och färg. 
-
 
 \subsection{Arkitekturer}
 Här kommer ett urval av de vanligaste arkitekturerna för CNN för bildkategorisering att presenteras. Nätverk med conv-lager har blivit djupare och djupare, från LeNet \parencite{lecun1998gradient} med fem lager, VGG med 19 lager \parencite{simonyan2014very} och Residual Networks (ResNet) med över 100 lager \parencite{he2016deep}. Ett problem med detta är att viktig information i indata försvinner innan det hinner nå slutet av nätverket \parencite{huang2017densely}. Det har därför kommit arkitekturen som försöker lösa dessa problem. ResNet löser det genom att förbikoppla vissa lager med identitetskopplingar. DenseNet skapar flera olika förbikopplingar inne i nätverket.
