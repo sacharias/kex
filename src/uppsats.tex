@@ -3,6 +3,8 @@
 \usepackage[style=numeric,sorting=none,backend=biber]{biblatex}
 \usepackage[swedish]{babel}
 \usepackage[]{graphicx}
+\usepackage{float}
+
 
 \graphicspath{{../images/}}
 
@@ -248,7 +250,8 @@ Dessa modeller kördes ett antal epochs? och bla bla bla bla
 
 \section{Uppföljning}
 När modellerna var färdigtränade gjordes ett utdrag av statistik för att kunna jämföra modellerna sinsemellan.
-Datan som hämtades för varje modell var
+För varje modell mättes träningstiden samt bästa procentuella resultat och presenterades i en tabell.
+Kostnaden samt träffsäkerheten för varje epoch hämtades också och presenterades i grafer med antal epochs på X-axeln och kostnade/träffsäkerheten på Y-axeln.
 
 
 \section{Hårdvara}
@@ -266,16 +269,24 @@ Det fanns tillgång till 61GB RAM-minne.
 
 Hur vi gått tillväga. Vilka dataset, hur implementation gått till (verktyg, klassificerare, parametrar), hur vi valt features.
 Hur evalueringen har gått till (traning, test, validation set).
+
 \chapter{Resultat}
-Prestandan av de olika modeller kommer presenteras här.
+Prestandan av de olika modellerna kommer presenteras här.
+
 
 \section{Balkonger}
-Här nedan presenteras resultatet av den binära klassificeringen av balkonger i mäklarbilder. Resultatet består av två grafer per modell, som visar hur kostnaden från kostnadsfunktionen samt noggrannheten för både vårt träningssset och evalueringsset. Det finns även en sammanställning av de högst uppnådda noggrannheten och hur lång tid modellerna tog att träna upp. Vi kommer även titta på både när alla lager var frysta och när alla lager tränades.
+Nedan presenteras resultatet av den binära klassificeringen av balkonger i mäklarbilder. 
+Resultatet består av två grafer per modell, där den ena visar hur kostnaden från kostandsfunktionen beter sig för varje epoch och där den andra visar hur nogrannheten förändras för varje epoch.
+Graferna visar detta både för träningsdata och valideringsdata.
+Det finns även en sammanställning av den högst uppnådda noggrannheten och hur lång tid modellerna tog att träna upp. 
+Vi kommer också att jämföra resultatet när alla lager förutom det sista är fruset (Feature Extraction) med när inget lager är fruset.
+
 
 \subsection{Feature extraction}
-Vi kan se kostnaden för båda tränings och valideringsdatan i figur \ref{fig:b_l_1} för varje epoch. Vi kan även se i figur \ref{fig:b_a_1} hur träffsäkerheten för de olika modeller var på balkonger.
+Vi kan se kostnaden för både tränings och valideringsdatan i figur \ref{fig:b_l_1} för varje epoch. Vi kan även se i figur \ref{fig:b_a_1} hur träffsäkerheten för de olika modeller var på balkonger.
+\restylefloat{table}
 
-\begin{table}
+\begin{table}[!htbp]
   \centering
   \begin{tabular}{|l|r|r|}
     Modell & Tid & Max. noggrannhet \\ 
@@ -288,30 +299,14 @@ Vi kan se kostnaden för båda tränings och valideringsdatan i figur \ref{fig:b
   \end{tabular}
   \caption{Sammanställning av feature extraction för balkonger}
 \end{table}
+\restylefloat{table}
 
-\begin{figure}[h]
-  \includegraphics[width=7cm]{b_l_resnet_fe}
-  \includegraphics[width=7cm]{b_l_alexnet_fe}
-  \includegraphics[width=7cm]{b_l_vgg_fe}
-  \includegraphics[width=7cm]{b_l_densenet_fe}
-  \includegraphics[width=7cm]{b_l_inception_fe}
-  \caption{Kostnaden vid varje epoch för balkonger med feature extraction}
-  \label{fig:b_l_1}
-\end{figure}
-\begin{figure}[h]
-  \includegraphics[width=7cm]{b_a_resnet_fe}
-  \includegraphics[width=7cm]{b_a_alexnet_fe}
-  \includegraphics[width=7cm]{b_a_vgg_fe}
-  \includegraphics[width=7cm]{b_a_densenet_fe}
-  \includegraphics[width=7cm]{b_a_inception_fe}
-  \caption{Träffsäkerhet för balkonger med feature extraction}
-  \label{fig:b_a_1}
-\end{figure}
+I tabell 4.1 står det bla bla bla
 
 \subsection{Finetuning}
 Vi kan se hur kostnadsfunktionen såg ut för varje epoch i figur \ref{fig:b_l_2} och hur träffsäkerheten var vid finetuning i figur \ref{fig:b_a_2}
 
-\begin{table}
+\begin{table}[!htbp]
   \centering
   \begin{tabular}{|l|r|r|}
     Modell & Tid & Max. noggrannhet \\ 
@@ -325,31 +320,16 @@ Vi kan se hur kostnadsfunktionen såg ut för varje epoch i figur \ref{fig:b_l_2
   \caption{Sammanställning av finetuning för balkonger}
 \end{table}
 
-\begin{figure}[h]
-  \includegraphics[width=7cm]{b_l_resnet_fine}
-  \includegraphics[width=7cm]{b_l_alexnet_fine}
-  \includegraphics[width=7cm]{b_l_vgg_fine}
-  \includegraphics[width=7cm]{b_l_densenet_fine}
-  \includegraphics[width=7cm]{b_l_inception_fine}
-  \caption{Kostnaden vid varje epoch för balkonger med finetuning}
-  \label{fig:b_l_2}
-\end{figure}
-\begin{figure}[h]
-  \includegraphics[width=7cm]{b_a_resnet_fine}
-  \includegraphics[width=7cm]{b_a_alexnet_fine}
-  \includegraphics[width=7cm]{b_a_vgg_fine}
-  \includegraphics[width=7cm]{b_a_densenet_fine}
-  \includegraphics[width=7cm]{b_a_inception_fine}
-  \caption{Träffsäkerhet för balkonger med finetuning}
-  \label{fig:b_a_2}
-\end{figure}
+
 
 \section{Eldstäder}
 
 \subsection{Feature extraction}
 Vi kan se kostnaden för båda tränings och valideringsdatan i figur \ref{fig:f_l_1} för varje epoch. Vi kan även se i figur \ref{fig:f_a_1} hur träffsäkerheten för de olika modeller var på eldstäder.
 
-\begin{table}
+\restylefloat{table}
+
+\begin{table}[!htbp]
   \centering
   \begin{tabular}{|l|r|r|}
     Modell & Tid & Max. noggrannhet \\ 
@@ -363,24 +343,8 @@ Vi kan se kostnaden för båda tränings och valideringsdatan i figur \ref{fig:f
   \caption{Sammanställning av feature extraction för eldstäder}
 \end{table}
 
-\begin{figure}[h]
-  \includegraphics[width=7cm]{f_l_resnet_fe}
-  \includegraphics[width=7cm]{f_l_alexnet_fe}
-  \includegraphics[width=7cm]{f_l_vgg_fe}
-  \includegraphics[width=7cm]{f_l_densenet_fe}
-  \includegraphics[width=7cm]{f_l_inception_fe}
-  \caption{Kostnaden vid varje epoch för eldstäder med feature extraction}
-  \label{fig:f_l_1}
-\end{figure}
-\begin{figure}[h]
-  \includegraphics[width=7cm]{f_a_resnet_fe}
-  \includegraphics[width=7cm]{f_a_alexnet_fe}
-  \includegraphics[width=7cm]{f_a_vgg_fe}
-  \includegraphics[width=7cm]{f_a_densenet_fe}
-  \includegraphics[width=7cm]{f_a_inception_fe}
-  \caption{Träffsäkerhet för eldstäder med feature extraction}
-  \label{fig:f_a_1}
-\end{figure}
+\restylefloat{table}
+
 
 \subsection{Finetuning}
 Vi kan se hur kostnadsfunktionen såg ut för varje epoch i figur \ref{fig:f_l_2} och hur träffsäkerheten var vid finetuning i figur \ref{fig:f_a_2}
@@ -399,31 +363,14 @@ Vi kan se hur kostnadsfunktionen såg ut för varje epoch i figur \ref{fig:f_l_2
   \caption{Sammanställning av finetuning för eldstäder}
 \end{table}
 
-\begin{figure}[h]
-  \includegraphics[width=7cm]{f_l_resnet_fine}
-  \includegraphics[width=7cm]{f_l_alexnet_fine}
-  \includegraphics[width=7cm]{f_l_vgg_fine}
-  \includegraphics[width=7cm]{f_l_densenet_fine}
-  \includegraphics[width=7cm]{f_l_inception_fine}
-  \caption{Kostnaden vid varje epoch för eldstäder med finetuning}
-  \label{fig:f_l_2}
-\end{figure}
-\begin{figure}[h]
-  \includegraphics[width=7cm]{f_a_resnet_fine}
-  \includegraphics[width=7cm]{f_a_alexnet_fine}
-  \includegraphics[width=7cm]{f_a_vgg_fine}
-  \includegraphics[width=7cm]{f_a_densenet_fine}
-  \includegraphics[width=7cm]{f_a_inception_fine}
-  \caption{Träffsäkerhet för eldstäder med finetuning}
-  \label{fig:f_a_2}
-\end{figure}
 
 \section{Rum}
 
 \subsection{Feature extraction}
 Vi kan se kostnaden för båda tränings och valideringsdatan i figur \ref{fig:r_l_1} för varje epoch. Vi kan även se i figur \ref{fig:r_a_1} hur träffsäkerheten för de olika modeller var på rum.
 
-\begin{table}
+\restylefloat{table}
+\begin{table}[!htbp]
   \centering
   \begin{tabular}{|l|r|r|}
     Modell & Tid & Max. noggrannhet \\ 
@@ -436,25 +383,9 @@ Vi kan se kostnaden för båda tränings och valideringsdatan i figur \ref{fig:r
   \end{tabular}
   \caption{Sammanställning av feature extraction för rum}
 \end{table}
+\restylefloat{table}
 
-\begin{figure}[h]
-  \includegraphics[width=7cm]{r_l_resnet_fe}
-  \includegraphics[width=7cm]{r_l_alexnet_fe}
-  \includegraphics[width=7cm]{r_l_vgg_fe}
-  \includegraphics[width=7cm]{r_l_densenet_fe}
-  \includegraphics[width=7cm]{r_l_inception_fe}
-  \caption{Kostnaden vid varje epoch för rum med feature extraction}
-  \label{fig:r_l_1}
-\end{figure}
-\begin{figure}[h]
-  \includegraphics[width=7cm]{r_a_resnet_fe}
-  \includegraphics[width=7cm]{r_a_alexnet_fe}
-  \includegraphics[width=7cm]{r_a_vgg_fe}
-  \includegraphics[width=7cm]{r_a_densenet_fe}
-  \includegraphics[width=7cm]{r_a_inception_fe}
-  \caption{Träffsäkerhet för rum med feature extraction}
-  \label{fig:r_a_1}
-\end{figure}
+
 
 \subsection{Finetuning}
 Vi kan se hur kostnadsfunktionen såg ut för varje epoch i figur \ref{fig:r_l_2} och hur träffsäkerheten var vid finetuning i figur \ref{fig:r_a_2}
@@ -473,24 +404,7 @@ Vi kan se hur kostnadsfunktionen såg ut för varje epoch i figur \ref{fig:r_l_2
   \caption{Sammanställning av finetuning för rum}
 \end{table}
 
-\begin{figure}[h]
-  \includegraphics[width=7cm]{r_l_resnet_fine}
-  \includegraphics[width=7cm]{r_l_alexnet_fine}
-  \includegraphics[width=7cm]{r_l_vgg_fine}
-  \includegraphics[width=7cm]{r_l_densenet_fine}
-  \includegraphics[width=7cm]{r_l_inception_fine}
-  \caption{Kostnaden vid varje epoch för rum med finetuning}
-  \label{fig:r_l_2}
-\end{figure}
-\begin{figure}[h]
-  \includegraphics[width=7cm]{r_a_resnet_fine}
-  \includegraphics[width=7cm]{r_a_alexnet_fine}
-  \includegraphics[width=7cm]{r_a_vgg_fine}
-  \includegraphics[width=7cm]{r_a_densenet_fine}
-  \includegraphics[width=7cm]{r_a_inception_fine}
-  \caption{Träffsäkerhet för rum med finetuning}
-  \label{fig:r_a_2}
-\end{figure}
+
 
 \chapter{Diskussion}
 Diskutera resultatet och hur olika delar kan ha påverkat eller påverkade. Diskutera eventuell framtida forskning. Begränsningar med resultatet. Etiska aspekter. Hållbarhet.
@@ -504,6 +418,126 @@ Slutsats av vad vi kom fram till.
 \printbibliography[heading=bibintoc]
 \appendix
   \chapter{Appendix A}
+  
+  \begin{figure}[h]
+    \includegraphics[width=7cm]{b_l_resnet_fe}
+    \includegraphics[width=7cm]{b_l_alexnet_fe}
+    \includegraphics[width=7cm]{b_l_vgg_fe}
+    \includegraphics[width=7cm]{b_l_densenet_fe}
+    \includegraphics[width=7cm]{b_l_inception_fe}
+    \caption{Kostnaden vid varje epoch för balkonger med feature extraction}
+    \label{fig:b_l_1}
+  \end{figure}
+  
+  \begin{figure}[h]
+    \includegraphics[width=7cm]{b_a_resnet_fe}
+    \includegraphics[width=7cm]{b_a_alexnet_fe}
+    \includegraphics[width=7cm]{b_a_vgg_fe}
+    \includegraphics[width=7cm]{b_a_densenet_fe}
+    \includegraphics[width=7cm]{b_a_inception_fe}
+    \caption{Träffsäkerhet för balkonger med feature extraction}
+    \label{fig:b_a_1}
+  \end{figure}
+  
+  \begin{figure}[h]
+    \includegraphics[width=7cm]{b_l_resnet_fine}
+    \includegraphics[width=7cm]{b_l_alexnet_fine}
+    \includegraphics[width=7cm]{b_l_vgg_fine}
+    \includegraphics[width=7cm]{b_l_densenet_fine}
+    \includegraphics[width=7cm]{b_l_inception_fine}
+    \caption{Kostnaden vid varje epoch för balkonger med finetuning}
+    \label{fig:b_l_2}
+  \end{figure}
+  
+  \begin{figure}[h]
+    \includegraphics[width=7cm]{b_a_resnet_fine}
+    \includegraphics[width=7cm]{b_a_alexnet_fine}
+    \includegraphics[width=7cm]{b_a_vgg_fine}
+    \includegraphics[width=7cm]{b_a_densenet_fine}
+    \includegraphics[width=7cm]{b_a_inception_fine}
+    \caption{Träffsäkerhet för balkonger med finetuning}
+    \label{fig:b_a_2}
+  \end{figure}
+
+  \begin{figure}[h]
+    \includegraphics[width=7cm]{f_l_resnet_fe}
+    \includegraphics[width=7cm]{f_l_alexnet_fe}
+    \includegraphics[width=7cm]{f_l_vgg_fe}
+    \includegraphics[width=7cm]{f_l_densenet_fe}
+    \includegraphics[width=7cm]{f_l_inception_fe}
+    \caption{Kostnaden vid varje epoch för eldstäder med feature extraction}
+    \label{fig:f_l_1}
+  \end{figure}
+  
+  \begin{figure}[h]
+    \includegraphics[width=7cm]{f_a_resnet_fe}
+    \includegraphics[width=7cm]{f_a_alexnet_fe}
+    \includegraphics[width=7cm]{f_a_vgg_fe}
+    \includegraphics[width=7cm]{f_a_densenet_fe}
+    \includegraphics[width=7cm]{f_a_inception_fe}
+    \caption{Träffsäkerhet för eldstäder med feature extraction}
+    \label{fig:f_a_1}
+  \end{figure}
+
+  \begin{figure}[h]
+    \includegraphics[width=7cm]{f_l_resnet_fine}
+    \includegraphics[width=7cm]{f_l_alexnet_fine}
+    \includegraphics[width=7cm]{f_l_vgg_fine}
+    \includegraphics[width=7cm]{f_l_densenet_fine}
+    \includegraphics[width=7cm]{f_l_inception_fine}
+    \caption{Kostnaden vid varje epoch för eldstäder med finetuning}
+    \label{fig:f_l_2}
+  \end{figure}
+
+  \begin{figure}[h]
+    \includegraphics[width=7cm]{f_a_resnet_fine}
+    \includegraphics[width=7cm]{f_a_alexnet_fine}
+    \includegraphics[width=7cm]{f_a_vgg_fine}
+    \includegraphics[width=7cm]{f_a_densenet_fine}
+    \includegraphics[width=7cm]{f_a_inception_fine}
+    \caption{Träffsäkerhet för eldstäder med finetuning}
+    \label{fig:f_a_2}
+  \end{figure}
+  
+  \begin{figure}[h]
+    \includegraphics[width=7cm]{r_l_resnet_fe}
+    \includegraphics[width=7cm]{r_l_alexnet_fe}
+    \includegraphics[width=7cm]{r_l_vgg_fe}
+    \includegraphics[width=7cm]{r_l_densenet_fe}
+    \includegraphics[width=7cm]{r_l_inception_fe}
+    \caption{Kostnaden vid varje epoch för rum med feature extraction}
+    \label{fig:r_l_1}
+  \end{figure}
+  
+  \begin{figure}[h]
+    \includegraphics[width=7cm]{r_a_resnet_fe}
+    \includegraphics[width=7cm]{r_a_alexnet_fe}
+    \includegraphics[width=7cm]{r_a_vgg_fe}
+    \includegraphics[width=7cm]{r_a_densenet_fe}
+    \includegraphics[width=7cm]{r_a_inception_fe}
+    \caption{Träffsäkerhet för rum med feature extraction}
+    \label{fig:r_a_1}
+  \end{figure}
+  
+  \begin{figure}[h]
+    \includegraphics[width=7cm]{r_l_resnet_fine}
+    \includegraphics[width=7cm]{r_l_alexnet_fine}
+    \includegraphics[width=7cm]{r_l_vgg_fine}
+    \includegraphics[width=7cm]{r_l_densenet_fine}
+    \includegraphics[width=7cm]{r_l_inception_fine}
+    \caption{Kostnaden vid varje epoch för rum med finetuning}
+    \label{fig:r_l_2}
+  \end{figure}
+  
+  \begin{figure}[h]
+    \includegraphics[width=7cm]{r_a_resnet_fine}
+    \includegraphics[width=7cm]{r_a_alexnet_fine}
+    \includegraphics[width=7cm]{r_a_vgg_fine}
+    \includegraphics[width=7cm]{r_a_densenet_fine}
+    \includegraphics[width=7cm]{r_a_inception_fine}
+    \caption{Träffsäkerhet för rum med finetuning}
+    \label{fig:r_a_2}
+  \end{figure}
 
 \tailmatter
 \end{document}
