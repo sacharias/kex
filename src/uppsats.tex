@@ -33,7 +33,21 @@
 
 \begin{otherlanguage}{swedish}
   \begin{abstract}
-    Svenskt sammanfattning
+    Varje minut görs 2000 sökningar på sveriges största mäklarsite som har 20 000 bostadsrätter till salu bara i Stockholm.
+    Detta ställer höga krav på sökfunktionen för att ge användarna en chans att hitta sin drömbostad. 
+    Idag finns det möjlighet att filtrera på attribut såsom ”antal rum”, ”boarea”, ”pris” och ”område” men inte på attribut som ”balkong” och ”eldstad”.
+
+    För att inte behöva kategorisera objekt manuellt för attribut såsom ”balkong” och ”eldstad” finns det möjlighet att använda sig av mäklarbilder samt djupa neurala nätverk för att klassifisera objekten automatiskt.
+    Denna uppsats syftar till att utreda om det med hög sannolikhet går att klassifisera mäklarbilder efter ”balkong”, ”eldstad” samt ”typ av rum” med hjälp av djupa neurala nätverk.
+    
+    För att undersöka detta på ett utförligt sätt jämfördes olika arkitekturer med varanadra samt feature extraction mot finetuning.
+    Testerna visade att balkong-modellen med 98,1\% sannolikhet kan avgöra om det finns en balkong på någon av bilderna eller inte.
+    För eldstäder nåddes ett maximum på 85,5\% vilket är vesäntligt sämre än för balkonger.
+    Under sista klassifiseringen, den för rum, nåddes ett resultat på 97,9\%.
+
+    Sammanfattningsvis påvisar detta att det är fullt möjligt att använda djupa neurala nätverk för att klassifisera mäklarbilder. 
+    
+
   \end{abstract}
 \end{otherlanguage}
   
@@ -497,6 +511,8 @@ Vi kan se att vid klassificering av balkonger så presterade samtliga arkitektur
 Klassificering av eldstäder var svårare än av balkonger. Detta beror nog huvudsakligen på att foton på balkonger skiljer sig till en stor del från övriga bilder från mäklarannonser, då de är fotade utomhus och innehåller himmel och är ljusare. Medan foton på eldstäder påminner mer om övriga bilder i annonserna. Då träningen av eldstäder skedde med en mindre datamängd, 478 och 256 bilder mot datamängden i balkonger 697 och 608 bilder, så kan även det ha försvårat problemet ytterligare. 
 
 Vid alla lager frysta (feature extraction) så uppnådde arkitekturerna ResNet och Alexnet högst, med en noggrannhet på 80,50\%. Vi kan dock se att samtliga modeller hade stora problem med en varierande noggrannhet mellan träningsepokerna. [HÄR ÄR DET FEL någonstans]
+
+\section{Klassificering av rum}
 
 \section{Begränsningar}
 
