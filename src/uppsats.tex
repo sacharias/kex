@@ -70,7 +70,7 @@ Detta går att göra med hjälp av maskininlärning och djupa neurala nätverk.
 Sättet som detta görs på är att man tränar ett antal bilder som innehåller det givna attributet och ett antal som inte innehåller attributet.
 Modellen tränas sedan med hjälpt av ett djupt neuralt nätverk. 
 Efter varje träning så testas modellen för att mäta hur många träningar som krävs för bästa resultat.
-När modellen är färdigtränad kan man använda denna genom att skicka in en bild som input och modellen berättar om bilden innhåller attributet eller inte.
+När modellen är färdigtränad kan man använda denna genom att skicka in en bild som input och modellen berättar om bilden innehåller det givna attributet eller inte.
 
 \section{Syfte}
 Syftet med denna studie är att titta på hur olika maskininlärningsmetoder kan användas för att hitta relevanta nyckelord till bilder på lägenhetsannonser. 
@@ -271,22 +271,34 @@ Hur vi gått tillväga. Vilka dataset, hur implementation gått till (verktyg, k
 Hur evalueringen har gått till (traning, test, validation set).
 
 \chapter{Resultat}
-Prestandan av de olika modellerna kommer presenteras här.
+Här presenteras prestandan per modell och attribut.
 
+Resultatet består av frya figurer per modell. 
+Varje figur innehåller i sin tur 5 olika grafer, en för varje arkitektur.
+De första två figurerna visar hur kostandsfunktionen och nogrannheten beter sig för varje epoch där alla lager utom det sista är fruset (Feature Extraction).
+De två senare figurerna visar hur kostandsfunktionen och nogrannheten beter sig för varje epoch där inget lager är fruset (Finetuning).
+I varje graf jämförs valideringsdatan mot träningsdatan.
+
+Med grund i graferna som beskrivs ovan finns en tabell som visar prestanda samt hur lång tid det tog att träna modellen.
 
 \section{Balkonger}
-Nedan presenteras resultatet av den binära klassificeringen av balkonger i mäklarbilder. 
-Resultatet består av två grafer per modell, där den ena visar hur kostnaden från kostandsfunktionen beter sig för varje epoch och där den andra visar hur nogrannheten förändras för varje epoch.
-Graferna visar detta både för träningsdata och valideringsdata.
-Det finns även en sammanställning av den högst uppnådda noggrannheten och hur lång tid modellerna tog att träna upp. 
-Vi kommer också att jämföra resultatet när alla lager förutom det sista är fruset (Feature Extraction) med när inget lager är fruset.
+Nedan presenteras resultatet av den binära klassificeringen av balkonger i mäklarbilder.
 
 
 \subsection{Feature extraction}
-Vi kan se kostnaden för både tränings och valideringsdatan i figur \ref{fig:b_l_1} för varje epoch. Vi kan även se i figur \ref{fig:b_a_1} hur träffsäkerheten för de olika modeller var på balkonger.
-\restylefloat{table}
+Figur \ref{fig:b_l_1} visar hur kostnaden för både tränings och valideringsdatan förändras efter varje epoch. 
+I de flesta grafer faller kostnadsfunktionen vesäntligt under de fem första epochsen och stabiliseras därefter.
+Den som sticker ut är alexnet som är mer ojämn.
 
-\begin{table}[!htbp]
+
+I figur \ref{fig:b_a_1} går det att se hur träffsäkerheten förändras efter varje epoch.
+I samtliga grafer utom Alexnet blir träffsäkerhetskruvan relativt stabil efter fyra epochs.
+Alexnet är däremot mer volatil men är trots detta inte den modell som presterar sämst.
+
+
+
+\restylefloat{table}
+\begin{table}[h]
   \centering
   \begin{tabular}{|l|r|r|}
     Modell & Tid & Max. noggrannhet \\ 
@@ -298,13 +310,21 @@ Vi kan se kostnaden för både tränings och valideringsdatan i figur \ref{fig:b
     Inception V3 & 9m 04s & 95.80 \\
   \end{tabular}
   \caption{Sammanställning av feature extraction för balkonger}
+  \label{fig:sam_1}
+  
 \end{table}
 \restylefloat{table}
 
-I tabell 4.1 står det bla bla bla
+Tabell \ref{fig:sam_1} visar att samtliga arkitekturer presterar ungefär lika bra på testadatan.
+Däremot är det väldigt olika hur lång tid det tar att träna modellen. 
+Inception V3 tar tillexempel tre gånger längre tid att träna jämfört med Alexnet.
 
 \subsection{Finetuning}
-Vi kan se hur kostnadsfunktionen såg ut för varje epoch i figur \ref{fig:b_l_2} och hur träffsäkerheten var vid finetuning i figur \ref{fig:b_a_2}
+Kostnadsfunktionerna för de olika arkitekturerna visas i figur \ref{fig:b_l_2} och träffsäkerheten i figur \ref{fig:b_a_2}. 
+
+Dessa funktioner beter sig på ett liknande sätt som de gjorde i feature extraction, med en inledningsvis skarp kurva som planar ut efter 3-4 epochs.
+
+
 
 \begin{table}[!htbp]
   \centering
@@ -317,15 +337,33 @@ Vi kan se hur kostnadsfunktionen såg ut för varje epoch i figur \ref{fig:b_l_2
     Densenet     & 13m 55s & 97.70 \\
     Inception V3 & 21m 54s & 98.09 \\
   \end{tabular}
+  
   \caption{Sammanställning av finetuning för balkonger}
+  \label{fig:sam_2}
+  
 \end{table}
 
 
+Tabell \ref{fig:sam_2} visar att den bästa modellen är Inception V3 har en träffsäkerhet på 98\%. 
+Denna tar dock betydligt längre tid att träna än övriga arkitekturer. 
+Största skillnaden mellan arkitekturerna är ungefär tre procentenheter, precis som i feature extraction.
+
+Även i denna körning presterar Alexnet sämst, men tar samtidigt betydligt mindre tid att träna än övriga arkitekturer.
+
 
 \section{Eldstäder}
+Nedan presenteras resultatet av den binära klassificeringen av eldstäder i mäklarbilder.
+
 
 \subsection{Feature extraction}
-Vi kan se kostnaden för båda tränings och valideringsdatan i figur \ref{fig:f_l_1} för varje epoch. Vi kan även se i figur \ref{fig:f_a_1} hur träffsäkerheten för de olika modeller var på eldstäder.
+Kostnadsfunktionen för tränings och valideringsdata finns i figur \ref{fig:f_l_1} och träffsäkerheten i figur \ref{fig:f_a_1}.
+I dessa figurer visas det på samma sätt som för balkonger olika grafer för olika arkitekturer.
+
+Kostnadsgraferna i figur \ref{fig:f_l_1} rör sig samtliga grafer utom Inception V3 rör sig kurvorna kraftigt upp och ner för varje epoch. 
+Inception V3 har däremot en mer stabil kurva. 
+Detta återspeglar sig dock inte i träffsäkerhetsgraferna i figur \ref{fig:f_a_1} där Inception V3 likt övriga kurvor är volatilt.
+
+I träffsäkerhetskurvorna tar det i samtliga fall utom Alexnet runt 25 epochs innan maximum nås, medan alexnet endast behöver 15 epochs för att nå sitt maximum.
 
 \restylefloat{table}
 
@@ -341,15 +379,23 @@ Vi kan se kostnaden för båda tränings och valideringsdatan i figur \ref{fig:f
     Inception V3 & 05m 15s & 79.24 \\
   \end{tabular}
   \caption{Sammanställning av feature extraction för eldstäder}
+  \label{fig:sam_3}
 \end{table}
-
 \restylefloat{table}
 
 
-\subsection{Finetuning}
-Vi kan se hur kostnadsfunktionen såg ut för varje epoch i figur \ref{fig:f_l_2} och hur träffsäkerheten var vid finetuning i figur \ref{fig:f_a_2}
+Tabell \ref{fig:sam_3} visar att alexnet, den klart sämsta arkitekturen när balkong-modeller tränades , här är delad förstaplats i träffsäkerhet och går snabbast att träna.
+Samtidigt visar det sig att densenet som tidigare var en av de bättre arkitekturerna nu har det klart lägsta resultatet.
 
-\begin{table}
+\subsection{Finetuning}
+Graferna för klassifiseringen av eldstäder med finetuning visas i figur \ref{fig:f_l_2} och \ref{fig:f_a_2} där den första visar kostnadsfunktionen och den senare visar träffsäkerheten.
+
+Kostnadsfunktionen för valideringsdata blir inte särskilt mycket mindre än när den startade, utan ligger kvar på samma nivå eller ökar i samtliga arkitekturer.
+Detta skiljer sig starkt mot kostnadsfunktionerna i figur \ref{fig:f_l_1} (Feature extraction för eldstäder) där kostnaden i de första epochsen snabbt blir lägre. 
+
+
+\restylefloat{table}
+\begin{table}[!htbp]
   \centering
   \begin{tabular}{|l|r|r|}
     Modell & Tid & Max. noggrannhet \\ 
@@ -361,13 +407,30 @@ Vi kan se hur kostnadsfunktionen såg ut för varje epoch i figur \ref{fig:f_l_2
     Inception V3 & 12m 54s & 83.64 \\
   \end{tabular}
   \caption{Sammanställning av finetuning för eldstäder}
+  \label{fig:sam_4}  
 \end{table}
+\restylefloat{table}
 
+Tabell \ref{fig:sam_4} visar att det är relativt stor spridning på resultaten för de olika arkitekturerna.
+Mellan den arkitektur som presterar bäst (Densenet) och den som presterar sämst (Alexnet) är det åtta procentenheter.
+Finetuning har ett högre maximum i träffsäkerhet än feature extraction, dock presterade arkitekturerna resnet och alexnet bättre under feature extraction.
 
 \section{Rum}
+Nedan presenteras resultatet av klassificering av rum i mäklarbilder. 
+Rummen som klassifiseras är badrum, sovrum och kök.
+
 
 \subsection{Feature extraction}
-Vi kan se kostnaden för båda tränings och valideringsdatan i figur \ref{fig:r_l_1} för varje epoch. Vi kan även se i figur \ref{fig:r_a_1} hur träffsäkerheten för de olika modeller var på rum.
+Vi kan se kostnaden för både tränings och valideringsdatan i figur \ref{fig:r_l_1} för varje epoch. 
+Vi kan även  i figur \ref{fig:r_a_1} se hur träffsäkerheten för de olika modeller var på rum.
+
+Kostnadsfunktionen för valideringsdata är i Alexnet volatil. 
+I övriga kostnadsfunktioner rör sig kurvan snabbt nedåt för att sedan plana ut.
+
+Träffsäkerhetsgraferna för resnet, densnet och inception v3 rör sig på motsatt sätt mot kostnadsgraferna, då kurvan snabbt rör sig uppåt under de första epochsen för att sedan plana ut.
+Alexnet graf rör sig också på ett motsatt sätt som sin kostnadsfunktion. 
+VGG är däremot anmärkningsvärt, då den redan under den första epochen nått sitt maximum för att sedan dala något.
+
 
 \restylefloat{table}
 \begin{table}[!htbp]
@@ -382,15 +445,25 @@ Vi kan se kostnaden för båda tränings och valideringsdatan i figur \ref{fig:r
     inception V3 & 06m 28s & 93.75 \\
   \end{tabular}
   \caption{Sammanställning av feature extraction för rum}
+  \label{fig:sam_5}    
 \end{table}
 \restylefloat{table}
 
-
+Enligt tabell \ref{fig:sam_5} är träffsäkerheten för samtliga grafer över 93\%.
+Den arkitektur som utmärker sig är densenet då den presterar ungefär tre procentenheter bättre än alla andra.
 
 \subsection{Finetuning}
-Vi kan se hur kostnadsfunktionen såg ut för varje epoch i figur \ref{fig:r_l_2} och hur träffsäkerheten var vid finetuning i figur \ref{fig:r_a_2}
+Kostnadsfunktionen för klassifisering av rum i finetuning visas i figur \ref{fig:r_l_2} och träffsäkerheten i figur \ref{fig:r_a_2}.
 
-\begin{table}
+Kostnadsgraferna är relativt lika kostnadsgraferna för feature extraction då samtliga kurvor utom alexnet rör sig snabbt nedåt till en början för att sedan plana ut.
+Alexnet är även här volatilt.
+
+Träffsäkerhetsgraferna resnet, vgg och inception rör börjar på en relativt hög nivå efter den första epochen för att under senare epochs endast öka lite.
+Densenet däremot ökar markant under de första epochsen för att sedan plana ut. 
+Alexnet rör sig fram och tillbaka runt 90\%. 
+
+\restylefloat{table}
+\begin{table}[!htbp]
   \centering
   \begin{tabular}{|l|r|r|}
     Modell & Tid & Max. noggrannhet \\ 
@@ -402,8 +475,15 @@ Vi kan se hur kostnadsfunktionen såg ut för varje epoch i figur \ref{fig:r_l_2
     Inception V3 & 16m 10s & 97.39 \\
   \end{tabular}
   \caption{Sammanställning av finetuning för rum}
+  \label{fig:sam_6}    
 \end{table}
+\restylefloat{table}
 
+Enligt tabell \ref{fig:sam_5} presterar densenet och VGG-11 bäst och Alexnet sämst.
+Skillnaden mellan den bästa arkitekturen och den sämsta är ungefär tre procentenheter.
+
+Finetuning har ett något högre maximum än feature extraction.
+I båda fall är det arkitekturen Densenet som presterar bäst, dock tar det mer än dubbelt så lång tid att träna med finetuning och skillnaden är ungefär en procentenhet.
 
 
 \chapter{Diskussion}
