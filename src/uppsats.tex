@@ -244,8 +244,8 @@ Vid varje experiment ersattes det sista FC-lagret på samtliga modeller, för at
 
 Experimentet använde sig av dataförstärkning med inbyggda metoder i PyTorch. Indata vid träning beskärs slumpmässigt enligt indataspecifikationerna för varje arkitektur, flippades horisontellt slumpmässigt och normaliserades sedan enligt samma värden som modellerna blivit förtränade på. Indata vid validering beskärs för korrekta mått med centerfokusering och normaliserades enligt samma värden.
 
-Varje modell tränades med alla lager frysta utan det tillagda FC-lagret (feature extraction) och med alla lager icke-frysta (finetuning). Modellerna tränades för 30 epoker, då förexperiment visade att förtränade modeller konvergerar långt innan detta. Om vi såg tendenser under experimentet att detta inte sker, så tillåter vi att fler epoker körs. Batchstorleken är 32. Som kostnadsfunktion används CrossEntropyLoss och som optimeringsalgoritm används stochastic gradient descent med momentum. Parametern för momentum har ett värde på 0.9 och båda funktionerna är från PyTorchs standardbibliotek.
-
+Varje modell tränades med alla lager frysta utan det tillagda FC-lagret (feature extraction) och med alla lager icke-frysta (finetuning). Modellerna tränades för 30 epoker, då förexperiment visade att förtränade modeller konvergerar långt innan detta. Om vi såg tendenser under experimentet att detta inte sker, så tillåter vi att fler epoker körs. Batchstorleken är 32. Som kostnadsfunktion används CrossEntropyLoss och som optimeringsalgoritm används stochastic gradient descent med momentum. Inlärningstakten var 0.001 och momentum 0.9. Båda funktionerna är från PyTorch standardbibliotek.
+s
 \section{Mjukvara}
 Alla experiment utfördes i en JupyterLab-miljö på plattformen Floydhub \parencite{floydhub} med Python 3.6 och PyTorch 1.0.0. För bearbetning av datan samt presentering av resultat användes även biblioteken numpy och matplotlib.
 
@@ -472,18 +472,46 @@ I båda fall är det arkitekturen Densenet som presterar bäst, dock tar det mer
 
 
 \chapter{Diskussion}
-Diskutera resultatet och hur olika delar kan ha påverkat eller påverkade. Diskutera eventuell framtida forskning. Begränsningar med resultatet. Etiska aspekter. Hållbarhet.
+% Vad vi kom fram till i resultat, per kategori. Tillämpning
+% Förbättringar som hade kunnat göras med begränsningar.
+% framtida forskning: både för just detta (mer bilder, fler attribut som går emot mäklare, demokratisera måklarbranschen, asymmetrisk information), mer kunskap om transfer learning: Ge ökad förståelse som kan användas i ett annat domain (NLP, audio), andra bildkategoriseringar. andra dataset som inte består av svenska lägenheter.
+% Även diskutera om man hade kunnat använda annan optimering, inlärningstakt, etc. 
+% etiska aspekter
+% Hållbarhet
 
-\section{Fortsatt forskning}
-Vid värdering så är det också intressant att få ut attribut, så kan man räkna med det i värderingskalkylen.
+\section{Klassificering av balkonger}
+Klassificering av bilder på balkonger uppnådde hög noggrannhet på valideringsdatan. Vid alla lager frysta (feature extractor) så konvergerade alla modeller förutom Alexnet efter några få epoker, vilket visar att någon ytterligare träning inte hade ökat modellernas prestanda. Alexnet volatilitet beror antaligen på dess enklare modellarkitektur. Högsta noggrannheten vid feature extraction var 96,94\% för Densenet, men då det endast skiljde 2.67 procentenheter mellan den sämsta och den bästa modellen, så kan inga slutsatser att Densenet alltid kommer vara bäst att dras.
+
+Då alla lager var träningsbara (finetuning) så konvergade även samtliga modeller förutom Alexnet efter bara några få epoker. Det krävdes dock flera jämfört med vid frysta lager. Vid finetuning kan man även se att det uppkommer problem med överanpassning då träningsdatan har en högre noggrannhet än valideringsdatan vid de sista epokerna. Detta visar även att fler epoker inte hade påverkat modellernas prestanda positivt. Den högsta noggrannheten uppnåde modellen Inception v3 med en noggrannhet på 98,09\%. Även har var skillnaden mellan den sämsta och bästa modellen liten, bara 2,68 procentenheter.
+
+Vi kan se att vid klassificering av balkonger så presterade samtliga arkitekturer bra, både med lager frysta och icke frysta. Bäst resultat fick man dock vid en mer avancerade arkitektur som inception med alla lager träningsbara. Den främsta nackdelen med de mer avancerade arkitekturerna är att träningstiden blir mycket längre. Beroende på datamängd så behöver det inte vara ett problem i praktiken. Modellens högsta prestanda visar att denna skulle kunna vara praktiskt tillämpningsbar utan modifikation.
+
+\section{Klassificering av eldstäder}
+% Resnet       & 02m 06s & 80.50 \\
+% Alexnet      & 01m 55s & 80.50 \\
+% 6.91 procentenheter
+
+% Densenet     & 07m 55s & 85.53 \\
+% 8.18 procentenheter
+
+Klassificering av eldstäder var svårare än av balkonger. Detta beror nog huvudsakligen på att foton på balkonger skiljer sig till en stor del från övriga bilder från mäklarannonser, då de är fotade utomhus och innehåller himmel och är ljusare. Medan foton på eldstäder påminner mer om övriga bilder i annonserna. Då träningen av eldstäder skedde med en mindre datamängd, 478 och 256 bilder mot datamängden i balkonger 697 och 608 bilder, så kan även det ha försvårat problemet ytterligare. 
+
+Vid alla lager frysta (feature extraction) så uppnådde arkitekturerna ResNet och Alexnet högst, med en noggrannhet på 80,50\%. Vi kan dock se att samtliga modeller hade stora problem med en varierande noggrannhet mellan träningsepokerna. [HÄR ÄR DET FEL någonstans]
+
+\section{Begränsningar}
+
+\section{Framtida forskning}
+
+\section{Etiska aspekter och Hållbarhet}
+
+
+
 
 \chapter{Slutsats}  
 Slutsats av vad vi kom fram till.
 
 \printbibliography[heading=bibintoc]
 \appendix
-  \chapter{Appendix A}
-  
   \begin{figure}[h]
     \includegraphics[width=7cm]{b_l_resnet_fe}
     \includegraphics[width=7cm]{b_l_alexnet_fe}
