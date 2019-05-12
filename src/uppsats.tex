@@ -42,19 +42,18 @@
 \mainmatter
 
 \chapter{Introduktion}
-Koppla första mening till titel. söka på speicfika saker i en annons. mysig inledning. Deeplearning bildanalys - google grejer. Ai och hur automatisering vuxit fram. Lite fakta på hur viktig sökfunktioner är för att hitta bostäder? Hur många sökningar /tidsenehet. Om folk enklare hittar bostad på ett mer effektivt sätt så effektiviseras hela köp och sälj processen och därmed hela marknaden.
 
-Just nu (april 2019) finns över 20 000 bostadsrätter (https://www.hemnet.se/statistik) till salu på Sveriges största mäklarsite (https://www.hemnet.se/om), där nästan hälften av dessa ligger i Stockholm. 
-Dit kommer 2,8 miljoner (https://www.hemnet.se/om) unika besökare varje vecka och gör tillsammans över 2000 sökningar i minuten.
+Just nu finns över 20 000 bostadsrätter \parencite{hemnetstats} till salu på Sveriges största mäklarsite \parencite{hemnetom}, där nästan hälften av dessa ligger i Stockholm. 
+Dit kommer 2,8 miljoner unika besökare varje vecka och gör tillsammans över 2000 sökningar i minuten \parencite{hemnetom}.
 Detta ställer höga krav på filtreringsfunktionerna för att potentiella köpare snabbt ska kunna hitta sin drömbostad.
 Idag erbjuds redan filtreringsfunktionerna ”antal rum”, ”boarea”, ”pris” samt ”område”. 
-Det finns också en fritextsöka där man kan söka på vad mäklaren har skrivit i texten.
+Det finns också en fritextsök där man kan söka på vad mäklaren skrivit i texten.
 Exempel på sökord är ”balkong”, ”kakelugn” och ”sjöutsikt”. 
 
 Problemet med att söka i mäklartexter är att det tvingar mäklaren att i texten nämna samtliga attribut som han eller hon vill göra sökbara. 
 Detta gör att vissa attribut kan bli utelämnade vilket i sin tur gör fritextrutan sämre.
 
-Exempelvis är det ofta självklart om det finns en balkong eller kakelugn på mäklarbilderna men det är inte alltid mäklaren väljer att skriva detta i den löpande texten.
+Exempelvis går det ofta att se på mäklarbilderna om det finns en balkong eller kakelugn i objektet, men det är inte alltid mäklaren väljer att skriva detta i den löpande texten.
 Det hade därför varit intressant att utifrån mäklarbilderna automatiskt generera ett sökindex där varje bild knyts till ett antal attribut.
 Dessa attribut skulle sedan kunna användas för att lägga till filtreringsalternativ i sökfunktionen och därmed skapa en bättre användarupplevelse.
 
@@ -69,7 +68,7 @@ Detta går att göra med hjälp av maskininlärning och djupa neurala nätverk.
 Sättet som detta görs på är att man tränar ett antal bilder som innehåller det givna attributet och ett antal som inte innehåller attributet.
 Modellen tränas sedan med hjälpt av ett djupt neuralt nätverk. 
 Efter varje träning så testas modellen för att mäta hur många träningar som krävs för bästa resultat.
-När modellen är färdigtränad kan man använda denna genom att skicka in en bild som input och modellen berättar om bilden innhåller attributet eller inte.
+När modellen är färdigtränad kan man använda denna genom att skicka in en bild som input och modellen berättar om bilden innehåller det givna attributet eller inte.
 
 \section{Syfte}
 Syftet med denna studie är att titta på hur olika maskininlärningsmetoder kan användas för att hitta relevanta nyckelord till bilder på lägenhetsannonser. 
@@ -80,19 +79,19 @@ Går det med nuvarande verktyg inom maskininlärning hitta attribut i bilder fr�
 \section{Avgränsningar}
 För att sätta en rimlig avgränsningar på denna uppsats kommer tre olika sorters attribut undersökas och jämföras med tre olika sorters deeplearningmodeller. 
 Attributen som kommer– användas är ”Balkong”, ”Kakelugn” samt ”Typ av rum” (Kök, badrum eller sovrum) och deelearningmodellerna som kommer användas är ”keras”, ”smartAI”, samt ”blabla”. 
-Anledningen till att flera attribut eller flera sorters modeller inte valdes är att det är resurskrävande att både samla in och sortera testdata samt att implementera modellerna. 
+Anledningen till att flera attribut eller flera sorters modeller inte valdes är att det är resurskrävande att samla in och sortera testdata samt att implementera modellerna. 
 Anledningen till att färre inte valdes var för att få spridning på attributen och modellerna, för kunna svara på om klassifiseringen fungerar i allmänhet och inte bara i enstaka testfall. 
 En annan avgräsning som gjort är att mäklarbilderna som används endast kommer från bostadsrätter, då det kan skilja sig ganska mycket på hur villor och bostadsrätter ser ut.
 
 \chapter{Bakgrund}
 
 \section{Maskininlärning}
-Maskininlärning är ett sätt att programmera datorer så de optimerar ett problem med hjälp av exempeldata eller tidigare erfarenhet \parencite{alpaydin2009introduction}. Maskininlärning är ett aktivt forskningsfält inom datalogi. Lärandeprocessen för en maskininlärningsalgoritm kan se ut på följande sätt: Ett datorprogram har som uppgift att lära sig en förutbestämd uppgift T, hur väl den gör detta, algoritmens prestanda, är måttet P. Till sin hjälp har datorprogrammet tidigare erfarenhet E. Om prestandan P blir högre då vi tillhör erfarenheten E till programmet, då lär sig programmet.
+Maskininlärning är ett sätt att programmera datorer så de optimerar ett problem med hjälp av exempeldata eller tidigare erfarenhet \parencite{alpaydin2009introduction}. Maskininlärning är ett aktivt forskningsfält inom datalogi. Lärandeprocessen för en maskininlärningsalgoritm kan se ut på följande sätt: Ett datorprogram har som uppgift att lära sig en förutbestämd uppgift T, hur väl den gör detta, algoritmens prestanda, är måttet P. Till sin hjälp har datorprogrammet tidigare erfarenhet E. Om prestandan P blir högre då vi tillför erfarenheten E till programmet, då lär sig programmet.
 
-Maskininlärningsmodeller kan delas in i två kategorier, övervakat lärande (eng. supervised learning) och oövervakat lärande (eng. unsupervised learning) \parencite{murphy2012machine}. Vid övervakat lärande så är erfarenheten E redan kategoriserad och uppmärkt för uppgiften T, vid oövervakat lärande så är den inte det. Ett exempel är en maskininlärningsmodell som har som uppgift T att kategorisera bilder i vissa förutbestämda kategorier. Vid övervakat lärande kommer erfarenhet E bestå av bilder som redan är uppmärkta med rätt kategori. Modellen ska då med hjälp av erfarenheten kunna kategorisera ny data som inte är uppmärkt. 
+Maskininlärningsmodeller kan delas in i två kategorier, övervakat lärande (eng. supervised learning) och oövervakat lärande (eng. unsupervised learning) \parencite{murphy2012machine}. Vid övervakat lärande är erfarenheten E redan kategoriserad och uppmärkt för uppgiften T, vid oövervakat lärande så är den inte det. Ett exempel är en maskininlärningsmodell som har som uppgift T att kategorisera bilder i vissa förutbestämda kategorier. Vid övervakat lärande kommer erfarenhet E bestå av bilder som redan är uppmärkta med rätt kategori. Modellen ska då med hjälp av erfarenheten kunna kategorisera ny data som inte är uppmärkt. 
 
 \section{Artificella neurala nätverk}
-En samling algoritmer inom maskininlärning med många tillämpningsområden är artificella neurala nätverk (ANN). Enligt \textcite{Goodfellow-et-al-2016} så var från början ANN ett försök till att bygga en digital modell av det biologiska neuronsystemet. Forskningen inom områden avvek dock snabbt från att efterlikna den biologiska varianten och fokuserade istället på att öka prestandan på maskininlärningsproblem. De minsta byggstenarna i ANN, neuronen, fungerar fortfarande som dess biologiska variant. En neuron får signaler in och skickar sedan signaler ut via synapserna. Hur stark utsignal bör vara simuleras i en dator med hjälp av vikter (eng. weights), även kallat för parametrar. Varje neuron i nätverket har sina tillhörande vikter. När ett ANN tränas så görs detta genom att justera dessa vikter \parencite{Goodfellow-et-al-2016}. De viktade insignalerna bör även nå upp till en viss tröskel för att en utsignal ska skickas, detta simuleras i ANN med aktiveringsfunktioner. ANN är en acyklisk graf som består av dessa artificiella neuroner.
+En samling algoritmer inom maskininlärning med många tillämpningsområden är artificella neurala nätverk (ANN). Enligt \textcite{Goodfellow-et-al-2016} så var ANN från början ett försök till att bygga en digital modell av det biologiska neuronsystemet. Forskningen inom områden avvek dock snabbt från att efterlikna den biologiska varianten och fokuserade istället på att öka prestandan på maskininlärningsproblem. De minsta byggstenarna i ANN, neuronen, fungerar fortfarande som dess biologiska variant. En neuron får signaler in och skickar sedan signaler ut via synapserna. Hur stark utsignalen bör vara simuleras i en dator med hjälp av vikter (eng. weights), även kallat för parametrar. Varje neuron i nätverket har sina tillhörande vikter. När ett ANN tränas så görs detta genom att justera dessa vikter \parencite{Goodfellow-et-al-2016}. De viktade insignalerna bör även nå upp till en viss tröskel för att en utsignal ska skickas, detta simuleras i ANN med aktiveringsfunktioner. ANN är en acyklisk graf som består av dessa artificiella neuroner.
 
 \begin{figure}[h]
   \centering
@@ -127,7 +126,7 @@ En konvolutionslager består av en godtycklig mängd filter med träningsbara vi
 Aktiveringslagret (eng. activation layer) består av en aktiveringsfunktion. Denna funktion ska motsvara den tröskel som finns i biologiska neuroner för att trigga en utsignal. En av de vanligaste aktiveringsfunktionerna inom djupinlärning för bildkategorisering är Rectified Linear Units (ReLU) \parencite{krizhevsky2012imagenet}. Aktiveringsfunktionen appliceras elementvis och ReLU applicerar funktionen \begin{equation} f(x) = max(0,x) \end{equation} på varje element i indatan till lagret. Det betyder att varje element som är positivt är opåverkat och varje negativt värde får värdet noll. Storleken på datan blir oförändrad.
 
 \subsubsection{Föreningslager}
-Ett föreningslager (eng. pooling layer) applicerar en nedsampling (eng. downsampling) på indata \parencite{krizhevsky2012imagenet}. Detta sker längs de spatiala dimensionerna bredd och höjd. Vanligtvis sker detta för att minska antalet parametrar i nätverket och för att minska beräkningskrafen som behövs för att träna nätverket. Det är även en teknik för att undvika överanpassning (eng. overfitting). Det som främst används inom CNN är max pooling. Det är när ett förutbestämt område, till exempel 2 x 2 pixlar, sammanfattas genom att det högsta värdet av dessa fyra pixlar väljs ut. Max pooling med filter i storlek 2 x 2 och klivstorlek 2 är vanligt förekommande. Indata minskar då i storlek med 75\%.
+Ett föreningslager (eng. pooling layer) applicerar en nedsampling (eng. downsampling) på indata \parencite{krizhevsky2012imagenet}. Detta sker längs de spatiala dimensionerna bredd och höjd. Vanligtvis sker detta för att minska antalet parametrar i nätverket och för att minska beräkningskraften som behövs för att träna nätverket. Det är även en teknik för att undvika överanpassning (eng. overfitting). Det som främst används inom CNN är max pooling. Det är när ett förutbestämt område, till exempel 2 x 2 pixlar, sammanfattas genom att det högsta värdet av dessa fyra pixlar väljs ut. Max pooling med filter i storlek 2 x 2 och klivstorlek 2 är vanligt förekommande. Indata minskar då i storlek med 75\%.
 
 \subsubsection{FC-lager}
 Det lager som är vanligt förekommande i tradionella neurala nätverk är FC-lagret (eng. Fully-connected layer) \parencite{krizhevsky2012imagenet}. I detta lager har varje neuron en koppling till alla aktiveringar från det tidigare lagret. Dessa neuroner har tillhörande träningsbara vikter, som vanligtvis sparas i en matris \parencite{Goodfellow-et-al-2016}. Detta möjliggör även effektiva implementationer med matrismultiplikation. Storleken på utdata beror på storleken på viktmatrisen. I CNN är det vanligt förekommande att det sista lagret är ett FC-lager som byggs på det sättet att formen på utdata motsvarar antal kategorier modellen ska kunna kategorisera i. Ett exempel är att om en bild ska klassificeras bland tio klasser, så kan utdata från sista lagret ha formen 10 x 1.
@@ -140,16 +139,16 @@ Det har uppkommit vissa tekniker inom djupinlärning som inte är en del av arti
 \subsubsection{Batch-normalisering}
 Att träna djupa neurala nätverk är komplicerat då distributionen av varje lagers indatavärden förändras under träning \parencite{ioffe2015batch}. Detta leder till att träningen av nätverket tar längre tid, då vi behöver använda långsammare inlärningstakt. Det leder också till att viktinitieringen blir väldigt finkänslig. Enligt \textcite{ioffe2015batch} kallas detta fenomen för internal covariate shift och löses genom att normalisera indata till varje lager. Metoden bygger på att normaliseringen blir en del av arkitekturen och där en normalisering sker för varje mini-batch av vårt träningsdata. Denna typ av batch-normalisering tillåter oss att använda högre inlärningstakt och gör att initieringen av vikterna inte blir lika kritisk. Det fungerar även som regularisering (eng. regularization), vilket gör att andra tekniker för regularisering kan uteslutas.
 
-Batch-normalisering har visat sig vara extra viktigt för lyckad träning och för att större nätverk ska konvergera, nätverk som VGG19 \parencite{simon2016imagenet}. Det har även visat sig att den högre inlärningstakten, som batch-normalisering tillåter, leder till en högre slutlig noggrannhet än vad som annars hade varit möjlig \parencite{simon2016imagenet}. Tidigare experiment har visat att detta har fungerat både bland annat AlexNey och VGG19 \parencite{simon2016imagenet}.
+Batch-normalisering har visat sig vara extra viktigt för lyckad träning och för att större nätverk ska konvergera, nätverk som VGG19 \parencite{simon2016imagenet}. Det har även visat sig att den högre inlärningstakten, som batch-normalisering tillåter, leder till en högre slutlig noggrannhet än vad som annars hade varit möjligt \parencite{simon2016imagenet}. Tidigare experiment har visat att detta har fungerat både bland annat AlexNey och VGG19 \parencite{simon2016imagenet}.
 
 \subsubsection{Dataförstärkning}
-Djupa neurala nätverk behöver en stor mängd data för att lära sig effektivt. Insamlingen av denna data är oftast dyrt och tidskrävande. Dataförstärkning (eng. data augmentation) löser detta genom att öka datamängden artificiellt genom att göra förändringar på befintlig data \parencite{taylor2017improving}. Det har visat sig att generell dataförstärkning leder till ökad prestanda på de flesta CNN. En viktig del av dataförstärkningen är att indata fortfarande ska tillhöra samma klass som den tillhörde innan. Inom bildkategorisering så sker förändringen med geometriska och fotometriska transformationer. Geometriska transformationer ändrar geometrin i bilden med målet att vårt CNN ska vara oberoende av objektets position eller orientering. Dessa transformationer inkluderar att flippa, beskära, skala och rotera bilden. Fotometriska transformationer förändrar istället färgkanalerna och målet är att vårt CNN ska vara oförändligt till skillnader i belysning och färg. 
+Djupa neurala nätverk behöver en stor mängd data för att lära sig effektivt. Insamlingen av denna data är oftast dyrt och tidskrävande. Dataförstärkning (eng. data augmentation) löser detta genom att öka datamängden artificiellt genom att göra förändringar på befintlig data \parencite{taylor2017improving}. Det har visat sig att generell dataförstärkning leder till ökad prestanda på de flesta CNN. En viktig del av dataförstärkningen är att indata fortfarande ska tillhöra samma klass som den tillhörde innan. Inom bildkategorisering sker förändringen med geometriska och fotometriska transformationer. Geometriska transformationer ändrar geometrin i bilden med målet att vårt CNN ska vara oberoende av objektets position eller orientering. Dessa transformationer inkluderar att flippa, beskära, skala och rotera bilden. Fotometriska transformationer förändrar istället färgkanalerna och målet är att vårt CNN ska vara oförändligt till skillnader i belysning och färg. 
 
 \subsection{Arkitekturer}
 Här presenteras ett urval av de mest betydelsefulla arkitekturerna inom CNN för bildkategorisering. En tydlig trend är att CNN har fått fler lager, blivit djupare, med tiden. Från LeNet \parencite{lecun1998gradient} med fem lager, till VGG med 19 lager \parencite{simonyan2014very} och Residual Networks (ResNet) med över 100 lager \parencite{he2016deep}. Ett problem med detta är att viktig information i indata försvinner innan det hinner nå slutet av nätverket \parencite{huang2017densely}. Det har därför kommit arkitekturer som försöker lösa detta problem. ResNet löser det genom att förbikoppla vissa lager med identitetskopplingar. DenseNet skapar istället flera olika förbikopplingar inne i nätverket.
 
 \subsubsection{ResNet}
-ResNet är en arkitektur för CNN som består av konvolutionslager, föreningslager och FC-lager \parencite{he2016deep}. ResNet finns i olika varianter, från ResNet18 till ResNet152, och skillnaden är storleken på nätverket, där ResNet18 består av 18 lager. Efter utvecklingen av djupare CNN så nådde till slut ett tak för hur kraftfulla modellerna kunde vara. ResNet är en lösning på det här problemet som introducerar identity shortcut connections. Det betyder att det finns kopplingar som hoppar över vissa konvolutionslager, vilket betyder att om nätverket tycker att vissa lager är onödiga så kan den helt enkelt skippa dessa. Anledningen till namnet är att dessa kopplingar skickar vidare indentiteten av indatan till nästkommande lager. Dessa kopplingar leder till att nätverken kan göras hur stora som helst utan prestandaförlust, för modellen kan alltid använda indentiteten. Modeller med dessa residuala funktioner ska även vara enklare att optimera \parencite{he2016deep}. ResNet-modellen tar RGB-bilder i storleken 224 x 244 pixlar som indata och målet är att kategorisera bilden bland 1000 kategorier från ImageNet. ResNet18 består först av ett konvolutionslager och sedan ett max pooling-lager. Därefter kommer en stack med konvolutionslager där det även sker en nedsampling med föreningslager. De sista lagren består av ett föreningslager av typen average pooling, ett FC-lager med utdata 1 x 1000 och ett softmax-lager.
+ResNet är en arkitektur för CNN som består av konvolutionslager, föreningslager och FC-lager \parencite{he2016deep}. ResNet finns i olika varianter, från ResNet18 till ResNet152, och skillnaden är storleken på nätverket, där ResNet18 består av 18 lager. Efter utvecklingen av djupare CNN så nådde till slut ett tak för hur kraftfulla modellerna kunde vara. ResNet är en lösning på det här problemet som introducerar identity shortcut connections. Det betyder att det finns kopplingar som hoppar över vissa konvolutionslager, vilket betyder att om nätverket tycker att vissa lager är onödiga så kan den helt enkelt skippa dessa. Anledningen till namnet är att dessa kopplingar skickar vidare indentiteten av indatan till nästkommande lager. Dessa kopplingar leder till att nätverken kan göras oändligt stora utan prestandaförlust, för modellen kan alltid använda indentiteten. Modeller med dessa residuala funktioner ska även vara enklare att optimera \parencite{he2016deep}. ResNet-modellen tar RGB-bilder i storleken 224 x 244 pixlar som indata och målet är att kategorisera bilden bland 1000 kategorier från ImageNet. ResNet18 består först av ett konvolutionslager och sedan ett max pooling-lager. Därefter kommer en stack med konvolutionslager där det även sker en nedsampling med föreningslager. De sista lagren består av ett föreningslager av typen average pooling, ett FC-lager med utdata 1 x 1000 och ett softmax-lager.
 
 \subsubsection{Alexnet}
 Alexnet är en enklare variant av CNN, vann tävligen ILSVR 2012 och består av totalt åtta lager \parencite{krizhevsky2012imagenet}. De första fem lagrena är konvolutionslager, där vissa av dem även applicerar max pooling efteråt. De tre sista är FC-lager, där det sista har utdataformen 1 x 1000 för att motsvara klasserna i ImageNet. På detta sista FC-lager appliceras även softmax. Aktiveringsfunktionen i modellen är ReLU och indata består av RGB-bilder med storleken 224 x 244. Konvolutionslagren använder sig av filter i storlekarna 11 x 11, 5 x 5, 3 x 3. Nätverket tränades ursprunligen med SGD med momentum.
@@ -170,14 +169,14 @@ Inception-v2 är unikt då det består av två utdatalager vid träning \parenci
 \section{Transfer Learning}
 Enligt \cite{yosinski2014transferable} så har många djupa neurala nätverk som har tränats på naturliga bilder visat att de har en gemensam sak. Det är att i de första lagren så lär de sig egenskaper som motsvarar Gabor-filter och färgklickar. Gabor-filter är ett typ av filter som används för att beskriva textur. Det har även visat sig att hur vikterna i dessa första lager är beror inte på någon specifik datamängd eller uppgift utan är istället generell oberoende på datamängd. Dessa egenskaper behöver sedan formas från generella till specifika egenskaper för den specifika datamängden \parencite{yosinski2014transferable}. Detta sker i de sista lagren, men exakt vart det sker har inte studerats tillräckligt. De första lagrena kallas därför för generella och det sista för det specifika.
 
-Det intressanta med generella och specifika lager är att det blir möjligt att implementera transfer learning. I transfer learning så tränar vi först ett basnätverk på en bas-datamängd och en basuppgift för att sedan överföra de tränade vikterna till ett annat målnätverk som tränas med mål-datamängden och måluppgifen \parencite{yosinski2014transferable}. När måldatamängden är mycket mindre än basdatamängden så kan detta vara ett kraftfullt verktyg för att träna ett stort nätverk utan överanpassning. Vanligaste sättet är att träna ett basnätverk och sedan kopiera över dess n första lager till de n första lagren i målnätverket. De övriga lagren i målnätverket initieras slumpmässigt och tränas sedan för måluppgiften. Man kan välja att även träna de kopierade lagren när man tränar nätverket för måluppgiften. Det kallas för att finjustera (eng. finetuning) lagren till den nya uppgiften. Man kan även låta bli att träna de kopiera lagren utan istället bara träna det sista klassificeringslagret. Detta kallas för att frysa lagren och brukas kallas för feature extraction.
+Det intressanta med generella och specifika lager är att det blir möjligt att implementera transfer learning. I transfer learning så tränar vi först ett basnätverk på en bas-datamängd och en basuppgift för att sedan överföra de tränade vikterna till ett annat målnätverk som tränas med mål-datamängden och måluppgifen \parencite{yosinski2014transferable}. När måldatamängden är mycket mindre än basdatamängden så kan detta vara ett kraftfullt verktyg för att träna ett stort nätverk utan överanpassning. Vanligaste sättet är att träna ett basnätverk och sedan kopiera över dess N första lager till de N första lagren i målnätverket. De övriga lagren i målnätverket initieras slumpmässigt och tränas sedan för måluppgiften. Man kan välja att även träna de kopierade lagren när man tränar nätverket för måluppgiften. Det kallas för att finjustera (eng. finetuning) lagren till den nya uppgiften. Man kan även låta bli att träna de kopierade lagren utan istället bara träna det sista klassificeringslagret. Detta kallas för att frysa lagren och brukas kallas för feature extraction.
 
 Om det är bäst att träna alla lager (finetuning) eller frysa de kopierade lagren och träna sista lagret (feature extraction) beror på storleken på måldatamängden samt antal parametrar i de första n lagren. Om måldatamängden är liten och antal parametrar är stort, så leder finetuning oftast till överanpassning. Det är då bättre med frysta lager. Om måldatamängden däremot är stor eller om antal parametrar är litet så kan finjustering användas för att få en högre noggrannhet än vad som hade varit möjlig med frysta lager \parencite{yosinski2014transferable}. 
 
 \subsection{ImageNet}
 ImageNet Large Scale Visual Recognition Challenge (ILSVRC) är en utmaning som testar algoritmer för objektigenkänning och bildkategorisering i stor skala \parencite{ILSVRC15}. En anledning till detta är att utveckla en stor datamängd som redan är uppmärkt, för att minska barriär för att utveckla bättre modeller genom att ta bort processen med att märka upp bilder. Den andra anledningen är att mäta utveckling för datorseende. Huvudutmaningen består i att bestämma vilken klass en bild tillhör av 1000 klasser. ImageNet är en bilddatabas med uppmärkta bilder som används i tävlingen. Databasen består av strax över 1.2 miljoner bilder \parencite{huh2016makes}.
 
-Det har blivit väldigt vanligt att för-träna ett bildigenkänningsnätverk på ImageNet för att det ska lära sig bra generella egenskaper \parencite{huh2016makes}. Man använder då utmaningen ILSVRCs 1000 kategorier som basuppgift för att bygga upp ett basnätverk. Detta har visat sig fungera väldigt bra i många områden. Anledningen till detta diskuteras men både att basdatamängden är väldigt stor och att basuppgiften består av många olika kategorier är två anledningen som tillför till dess generella egenskaper \parencite{huh2016makes}.
+Det har blivit väldigt vanligt att för-träna ett bildigenkänningsnätverk på ImageNet för att det ska lära sig bra generella egenskaper \parencite{huh2016makes}. Man använder då utmaningen ILSVRCs 1000 kategorier som basuppgift för att bygga upp ett basnätverk. Detta har visat sig fungera väldigt bra i många områden. Anledningen till detta diskuteras men både att basdatamängden är stor och att basuppgiften består av många olika kategorier är två anledningar som tillför till dess generella egenskaper \parencite{huh2016makes}.
 
 \chapter{Metod}
 % 4 olika modeller, testade med varje modell både finetuning och feature extraction.
@@ -257,22 +256,34 @@ Hårdvaran som användes var en GPU av modell Tesla K80 med 12GB arbetsminne, 4 
 Efter varje epok under träning så beräknades både kostnaden från kostnadsfunktionen samt modellens noggrannheten på både träningsdatan och valideringsdatan. Efter träningen skapar vi två grafer över denna data samt plockar ut den högsta noggrannheten som modellen hade på valideringsdatan. Vi använder sedan dessa kostnads- och noggrannhetsgrafer för att jämföra modellerna och se hur många iterationer modellerna behövde tränas för att uppnå maximal noggrannhet samt se hur volatila modellerna var emellan epoker. Även träningstid för de 30 epokerna sparades, för att även jämföra detta mellan modellerna.
 
 \chapter{Resultat}
-Prestandan av de olika modellerna kommer presenteras här.
+Här presenteras prestandan per modell och attribut.
 
+Resultatet består av frya figurer per modell. 
+Varje figur innehåller i sin tur 5 olika grafer, en för varje arkitektur.
+De första två figurerna visar hur kostandsfunktionen och nogrannheten beter sig för varje epoch där alla lager utom det sista är fruset (Feature Extraction).
+De två senare figurerna visar hur kostandsfunktionen och nogrannheten beter sig för varje epoch där inget lager är fruset (Finetuning).
+I varje graf jämförs valideringsdatan mot träningsdatan.
+
+Med grund i graferna som beskrivs ovan finns en tabell som visar prestanda samt hur lång tid det tog att träna modellen.
 
 \section{Balkonger}
-Nedan presenteras resultatet av den binära klassificeringen av balkonger i mäklarbilder. 
-Resultatet består av två grafer per modell, där den ena visar hur kostnaden från kostandsfunktionen beter sig för varje epoch och där den andra visar hur nogrannheten förändras för varje epoch.
-Graferna visar detta både för träningsdata och valideringsdata.
-Det finns även en sammanställning av den högst uppnådda noggrannheten och hur lång tid modellerna tog att träna upp. 
-Vi kommer också att jämföra resultatet när alla lager förutom det sista är fruset (Feature Extraction) med när inget lager är fruset.
+Nedan presenteras resultatet av den binära klassificeringen av balkonger i mäklarbilder.
 
 
 \subsection{Feature extraction}
-Vi kan se kostnaden för både tränings och valideringsdatan i figur \ref{fig:b_l_1} för varje epoch. Vi kan även se i figur \ref{fig:b_a_1} hur träffsäkerheten för de olika modeller var på balkonger.
-\restylefloat{table}
+Figur \ref{fig:b_l_1} visar hur kostnaden för både tränings och valideringsdatan förändras efter varje epoch. 
+I de flesta grafer faller kostnadsfunktionen vesäntligt under de fem första epochsen och stabiliseras därefter.
+Den som sticker ut är alexnet som är mer ojämn.
 
-\begin{table}[!htbp]
+
+I figur \ref{fig:b_a_1} går det att se hur träffsäkerheten förändras efter varje epoch.
+I samtliga grafer utom Alexnet blir träffsäkerhetskruvan relativt stabil efter fyra epochs.
+Alexnet är däremot mer volatil men är trots detta inte den modell som presterar sämst.
+
+
+
+\restylefloat{table}
+\begin{table}[h]
   \centering
   \begin{tabular}{|l|r|r|}
     Modell & Tid & Max. noggrannhet \\ 
@@ -284,13 +295,21 @@ Vi kan se kostnaden för både tränings och valideringsdatan i figur \ref{fig:b
     Inception V3 & 9m 04s & 95.80 \\
   \end{tabular}
   \caption{Sammanställning av feature extraction för balkonger}
+  \label{fig:sam_1}
+  
 \end{table}
 \restylefloat{table}
 
-I tabell 4.1 står det bla bla bla
+Tabell \ref{fig:sam_1} visar att samtliga arkitekturer presterar ungefär lika bra på testadatan.
+Däremot är det väldigt olika hur lång tid det tar att träna modellen. 
+Inception V3 tar tillexempel tre gånger längre tid att träna jämfört med Alexnet.
 
 \subsection{Finetuning}
-Vi kan se hur kostnadsfunktionen såg ut för varje epoch i figur \ref{fig:b_l_2} och hur träffsäkerheten var vid finetuning i figur \ref{fig:b_a_2}
+Kostnadsfunktionerna för de olika arkitekturerna visas i figur \ref{fig:b_l_2} och träffsäkerheten i figur \ref{fig:b_a_2}. 
+
+Dessa funktioner beter sig på ett liknande sätt som de gjorde i feature extraction, med en inledningsvis skarp kurva som planar ut efter 3-4 epochs.
+
+
 
 \begin{table}[!htbp]
   \centering
@@ -303,15 +322,33 @@ Vi kan se hur kostnadsfunktionen såg ut för varje epoch i figur \ref{fig:b_l_2
     Densenet     & 13m 55s & 97.70 \\
     Inception V3 & 21m 54s & 98.09 \\
   \end{tabular}
+  
   \caption{Sammanställning av finetuning för balkonger}
+  \label{fig:sam_2}
+  
 \end{table}
 
 
+Tabell \ref{fig:sam_2} visar att den bästa modellen är Inception V3 har en träffsäkerhet på 98\%. 
+Denna tar dock betydligt längre tid att träna än övriga arkitekturer. 
+Största skillnaden mellan arkitekturerna är ungefär tre procentenheter, precis som i feature extraction.
+
+Även i denna körning presterar Alexnet sämst, men tar samtidigt betydligt mindre tid att träna än övriga arkitekturer.
+
 
 \section{Eldstäder}
+Nedan presenteras resultatet av den binära klassificeringen av eldstäder i mäklarbilder.
+
 
 \subsection{Feature extraction}
-Vi kan se kostnaden för båda tränings och valideringsdatan i figur \ref{fig:f_l_1} för varje epoch. Vi kan även se i figur \ref{fig:f_a_1} hur träffsäkerheten för de olika modeller var på eldstäder.
+Kostnadsfunktionen för tränings och valideringsdata finns i figur \ref{fig:f_l_1} och träffsäkerheten i figur \ref{fig:f_a_1}.
+I dessa figurer visas det på samma sätt som för balkonger olika grafer för olika arkitekturer.
+
+Kostnadsgraferna i figur \ref{fig:f_l_1} rör sig samtliga grafer utom Inception V3 rör sig kurvorna kraftigt upp och ner för varje epoch. 
+Inception V3 har däremot en mer stabil kurva. 
+Detta återspeglar sig dock inte i träffsäkerhetsgraferna i figur \ref{fig:f_a_1} där Inception V3 likt övriga kurvor är volatilt.
+
+I träffsäkerhetskurvorna tar det i samtliga fall utom Alexnet runt 25 epochs innan maximum nås, medan alexnet endast behöver 15 epochs för att nå sitt maximum.
 
 \restylefloat{table}
 
@@ -327,15 +364,23 @@ Vi kan se kostnaden för båda tränings och valideringsdatan i figur \ref{fig:f
     Inception V3 & 05m 15s & 79.24 \\
   \end{tabular}
   \caption{Sammanställning av feature extraction för eldstäder}
+  \label{fig:sam_3}
 \end{table}
-
 \restylefloat{table}
 
 
-\subsection{Finetuning}
-Vi kan se hur kostnadsfunktionen såg ut för varje epoch i figur \ref{fig:f_l_2} och hur träffsäkerheten var vid finetuning i figur \ref{fig:f_a_2}
+Tabell \ref{fig:sam_3} visar att alexnet, den klart sämsta arkitekturen när balkong-modeller tränades , här är delad förstaplats i träffsäkerhet och går snabbast att träna.
+Samtidigt visar det sig att densenet som tidigare var en av de bättre arkitekturerna nu har det klart lägsta resultatet.
 
-\begin{table}
+\subsection{Finetuning}
+Graferna för klassifiseringen av eldstäder med finetuning visas i figur \ref{fig:f_l_2} och \ref{fig:f_a_2} där den första visar kostnadsfunktionen och den senare visar träffsäkerheten.
+
+Kostnadsfunktionen för valideringsdata blir inte särskilt mycket mindre än när den startade, utan ligger kvar på samma nivå eller ökar i samtliga arkitekturer.
+Detta skiljer sig starkt mot kostnadsfunktionerna i figur \ref{fig:f_l_1} (Feature extraction för eldstäder) där kostnaden i de första epochsen snabbt blir lägre. 
+
+
+\restylefloat{table}
+\begin{table}[!htbp]
   \centering
   \begin{tabular}{|l|r|r|}
     Modell & Tid & Max. noggrannhet \\ 
@@ -347,13 +392,30 @@ Vi kan se hur kostnadsfunktionen såg ut för varje epoch i figur \ref{fig:f_l_2
     Inception V3 & 12m 54s & 83.64 \\
   \end{tabular}
   \caption{Sammanställning av finetuning för eldstäder}
+  \label{fig:sam_4}  
 \end{table}
+\restylefloat{table}
 
+Tabell \ref{fig:sam_4} visar att det är relativt stor spridning på resultaten för de olika arkitekturerna.
+Mellan den arkitektur som presterar bäst (Densenet) och den som presterar sämst (Alexnet) är det åtta procentenheter.
+Finetuning har ett högre maximum i träffsäkerhet än feature extraction, dock presterade arkitekturerna resnet och alexnet bättre under feature extraction.
 
 \section{Rum}
+Nedan presenteras resultatet av klassificering av rum i mäklarbilder. 
+Rummen som klassifiseras är badrum, sovrum och kök.
+
 
 \subsection{Feature extraction}
-Vi kan se kostnaden för båda tränings och valideringsdatan i figur \ref{fig:r_l_1} för varje epoch. Vi kan även se i figur \ref{fig:r_a_1} hur träffsäkerheten för de olika modeller var på rum.
+Vi kan se kostnaden för både tränings och valideringsdatan i figur \ref{fig:r_l_1} för varje epoch. 
+Vi kan även  i figur \ref{fig:r_a_1} se hur träffsäkerheten för de olika modeller var på rum.
+
+Kostnadsfunktionen för valideringsdata är i Alexnet volatil. 
+I övriga kostnadsfunktioner rör sig kurvan snabbt nedåt för att sedan plana ut.
+
+Träffsäkerhetsgraferna för resnet, densnet och inception v3 rör sig på motsatt sätt mot kostnadsgraferna, då kurvan snabbt rör sig uppåt under de första epochsen för att sedan plana ut.
+Alexnet graf rör sig också på ett motsatt sätt som sin kostnadsfunktion. 
+VGG är däremot anmärkningsvärt, då den redan under den första epochen nått sitt maximum för att sedan dala något.
+
 
 \restylefloat{table}
 \begin{table}[!htbp]
@@ -368,15 +430,25 @@ Vi kan se kostnaden för båda tränings och valideringsdatan i figur \ref{fig:r
     inception V3 & 06m 28s & 93.75 \\
   \end{tabular}
   \caption{Sammanställning av feature extraction för rum}
+  \label{fig:sam_5}    
 \end{table}
 \restylefloat{table}
 
-
+Enligt tabell \ref{fig:sam_5} är träffsäkerheten för samtliga grafer över 93\%.
+Den arkitektur som utmärker sig är densenet då den presterar ungefär tre procentenheter bättre än alla andra.
 
 \subsection{Finetuning}
-Vi kan se hur kostnadsfunktionen såg ut för varje epoch i figur \ref{fig:r_l_2} och hur träffsäkerheten var vid finetuning i figur \ref{fig:r_a_2}
+Kostnadsfunktionen för klassifisering av rum i finetuning visas i figur \ref{fig:r_l_2} och träffsäkerheten i figur \ref{fig:r_a_2}.
 
-\begin{table}
+Kostnadsgraferna är relativt lika kostnadsgraferna för feature extraction då samtliga kurvor utom alexnet rör sig snabbt nedåt till en början för att sedan plana ut.
+Alexnet är även här volatilt.
+
+Träffsäkerhetsgraferna resnet, vgg och inception rör börjar på en relativt hög nivå efter den första epochen för att under senare epochs endast öka lite.
+Densenet däremot ökar markant under de första epochsen för att sedan plana ut. 
+Alexnet rör sig fram och tillbaka runt 90\%. 
+
+\restylefloat{table}
+\begin{table}[!htbp]
   \centering
   \begin{tabular}{|l|r|r|}
     Modell & Tid & Max. noggrannhet \\ 
@@ -388,8 +460,15 @@ Vi kan se hur kostnadsfunktionen såg ut för varje epoch i figur \ref{fig:r_l_2
     Inception V3 & 16m 10s & 97.39 \\
   \end{tabular}
   \caption{Sammanställning av finetuning för rum}
+  \label{fig:sam_6}    
 \end{table}
+\restylefloat{table}
 
+Enligt tabell \ref{fig:sam_5} presterar densenet och VGG-11 bäst och Alexnet sämst.
+Skillnaden mellan den bästa arkitekturen och den sämsta är ungefär tre procentenheter.
+
+Finetuning har ett något högre maximum än feature extraction.
+I båda fall är det arkitekturen Densenet som presterar bäst, dock tar det mer än dubbelt så lång tid att träna med finetuning och skillnaden är ungefär en procentenhet.
 
 
 \chapter{Diskussion}
