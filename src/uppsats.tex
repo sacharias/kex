@@ -9,9 +9,8 @@
 \graphicspath{{../images/}}
 
 \addbibresource{references.bib}
-
-\title{Find objects in real estate images with convolutional neural networks}
-\alttitle{Hitta object i fastighetsbilder med convolutional neural networks}
+\title{Image Classification of real estate images with transfer learning}
+\alttitle{Bildklassificering av fastighetsbilder med transfer learning}
 \author{Oskar Råhlén och Sacharias Sjöqvist}
 \email{orahlen@kth.se och sacsjo@kth.se}
 \supervisor{Handledare}
@@ -163,7 +162,7 @@ Enligt \cite{simonyan2014very} ser arkitekturen ut som följande: Under träning
 \subsubsection{Densenet}
 Tidigare forskning har visat att nätverk bestående av konvolutionslager kan vara djupare, ha högre noggrannhet och kan vara mer effektiva att träna om det finns kortare vägar mellan indata och utdata \parencite{huang2017densely}. Därför skapades DenseNet, vilket kopplar ihop varje lager i nätverk med varje lager framför, vilket betyder att alla lager har en direkt koppling till lagren framför. Det betyder att om ett tradionellt nätverk med konvolutionslager har totalt L antal lager, så har det även L kopplingar. DenseNet har istället \begin{math} L(L+1)/2 \end{math} antal direkta kopplingar. Enligt \cite{huang2017densely} så har DenseNet uppnått signifikanta förbättringar på Cifar-10 och ImageNet jämfört med andra state-of-the-art-modeller. DenseNet har olika intern arkitektur beroende på storlek. Gemensamt är dock att indata består av RGB-bilder av storlek 224 x 224. Därefter kommer en stack med konvolutionslager där första lagret har filterstorlek 7 x 7 och klivstorlek 2. Efterkommande konvolutionslager kommer i par, där det första i paret har storlek 1 x 1 och den andra har filterstorlek 3 x 3, klivstorlek 1 och nollutfyllnad för att behålla storleken på indata. Mellan dessa lager sker först max-pooling med storlek 3 x 3 och klivstorlek 2 och sedan average pooling med storlek 2 x 2 och klivstorlek 2. Sista lagret, som är klassificeringslagret, består av global average pooling med storlek 7 x 7 och ett FC-lager med 1000 kanaler samt ett soft max-lager.
 
-\subsubsection{Inception V2}
+\subsubsection{Inception}
 Inception har en mycket lägre beräkningskostnad än VGG \parencite{szegedy2016rethinking}. Detta har lett till att den används i big-data-sammanhang, där modeller med större beräkningskraft inte har kunnat användas. Inception-v2 tar som indata RGB-bilder i storleken 299 x 299, vilket är större än de andra arkitekturerna. Inception-v2 består av en stack med konvolutionslager där alla har filterstorlek 3 x 3 med klivstorlek 1 eller 2. Det finns även mellan konvolutionslagren ett max pooling med storlek 3 x 3 och kliv 2. Nollutfyllnad är så data ska behålla storleken. Därefter kommer tre stycken inception-lager. Ett inception-lager är ett lager som kombinerar resultatet från flera olika konvolutionslager i olika storlekar (vanligtvis 1 x 1, 3 x 3 och 5 x 5) ihop med ett max pooling-lager. Efter inception-lagren kommer klassificeringslagren som består av ett max pooling med storlek 8 x 8, ett FC-lager med 2048 kanaler och sist ett FC-lager med 1000 kanaler med softmax.
 
 Inception-v2 är unikt då det består av två utdatalager vid träning \parencite{szegedy2016rethinking}. Det primära lagret är ett linjärt lager i slutet av nätverk medan det sekundära lagret kallas för auxiliary output. Vid testning så används bara det primära lagret och vid tränings så används båda lagren i kostnadsfunktionen.
@@ -181,94 +180,81 @@ ImageNet Large Scale Visual Recognition Challenge (ILSVRC) är en utmaning som t
 Det har blivit väldigt vanligt att för-träna ett bildigenkänningsnätverk på ImageNet för att det ska lära sig bra generella egenskaper \parencite{huh2016makes}. Man använder då utmaningen ILSVRCs 1000 kategorier som basuppgift för att bygga upp ett basnätverk. Detta har visat sig fungera väldigt bra i många områden. Anledningen till detta diskuteras men både att basdatamängden är väldigt stor och att basuppgiften består av många olika kategorier är två anledningen som tillför till dess generella egenskaper \parencite{huh2016makes}.
 
 \chapter{Metod}
-Detta kapitel kommer att beskriva metoden som användes för att ge mäklarbilder attribut.
-
+% 4 olika modeller, testade med varje modell både finetuning och feature extraction.
+% Använda pytorch och pytorch vision med modeller förtränade på imageNet
+% vi skapade allt i en jupyter notebook och sparade graferna med matplotlib.
+Vi har valt att utföra tre olika experiment. Det första experimentet är en binär klassificering, där vi bygger en modell som kan avgöra om en bild innehåller en balkong eller inte. Det andra experimentet är också en binär klassificering där vi avgör om bilden innehåller en eldstad eller inte. Det sista experimentet är av typen multiklass, vilket betyder att vi vill kategorisera bilden i flera olika kategorierna. De olika kategorierna består av tre olika rum, vilka är kök, badrum och sovrum.
 
 \section{Datainsamling}
-För att kunna träna modeller för de olika attributen ”balkong”, ”kakelugn” samt ”typ av rum” behövdes ett antal bilder som både uppfyllde dessa attribut samt ”negativa” bilder som inte uppfyllde dessa attribut.
-Detta gjordes med ett pythonscript som heter Google Images Download (https://github.com/hardikvasa/google-images-download) och tar ett sökord, hur många bilder som ska laddas ner (X) samt från vilken källa bilderna ska hämtas från som input och ger tillbaka en mapp med de första X antal bilderna som hittas på Google från den givna källan. 
-
-Bildkällan som valdes var https://hemnet.se då det är Sveriges största bostadsförmedlingssite med mängder av bilder.
-
-Sökorden samt antalen som användes för detta beskrivs här:
-
-\begin{center}
-  \begin{tabular}{ |c|c|c| } 
-   \hline
-   Sökord & Antal \\ 
-   \hline
-   balkong hemnet & 400  \\ 
-   \hline
-   balkong vasastan & 400 \\ 
-   \hline
-   balkong inspiration & 400 \\ 
-   \hline
-   hemnet vardagsrum & 400  \\ 
-   \hline
-   hemnet badrum & 400 \\ 
-   \hline
-   Hemnet braskamin & 400  \\ 
-   \hline
-   hemnet öppen spis & 400 \\ 
-   \hline
-   vardagsrum braskamin & 400 \\ 
-   \hline
-   hemnet hall & 400 \\ 
-   \hline
-   hemnet kök & 400 \\ 
-   \hline
-   hemnet uteplats & 400   \\ 
-   \hline 
-  \end{tabular}
-  \end{center}
-
-Eftersom denna data inte är validerade mäklarbilder med det attribut som sökes påbörjades ett valideringsarbete där alla bilder manuellt validerades och sorterades enligt följande:
+Datainsamlingen bestod av att samla in bilder på lägenheter från mäklare som kunde kategoriseras under våra kategorier: balkong, eldstad, kök, badrum och sovrum. Vi behövde dock också även bilder från lägenhetsannonser som kunde motsvara den motsatta kategorien i de binära experimenten. Vi använde ett pythonbibliotek \parencite{google_image} för att ladda ner bilder via Google bildsökning. Vi kunde då fylla i sökord, från vilken domän bilderna fick komma ifrån, antal bilder vi ville ladda ner och av vilken typ bilderna skulle vara. Bilderna laddades sedan ner automatiskt och hamnade i en uppmärkt mapp. Vi laddade ner 400 bilder för varje nyckelord, då det var det högsta antalet som var möjligt på grund av begränsningar i Google bildsökning. Vi valde att alla bilder skulle vara av typen foto. Vi sökte på nedanstående nyckelord, både med domänen begränsad till https://hemnet.se och utan domänbegränsningar:
 \begin{itemize}
-  \item Alla bilder som inte uppfattades som mäklarbilder enligt definitionen ovan raderades
-  \item Alla bilder som inte var tagna på lägenheter raderades
-  \item Alla bilder med en eldstad las i en mapp med eldstäder
-  \item Alla bilder med en balkong las i en mapp
-  \item Alla bilder på ett kök las i en mapp
-  \item Alla bilder på ett vardagsrum las i en mapp
-  \item Alla bilder på ett badrum las i en mapp
-  \item Negativa bilder skapades för samtliga mappar. Alltså skapades en mapp med bilder utan eldstad, en mapp med bilder utan balkong etc. Dessa skapades med hjälp av bilder i övriga mappar. 
-\end{itemize} 
-
-I varje mapp låg det slutligen runt 400 bilder. 
-
-När detta var slutfört delades varje mapp i ytterligare två delar, en som kallades ”training” och en som kallades ”validation”.
-I training palcerades de första 80\% av bilderna och i validation de sista 20\%.
-Detta gjordes för att kunna testa hur modellerna presterade när de var färdigtränade med 20\% av den totala bildmassan.
+  \item balkong hemnet
+  \item balkong vasastan
+  \item balkong inspiration
+  \item hemnet vardagsrum
+  \item hemnet badrum
+  \item hemnet braskamin
+  \item hemnet öppen spis
+  \item vardasgrum braskamin
+  \item hemnet hall
+  \item hemnet kök
+  \item hemnet uteplats
+\end{itemize}
 
 
-\section{Modeller}
-För att träna modellerna användes Python 3.6 med deeplearningramverket Pytorch 1.0.0. 
-Modellerna tränades med  hjälp av pytorch i de olika ramverken ”Resnet”, ”Alexnet”, ”VGG-11”, ”Densenet” samt ”inception V3”.
-Efter varje träningsrund (Epoch) kördes en validering för att se hur förbättringskurvan ser ut efter varje Epoch och när modellen börjar bli ”overfitted”.
+För att kategorisera, bearbeta och bli av med brus i bilderna så följde vi sedan följande process:
+\begin{enumerate}
+  \item Vi skrev ett pythonprogram som gick igenom alla bilder och försökte öppna bilderna. Gick inte det så raderades bilden. Detta för att bli av med korrupta filer.
+  \item Alla bilder beskärs sedan till 500 pixlar i bredd med ImageMagick \parencite{imagemagick}. Detta för att underlätta databearbetningen. Maxupplösning vi behöver senare är 299 pixlar så detta påverkar inte resultatet från modellerna.
+  \item Vi gick sedan igenom bilderna la dem i följande mappar: balcony, indoor, fireplace, no\_fireplace, kitchen, bathroom och bedroom. Samma bild kunde hamna i flera mappar, så länge de inte skulle användas med de binära modellerna.
+  \item Alla bilder som vi bedömde inte var bilder från lägenheter i mäklarannonser raderas.
+  \item Alla bilder med för låg upplösning raderades.
+  \item Därefter splittade vi bilderna i varje kategori i två delar, en för träning och en för validering. De första 80\% av bilderna placerades i en mapp för träning och de resterande 20\% i en mapp för validering. Valideringsdatan användes sedan för att mäta noggrannheten på de färdigtränade modellerna.
+\end{enumerate}
 
-Dessa modeller kördes ett antal epochs? och bla bla bla bla
+I första experimentet använde vi bilder från kategorierna balcony och indoor. I andra experimentet använde vi fireplace och no\_fireplace. I tredje experimentet använde vi kitchen, bathroom och bedroom. Antal bilder i varje kategori efter rensning kan ses i tabell \ref{table:amount_images}.
+\begin{table}
+  \caption{Antal bilder i varje kategori}
+  \centering
+  \begin{tabular}{ lrrr }
+  Kategori & Träning & Validering & Totalt \\  
+  \hline
+  balcony       & 558 & 139 & 697 \\ 
+  indoor        & 486 & 122 & 608 \\ 
+  fireplace     & 382 &  96 & 478 \\ 
+  no\_fireplace & 205 &  51 & 256 \\
+  kitchen       & 256 &  64 & 320 \\
+  bathroom      & 208 &  52 & 260 \\ 
+  bedroom       & 291 &  73 & 364 \\ 
+  \hline
+  \label{table:amount_images}
+  \end{tabular}
+\end{table}
 
-\section{Uppföljning}
-När modellerna var färdigtränade gjordes ett utdrag av statistik för att kunna jämföra modellerna sinsemellan.
-För varje modell mättes träningstiden samt bästa procentuella resultat och presenterades i en tabell.
-Kostnaden samt träffsäkerheten för varje epoch hämtades också och presenterades i grafer med antal epochs på X-axeln och kostnade/träffsäkerheten på Y-axeln.
+\section{Implementation}
+Experimentet bestod av att träna flera olika djupinlärningsmodeller och mäta och jämföra deras noggrannhet och träningstid. Som hjälp användes biblioteket PyTorch \parencite{paszke2017automatic} och en del av dess standardbibliotek torchvision. Från torchvision importerades samtliga modeller förtränade på bilder från ImageNet. Arkitekturerna som användes i samtliga tester är:
+\begin{itemize}
+  \item ResNet18
+  \item Alexnet
+  \item VGG-11 med batch-normalisering
+  \item Densenet-121
+  \item Inception v3
+\end{itemize}
 
+Vid varje experiment ersattes det sista FC-lagret på samtliga modeller, för att ha samma antal utdatakanaler som experimentet krävde. Vid de binära experimentet var det två kanaler och vid multiklass-experimentet var det tre kanaler. Dessa nya lager initierades med slumpmässiga parametrar.
+
+Experimentet använde sig av dataförstärkning med inbyggda metoder i PyTorch. Indata vid träning beskärs slumpmässigt enligt indataspecifikationerna för varje arkitektur, flippades horisontellt slumpmässigt och normaliserades sedan enligt samma värden som modellerna blivit förtränade på. Indata vid validering beskärs för korrekta mått med centerfokusering och normaliserades enligt samma värden.
+
+Varje modell tränades med alla lager frysta utan det tillagda FC-lagret (feature extraction) och med alla lager icke-frysta (finetuning). Modellerna tränades för 30 epoker, då förexperiment visade att förtränade modeller konvergerar långt innan detta. Om vi såg tendenser under experimentet att detta inte sker, så tillåter vi att fler epoker körs. Batchstorleken är 32. Som kostnadsfunktion används CrossEntropyLoss och som optimeringsalgoritm används stochastic gradient descent med momentum. Parametern för momentum har ett värde på 0.9 och båda funktionerna är från PyTorchs standardbibliotek.
+
+\section{Mjukvara}
+Alla experiment utfördes i en JupyterLab-miljö på plattformen Floydhub \parencite{floydhub} med Python 3.6 och PyTorch 1.0.0. För bearbetning av datan samt presentering av resultat användes även biblioteken numpy och matplotlib.
 
 \section{Hårdvara}
-Hårdvaran som användes när modellerna tränades var följande:
+Hårdvaran som användes var en GPU av modell Tesla K80 med 12GB arbetsminne, 4 stycken vCPUs, 61GB RAM och 200GB SDD diskutrymme.
 
-\subsection{Graphical processing unit (GPU)}
-GPUn som användes var av modell Tesla K80 och hade tillgång till 128GB grafikminne.
-
-\subsection{Central processing unit (CPU)}
-CPUn som användes hade fyra kärnor 
-
-\subsection{Random Access Memory (RAM)}
-Det fanns tillgång till 61GB RAM-minne.
-
-
-Hur vi gått tillväga. Vilka dataset, hur implementation gått till (verktyg, klassificerare, parametrar), hur vi valt features.
-Hur evalueringen har gått till (traning, test, validation set).
+\section{Evaluering}
+Efter varje epok under träning så beräknades både kostnaden från kostnadsfunktionen samt modellens noggrannheten på både träningsdatan och valideringsdatan. Efter träningen skapar vi två grafer över denna data samt plockar ut den högsta noggrannheten som modellen hade på valideringsdatan. Vi använder sedan dessa kostnads- och noggrannhetsgrafer för att jämföra modellerna och se hur många iterationer modellerna behövde tränas för att uppnå maximal noggrannhet samt se hur volatila modellerna var emellan epoker. Även träningstid för de 30 epokerna sparades, för att även jämföra detta mellan modellerna.
 
 \chapter{Resultat}
 Här presenteras prestandan per modell och attribut.
