@@ -74,7 +74,7 @@ Dessa attribut skulle sedan kunna användas för att lägga till filtreringsalte
 Det skulle också gå att använda sig av denna metod för att knyta attribut såsom skick och typ av rum (Sovrum, badrum eller kök) till varje bild.
 Kombinationen skulle göra sökningar såsom ”Kök i gott skick” möjligt.  
 
-Denna data kan också vara användbar vid värdering av bostäder, då det enkelt skulle gå att jämföra priser på bostäder med olika attribut, tillexempel lägenheter med sköutsikt mot lägenheter utan sköutsikt eller lägenheter med ett kök i gott skick mot lägenheter med ett kök i sämre skick.
+Denna data kan också vara användbar vid värdering av bostäder, då det enkelt skulle gå att jämföra priser på bostäder med olika attribut, tillexempel lägenheter med sjöutsikt mot lägenheter utan sjöutsikt eller lägenheter med ett kök i gott skick mot lägenheter med ett kök i sämre skick.
 
 VET INTE RIKTIGT HUR JAG SKA FORMULERA MIG HÄR!! Känns Som ett halvbra stycke
 För att på ett effektivt och precist sätt kunna knyta attribut till mäklarbilder behöver man använda sig av någon form av automatisk bildbehandling.
@@ -371,8 +371,8 @@ I träffsäkerhetskurvorna tar det i samtliga fall utom Alexnet runt 25 epochs i
   \begin{tabular}{|l|r|r|}
     Modell & Tid & Max. noggrannhet \\ 
     \hline
-    Resnet       & 02m 06s & 80.50 \\
-    Alexnet      & 01m 55s & 80.50 \\
+    Resnet       & 02m 06s & 80.05 \\
+    Alexnet      & 01m 55s & 76.00 \\
     VGG-11       & 03m 45s & 77.35 \\
     Densenet     & 03m 35s & 73.58 \\
     Inception V3 & 05m 15s & 79.24 \\
@@ -515,11 +515,21 @@ Vid alla lager frysta (feature extraction) så uppnådde arkitekturerna ResNet o
 \section{Klassificering av rum}
 
 \section{Begränsningar}
+ 
 
 \section{Framtida forskning}
+Det finns mycket spännande att utreda för framtida studier.
+En sak som hade varit spännande är att träna en modell där man med hjälp av bilder och ett antal hårda attribut såsom storlek och område gissa priset på objektet.
+Detta skulle gå att göra genom att först träna en modell för att exkludera miljöbilder, sedan skulle man kunna använda sig av tidigare försäljningstatistik med bilder och dataattribut för att träna en modell.
+
+Ett annat intressant ämne är klassifisering av skick på rum. 
+Genom att träna en modell på tillexempel badrum eller kök på deras skick skulle det både gå att lägga till en parameter i prismodellen nämnd ovan, men det skulle också gå att filtrera efter skick på olika rum.
+
+Det skulle också gå att bygga ut denna studie med mer träningsdata, framförallt på eldstäder, för att förbättra resultatet.
+För att kunna använda denna studie på ett kommersiellt sätt skulle det också vara intressant att utöka antalet attribut. 
+Andra attribut värda att utforska skulle kunna vara sjöutsikt, typ av golv och takhöjd.
 
 \section{Etiska aspekter och Hållbarhet}
-
 
 
 
