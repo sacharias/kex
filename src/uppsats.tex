@@ -56,49 +56,26 @@
 \mainmatter
 
 \chapter{Introduktion}
+Just nu finns över 20 000 bostadsrätter \parencite{hemnetstats} till salu på Sveriges största mäklarsite \parencite{hemnetom}, där nästan hälften av dessa ligger i Stockholm. Dit kommer 2,8 miljoner unika besökare varje vecka och gör tillsammans över 2000 sökningar i minuten \parencite{hemnetom}. Detta ställer höga krav på filtreringsfunktionerna för att potentiella köpare snabbt ska kunna hitta sin drömbostad. Idag erbjuds filtreringsfunktioner för bland annat antal rum, boarea, pris samt område. Det finns även möjligt att använda fritextsökning som hittar relevanta annonser beroende på texten som mäklaren skrivit i annonsen. En rekommendation av dessa sökord på bostadssidor är balkong, kakelugn och sjöutsikt.
 
-Just nu finns över 20 000 bostadsrätter \parencite{hemnetstats} till salu på Sveriges största mäklarsite \parencite{hemnetom}, där nästan hälften av dessa ligger i Stockholm. 
-Dit kommer 2,8 miljoner unika besökare varje vecka och gör tillsammans över 2000 sökningar i minuten \parencite{hemnetom}.
-Detta ställer höga krav på filtreringsfunktionerna för att potentiella köpare snabbt ska kunna hitta sin drömbostad.
-Idag erbjuds redan filtreringsfunktionerna ”antal rum”, ”boarea”, ”pris” samt ”område”. 
-Det finns också ett fritextsök där man kan söka på vad mäklaren skrivit i texten.
-Exempel på sökord är ”balkong”, ”kakelugn” och ”sjöutsikt”. 
+Problemet med att bygga sökfunktionen på ord i texten till mäklarannonsen är att mäklaren måste nämna samtliga attribut som kan vara relevanta för eventuella köpare. Och det finns även en möjlighet för mäklaren att vara selektiv bland valda attribut. Det kan även uppstå problem med att synonymer används.
 
-Problemet med att söka i mäklartexter är att det tvingar mäklaren att i texten nämna samtliga attribut som han eller hon vill göra sökbara. 
-Detta gör att vissa attribut kan bli utelämnade vilket i sin tur gör fritextrutan sämre.
+Genom att istället utgå ifrån bilderna i annonsen så kan det vara möjligt att hitta relevanta attribut, som till exempel balkong eller kakelugn, utan att det behöver nämnas i annonstexten. Det hade därför varit av stort intresse båda för bostadsplattformar och för människor som letar bostäder om det var möjligt att automatiskt koppla varje bild i en bostadsannons till ett antal attribut, vilket sedan kan underlätta bostadsletande. Det skulle även kunna utvecklas till attribut som idag inte är möjligt att söka efter, som takhöjd, skick och andra mer specifika egenskaper. Det skulle även finnas möjlighet att kombinera attribut, såsom skick och typ av rum, för att kunna göra ytterligare specifika sökningar.
 
-Exempelvis går det ofta att se på mäklarbilderna om det finns en balkong eller kakelugn i objektet, men det är inte alltid mäklaren väljer att skriva detta i den löpande texten.
-Det hade därför varit intressant att utifrån mäklarbilderna automatiskt generera ett sökindex där varje bild knyts till ett antal attribut.
-Dessa attribut skulle sedan kunna användas för att lägga till filtreringsalternativ i sökfunktionen och därmed skapa en bättre användarupplevelse.
+Denna kategorisering av bilder från annonser skulle även kunna användas vid värdering av bostäder, vilket skulle i långa loppet leda till en jämnare prisnivå på bostäder och en tryggare affär för bostadsköpare. Detta då det skulle vara enklare att jämföra priser mellan bostäder om det finns fler attribut att jämföra.
 
-Det skulle också gå att använda sig av denna metod för att knyta attribut såsom skick och typ av rum (Sovrum, badrum eller kök) till varje bild.
-Kombinationen skulle göra sökningar såsom ”Kök i gott skick” möjligt.  
-
-Denna data kan också vara användbar vid värdering av bostäder, då det enkelt skulle gå att jämföra priser på bostäder med olika attribut, till exempel lägenheter med sjöutsikt mot lägenheter utan sjöutsikt eller lägenheter med ett kök i gott skick mot lägenheter med ett kök i sämre skick.
-
-VET INTE RIKTIGT HUR JAG SKA FORMULERA MIG HÄR!! Känns Som ett halvbra stycke
-För att på ett effektivt och precist sätt kunna knyta attribut till mäklarbilder behöver man använda sig av någon form av automatisk bildbehandling.
-Detta går att göra med hjälp av maskininlärning och djupa neurala nätverk.
-Sättet som detta görs på är att man tränar ett antal bilder som innehåller det givna attributet och ett antal som inte innehåller attributet.
-Modellen tränas sedan med hjälpt av ett djupt neuralt nätverk. 
-Efter varje träning så testas modellen för att mäta hur många träningar som krävs för bästa resultat.
-När modellen är färdigtränad kan man använda denna genom att skicka in en bild som input och modellen berättar om bilden innehåller det givna attributet eller inte.
+För att på ett automatiskt tillvägagångssätt koppla attribut till bilder i bostadsannonser behövs någon form av bildkategorisering. Vi har därför valt att studera vilka metoder inom maskinlärning och i huvudsak djupinlärning som kan användas för att kategorisera dessa typer av bilder. Dessa modeller behöver vanligtvis tränas med en stor mängd data och det behövs experiment för att avgöra dess tillförlitlighet. För att sedan kunna använda bilder från bostadsannonser som indata för att generera alla önskade attribut.
 
 \section{Syfte}
-Syftet med denna studie är att titta på hur olika maskininlärningsmetoder kan användas för att hitta relevanta nyckelord till bilder på lägenhetsannonser. 
+Syftet med studien är att undersöka vilka tekniker inom maskininlärning som kan användas för att hitta relevanta attribut i bilder från bostadsannonser vilket sedan kan användas som nyckelord vid sökningar av bostadsannonser.
 
 \section{Frågeställning}
-Går det med nuvarande verktyg inom maskininlärning hitta attribut i bilder från lägenhetsannonser?
+Går det med tekniker inom maskininlärning att hitta relevanta attribut i bilder från bostadsannonser?
 
 \section{Avgränsningar}
-För att sätta en rimlig avgränsning på denna uppsats kommer tre olika sorters attribut undersökas och jämföras med tre olika sorters deeplearningmodeller. 
-Attributen som kommer– användas är ”Balkong”, ”Kakelugn” samt ”Typ av rum” (Kök, badrum eller sovrum) och deeplearningmodellerna som kommer användas är ”keras”, ”smartAI”, samt ”blabla”. 
-Anledningen till att flera attribut eller flera sorters modeller inte valdes är att det är resurskrävande att samla in och sortera testdata samt att implementera modellerna. 
-Anledningen till att färre inte valdes var för att få spridning på attributen och modellerna, för kunna svara på om klassificeringen fungerar i allmänhet och inte bara i enstaka testfall. 
-En annan avgränsning som gjort är att mäklarbilderna som används endast kommer från bostadsrätter, då det kan skilja sig ganska mycket på hur villor och bostadsrätter ser ut.
+Studien kommer undersöka möjligheten att hitta tre olika attribut: balkong, eldstad samt typ av rum. Typ av rum är begränsat till kök, badrum och sovrum. Vi har även valt att avgränsa oss till annonser för bostadsrätter i Stockholm. Vi har även valt att fokusera på tekniker inom maskininlärning.
 
 \chapter{Bakgrund}
-
 \section{Maskininlärning}
 Maskininlärning är ett sätt att programmera datorer så de optimerar ett problem med hjälp av exempeldata eller tidigare erfarenhet \parencite{alpaydin2009introduction}. Maskininlärning är ett aktivt forskningsfält inom datalogi. Lärandeprocessen för en maskininlärningsalgoritm kan se ut på följande sätt: Ett datorprogram har som uppgift att lära sig en förutbestämd uppgift T, hur väl den gör detta, algoritmens prestanda, är måttet P. Till sin hjälp har datorprogrammet tidigare erfarenhet E. Om prestandan P blir högre då vi tillför erfarenheten E till programmet, då lär sig programmet.
 
