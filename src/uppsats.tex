@@ -496,38 +496,34 @@ I båda fall är det arkitekturen Densenet som presterar bäst, dock tar det mer
 
 
 \chapter{Diskussion}
-% Vad vi kom fram till i resultat, per kategori. Tillämpning
-% Förbättringar som hade kunnat göras med begränsningar.
-% framtida forskning: både för just detta (mer bilder, fler attribut som går emot mäklare, demokratisera måklarbranschen, asymmetrisk information), mer kunskap om transfer learning: Ge ökad förståelse som kan användas i ett annat domain (NLP, audio), andra bildkategoriseringar. andra dataset som inte består av svenska lägenheter.
-% Även diskutera om man hade kunnat använda annan optimering, inlärningstakt, etc. 
-% etiska aspekter
-% Hållbarhet
-
 \section{Klassificering av balkonger}
-Klassificering av bilder på balkonger uppnådde hög noggrannhet på valideringsdata. Vid alla lager frysta (feature extractor) så konvergerade alla modeller förutom Alexnet efter några få epoker, vilket visar att någon ytterligare träning inte hade ökat modellernas prestanda. Alexnet volatilitet beror antaligen på dess enklare modellarkitektur. Högsta noggrannheten vid feature extraction var 96,94\% för Densenet, men då det endast skiljde 2.67 procentenheter mellan den sämsta och den bästa modellen, så kan inga slutsatser att Densenet alltid kommer vara bäst att dras.
+Klassificering av bilder på balkonger uppnådde hög noggrannhet på valideringsdatan. Vid alla lager frysta (feature extractor) så konvergerade alla modeller förutom Alexnet efter några få epoker, vilket visar att någon ytterligare träning inte hade ökat modellernas prestanda. Alexnet volatilitet beror antaligen på dess enklare modellarkitektur. Högsta noggrannheten vid feature extraction var 96,94\% för Densenet, men då det endast skiljde 2,67 procentenheter mellan den sämsta och den bästa modellen, så kan inga slutsatser att Densenet alltid kommer vara bäst att dras.
 
 Då alla lager var träningsbara (finetuning) så konvergade även samtliga modeller förutom Alexnet efter bara några få epoker. Det krävdes dock flera jämfört med vid frysta lager. Vid finetuning kan man även se att det uppkommer problem med överanpassning då träningsdata har en högre noggrannhet än valideringsdata vid de sista epokerna. Detta visar även att fler epoker inte hade påverkat modellernas prestanda positivt. Den högsta noggrannheten uppnåde modellen Inception v3 med en noggrannhet på 98,09\%. Även har var skillnaden mellan den sämsta och bästa modellen liten, bara 2,68 procentenheter.
 
-Vi kan se att vid klassificering av balkonger så presterade samtliga arkitekturer bra, både med lager frysta och icke frysta. Bäst resultat fick man dock vid en mer avancerade arkitektur som inception med alla lager träningsbara. Den främsta nackdelen med de mer avancerade arkitekturerna är att träningstiden blir mycket längre. Beroende på datamängd så behöver det inte vara ett problem i praktiken. Modellens högsta prestanda visar att denna skulle kunna vara praktiskt tillämpningsbar utan modifikation.
+Vi kan se att vid klassificering av balkonger så presterade samtliga arkitekturer bra, både med lager frysta och icke frysta. Bäst resultat fick man dock vid en mer avancerade arkitektur som inception med alla lager träningsbara. Den främsta nackdelen med de mer avancerade arkitekturerna är att träningstiden blir mycket längre. Beroende på datamängd så behöver det inte vara ett problem i praktiken. Modellens högsta prestanda visar att denna skulle kunna vara praktiskt tillämpningsbar utan modifikation. Om högra noggrannhet skulle behövas för en praktiskt tillämpning så en större datainsamling antagligen leda till högre resultat. Det skulle även vara möjligt att manuellt gå igenom de felklassificerade bilderna för att hitta en gemensam nämnare.
 
 \section{Klassificering av eldstäder}
-% Resnet       & 02m 06s & 80.50 \\
-% Alexnet      & 01m 55s & 80.50 \\
-% 6.91 procentenheter
-
-% Densenet     & 07m 55s & 85.53 \\
-% 8.18 procentenheter
-
 Klassificering av eldstäder var svårare än av balkonger. Detta beror nog huvudsakligen på att foton på balkonger skiljer sig till en stor del från övriga bilder från mäklarannonser, då de är fotade utomhus och innehåller himmel och är ljusare. Medan foton på eldstäder påminner mer om övriga bilder i annonserna. Då träningen av eldstäder skedde med en mindre datamängd, 478 och 256 bilder mot datamängden i balkonger 697 och 608 bilder, så kan även det ha försvårat problemet ytterligare. 
 
-Vid alla lager frysta (feature extraction) så uppnådde arkitekturerna ResNet och Alexnet högst, med en noggrannhet på 80,50\%. Vi kan dock se att samtliga modeller hade stora problem med en varierande noggrannhet mellan träningsepokerna. [HÄR ÄR DET FEL någonstans]
+Vid alla lager frysta (feature extraction) så uppnådde arkitekturerna ResNet högst träffsäkerhet, på 80,05\%. Vi kan dock se att samtliga modeller hade stora problem med en varierande noggrannhet mellan träningsepokerna. Då alla lager var träningsbara (finetuning) uppnådde arkitekturen Densenet träffsäkerheten 85,53\%, vilket var den högsta. Den stora skillnaden mellan de olika inställningarna visar på att klassificeringen av eldstäder är mer specifik än den av balkonger. Även här är träffsäkerheten så hög att det finns möjlighet till en praktiskt implementering. Även här skulle en förbättring kunna ske om mängden träningsdata ökades.
 
 \section{Klassificering av rum}
+Vid multiklassificeringen av rum, uppnåddes vid feature extraction modellen Densenet högst träffsäkerhet på 96,87\%. Vid finetuning var högsta träffsäkerheten på 97,91\%, vilket uppnådes av både VGG-11 och Densenet. Ett problem som skulle uppstå om modellen utvecklades till samtliga möjliga rum i en lägenhet är att klasserna inte är disjunkta, vilket vår modell antar. Det går dock att utveckla modeller där en bild kan ingå i flera kategorier. Ett annat tillvägagångssätt att ta sig an problemet är att bygga upp flera binära klassificeringsmodeller, där varje modell avgör om bilden är av en viss typ eller inte. Det skulle då motsvara modellerna vi använder för klassificering av balkonger och eldstäder. 
 
 \section{Begränsningar}
- 
+Vissa begränsningar har gjorts i studien som kan ha påverkat modellernas resultat. Vi har begränsat oss till bilder på annonser för lägenheter i Stockholm, vilket leder till att modellerna kan prestera sämre på samtliga lägenhetsannonser i landet. Det betyder också att modellerna för tillfället kanske inte fungerar på annonser för hus.
+
+Vi tror även att modellerna hade kunnat prestera bättre om träningsmängden ökades, vilket är en vanlig förbättring inom modeller för djupinlärning. Vi tränade modellerna med alla lager förutom det sista frysta och med alla lager träningsbara. Det hade dock även vara möjligt att göra flera variationer av detta. Ett sätt hade varit att först träna modellen enligt feature extraction för att sedan frysa upp några lager i taget, från bak till fram. Detta hade kunnat leda till bättre träffsäkerhet. 
+
+Vi har även valt att begränsa oss till samma optimeringsalgoritm, SGD med momentum, för alla modeller men det finns andra algoritmer som hade kunnat förbättra modellerna ytterligare. Även hyperparametrar, som inlärningstakt och parameter för momentum var konstant under experimentet och förändringar i dessa hade kunnat studerats ytterligare.
+
 
 \section{Framtida forskning}
+% framtida forskning: både för just detta (mer bilder, fler attribut som går emot mäklare, demokratisera måklarbranschen, asymmetrisk information), mer kunskap om transfer learning: Ge ökad förståelse som kan användas i ett annat domain (NLP, audio), andra bildkategoriseringar. andra dataset som inte består av svenska lägenheter.
+% etiska aspekter
+% Hållbarhet
+
 Det finns mycket spännande att utreda för framtida studier.
 En sak som hade varit spännande är att träna en modell där man med hjälp av bilder och ett antal hårda attribut såsom storlek och område gissa priset på objektet.
 Detta skulle gå att göra genom att först träna en modell för att exkludera miljöbilder, sedan skulle man kunna använda sig av tidigare försäljningstatistik med bilder och dataattribut för att träna en modell.
@@ -540,11 +536,12 @@ För att kunna använda denna studie på ett kommersiellt sätt skulle det ocks�
 Andra attribut värda att utforska skulle kunna vara sjöutsikt, typ av golv och takhöjd.
 
 \section{Etiska aspekter och Hållbarhet}
+Det finns vissa etiska dilemman med lösningar inom artificiell intelligens som leder till kvantifiering av information eller till och med skapande av ny information. Asymmetrisk information på en marknad leder vanligtvis till att vissa tjänar mycket på andra mindre vetande. Vår klassificeringmodell skulle kunna användas för att köpare på bostadsmarknaden skulle kunna enklare hitta relevanta föremål, vilket skulle kunna göra att objekt till försäljning hamnar på en stabilare och mer tillförlitlig prisnivå, vilket bör gynna samhället i stort. Modellerna kan dock även användas för att pressa upp priserna ytterligare på bostadsmarknaden. Om mäklarbyråerna använder sig av klassificeringsmodeller så kan de på en storskalig nivå få information om deras objekt och på så vis använda informationen i marknadsföringsstrategier. De kan automatisera vilket urval som ska presenteras för vilka bostadsköpare, för att i värsta fall kunna snedvrida marknaden.
 
+Då dessa modeller kan leda till en effektivare bostadsmarknad så kan det även leda till förbättringar ur hållbarhetssynvinkel. Detta kan leda till att människor bor där de vill bo, vilket kan leda till färre transporter inom landet. Nackdelen är att dessa modeller kräver mycket energi och datorkraft för att byggas upp. Dock hjälper transfer learning oss att få ner kraften som behövs vid inlärningen av modellerna, vilket även har positiva effekter ur ett hållbarhetsperspektiv. Vid större spridning av träning av neurala nätverk så kan dessa fördelar med transfer learning leda till stora resursbesparingar.
 
-
-\chapter{Slutsats}  
-Slutsats av vad vi kom fram till.
+\chapter{Slutsats}
+Det går med nuvarande teknologier inom maskininlärning att hitta attribut i bilder från lägenhetsannonser med hög tillförlitlighet. Enligt tidigare forskning så är de nuvarande state-of-the-art-teknikerna för denna typ av uppgift baserade på CNN. Vår studie har visat att med ett mindre antal bilder inom varje kategori så går det att bygga modeller som kan hitta nyckelorden balkong, eldstad, badrum, kök och sovrum för bilder från lägenhetsannonser. Vissa attribut är svårare än andra att hitta med nuvarande modeller och datamängd. Framtida forskning hade kunnat studera hur modellerna fungerar vid en större datamängd. Skillnaden mellan arkitekturer var inte stor och det fanns ingen arkitektur som entydigt fungerade bäst. Därför rekommenderas att vid en implementering för nya nyckelord att prova samtliga tillgängliga arkitekturer. Vidare studier behövs göras för nya nyckelord samt för andra objekt än lägenhetsbilder från Stockholm. Modellerna borde kunna användas i praktiska tillämpningar för ovanstående nyckelord idag.
 
 \printbibliography[heading=bibintoc]
 \appendix
