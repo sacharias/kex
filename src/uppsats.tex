@@ -73,9 +73,13 @@ Syftet med studien är att undersöka vilka tekniker inom maskininlärning som k
 Går det med tekniker inom maskininlärning att hitta relevanta attribut i bilder från bostadsannonser?
 
 \section{Avgränsningar}
-Studien kommer undersöka möjligheten att hitta tre olika attribut: balkong, eldstad samt typ av rum. Typ av rum är begränsat till kök, badrum och sovrum. Vi har även valt att avgränsa oss till annonser för bostadsrätter i Stockholm. Vi har även valt att fokusera på tekniker inom maskininlärning.
+Studien kommer undersöka möjligheten att hitta tre olika attribut: balkong, eldstad samt typ av rum. Typ av rum är begränsat till kök, badrum och sovrum. Vi har även valt att avgränsa oss till annonser för bostadsrätter i Stockholm. Vi har även valt att fokusera på tekniker inom maskininlärning. 
 
 \chapter{Bakgrund}
+
+\section{Bildklassificering}
+Klassificering av objekt i bilder är område där forskningen har gjort stora framsteg senaste åren \parencite{Goodfellow-et-al-2016}. Att applicera teknikerna inom klassificering av bilder från mäklare har skett i ett fåtal tidigare studier \parencite{cao2019classification} \parencite{poursaeed2018vision}. Dessa studierna har dock utgått ifrån hus i andra länder än Sverige och istället fokuserat på att utifrån bilderna estimera slutpris på fastigheterna. Detta skiljer sig från vårt arbete, där det huvudsakliga syftet är att hitta attribut i bilderna, vilket i ett senare skede kan användas i en prisestimering. Det har även studerats möjligheten till att klassificera scener med hjälp av bilder. \cite{zhou2014learning} har byggt modeller som klassificerar 67 olika typer av svener inomhus. 
+
 \section{Maskininlärning}
 Maskininlärning är ett sätt att programmera datorer så de optimerar ett problem med hjälp av exempeldata eller tidigare erfarenhet \parencite{alpaydin2009introduction}. Maskininlärning är ett aktivt forskningsfält inom datalogi. Lärandeprocessen för en maskininlärningsalgoritm kan se ut på följande sätt: Ett datorprogram har som uppgift att lära sig en förutbestämd uppgift T, hur väl den gör detta, algoritmens prestanda, är måttet P. Till sin hjälp har datorprogrammet tidigare erfarenhet E. Om prestandan P blir högre då vi tillför erfarenheten E till programmet, då lär sig programmet.
 
