@@ -9,7 +9,7 @@
 \graphicspath{{../images/}}
 
 \addbibresource{references.bib}
-\title{Image Classification of real estate images with transfer learning}
+\title{Image Classification of Real Estate Images with Transfer Learning}
 \alttitle{Bildklassificering av fastighetsbilder med transfer learning}
 \author{Oskar Råhlén och Sacharias Sjöqvist}
 \email{orahlen@kth.se och sacsjo@kth.se}
@@ -20,15 +20,22 @@
 \date{\today}
 
 % Uncomment the next line to include cover generated at https://intra.kth.se/kth-cover?l=en
-% \kthcover{kth-cover.pdf}
-% källor: \textcite och \parencite
+\kthcover{kth-cover.pdf}
 
+% källor: \textcite och \parencite
 \begin{document}
 \frontmatter
-\titlepage
 
 \begin{abstract}
-    English abstract goes here
+  Each minute, over 2 000 searches are made on Sweden’s largest real estate website. The site has over 20 000 apartments for sale in the Stockholm region alone. This makes the search-function a vital tool for the users to find their dream apartment, and thus the quality of the search-function is of significance. As of today, it’s only possible to filter and sort by meta-data such as numbers of room, living area, price, and location, but not on more complex attributes, such as “balcony” or “fireplace”. 
+  
+  To prevent the need for manual categorization of objects on the market, one option coud be to use images of the apartments as data-points in deep neural networks to automatically add rich attributes. This thesis aims to investigate if a high rate of success when classifying apartment images can be achieved using deep neural networks, specifically looking at the categories and attributes “balcony”, “fireplace”, as well as “type of room”. 
+  
+  Different types of architectures was compared amongst each other and feature extraction was compared against fine-tuning, in order to exhaustively investigate the thesis.
+  
+  The investigation showed that the “balcony-model” could determine if a balcony exists in an image, with a certainty of 98.1\%. For fireplaces, the maximum certainty reached was 85.5\%, which is significantly lower. The “type of room” classification reached a certainty of 97,9\%. 
+  
+  This all proves the possibility of using deep neural networks in order to classify and attribute real estate images.   
 \end{abstract}
 
 \begin{otherlanguage}{swedish}
@@ -73,7 +80,13 @@ Syftet med studien är att undersöka vilka tekniker inom maskininlärning som k
 Går det med tekniker inom maskininlärning att hitta relevanta attribut i bilder från bostadsannonser?
 
 \section{Avgränsningar}
-Studien kommer undersöka möjligheten att hitta tre olika attribut: balkong, eldstad samt typ av rum. Typ av rum är begränsat till kök, badrum och sovrum. Vi har även valt att avgränsa oss till annonser för bostadsrätter i Stockholm. Vi har även valt att fokusera på tekniker inom maskininlärning. 
+Studien kommer undersöka möjligheten att hitta tre olika attribut: balkong, eldstad samt typ av rum. Typ av rum är begränsat till kök, badrum och sovrum. Vi har även valt att avgränsa oss till annonser för bostadsrätter i Stockholm samt på tekniker inom maskininlärning. 
+
+Dessa avgränsningar görs framförallt för att marknaden efterfrågar denna typ av modell samt att det inte fanns oändligt med resurser. Att generera träningsdata för dessa attribut kommer vara krävande nog, därför togs inte flera attribut med.
+
+Anledningen till att avgränsa sig till bostadsrätter i Stockholm är att vi vill ha lägenheter som är i ungefär samma miljö och typ av människor som bor där, för att inte behöva ha allt för mycket träningsdata. 
+
+
 
 \chapter{Bakgrund}
 
@@ -245,6 +258,8 @@ Experimentet bestod av att träna flera olika djupinlärningsmodeller och mäta 
 
 Vid varje experiment ersattes det sista FC-lagret på samtliga modeller, för att ha samma antal utdatakanaler som experimentet krävde. Vid det binära experimentet var det två kanaler och vid multiklass-experimentet var det tre kanaler. Dessa nya lager initierades med slumpmässiga parametrar.
 
+Dessa arikitekturer och denna typ av modell användes då tidigare forskning inom bildklassificering. Därför valde vi att fortsätta på samma spår. 
+
 Experimentet använde sig av dataförstärkning med inbyggda metoder i PyTorch. Indata vid träning beskärs slumpmässigt enligt indataspecifikationerna för varje arkitektur, flippades horisontellt slumpmässigt och normaliserades sedan enligt samma värden som modellerna blivit förtränade på. Indata vid validering beskärs för korrekta mått med centerfokusering och normaliserades enligt samma värden.
 
 Varje modell tränades med alla lager frysta utan det tillagda FC-lagret (feature extraction) och med alla lager icke-frysta (finetuning). Modellerna tränades till de konvergerade, dock minst 30 epocher. Om vi såg tendenser under experimentet att detta inte sker, så tillåter vi att fler epocher körs. Batchstorleken är 32. Som kostnadsfunktion används CrossEntropyLoss och som optimeringsalgoritm används stochastic gradient descent med momentum. Inlärningstakten var 0.001 och momentum 0.9. Båda funktionerna är från PyTorch standardbibliotek.
@@ -267,7 +282,9 @@ Resultatet består av fyra figurer per modell.
 Varje figur innehåller i sin tur 5 olika grafer, en för varje arkitektur.
 De första två figurerna visar hur kostandsfunktionen och noggrannheten beter sig för varje epoch där alla lager utom det sista är fruset (Feature Extraction).
 De två senare figurerna visar hur kostandsfunktionen och noggrannheten beter sig för varje epoch där inget lager är fruset (Finetuning).
-I varje graf jämförs valideringsdata mot träningsdata.
+I varje graf jämförs valideringsdata mot träningsdata. Samtliga grafer finns under appendix.
+
+I graferna definieras nogrannhet som det procentuella antal rätt på all valideringsdata (Data som modellen aldrig tidigare tränat på). 
 
 Med grund i graferna som beskrivs ovan finns en tabell som visar prestanda samt hur lång tid det tog att träna modellen.
 
@@ -526,121 +543,121 @@ Det går med nuvarande teknologier inom maskininlärning att hitta attribut i bi
 \printbibliography[heading=bibintoc]
 \appendix
   \begin{figure}[h]
-    \includegraphics[width=7cm]{b_l_resnet_fe}
-    \includegraphics[width=7cm]{b_l_alexnet_fe}
-    \includegraphics[width=7cm]{b_l_vgg_fe}
-    \includegraphics[width=7cm]{b_l_densenet_fe}
-    \includegraphics[width=7cm]{b_l_inception_fe}
+    \includegraphics[width=9cm]{b_l_resnet_fe}
+    \includegraphics[width=9cm]{b_l_alexnet_fe}
+    \includegraphics[width=9cm]{b_l_vgg_fe}
+    \includegraphics[width=9cm]{b_l_densenet_fe}
+    \includegraphics[width=9cm]{b_l_inception_fe}
     \caption{Kostnaden vid varje epoch för balkonger med feature extraction}
     \label{fig:b_l_1}
   \end{figure}
   
   \begin{figure}[h]
-    \includegraphics[width=7cm]{b_a_resnet_fe}
-    \includegraphics[width=7cm]{b_a_alexnet_fe}
-    \includegraphics[width=7cm]{b_a_vgg_fe}
-    \includegraphics[width=7cm]{b_a_densenet_fe}
-    \includegraphics[width=7cm]{b_a_inception_fe}
+    \includegraphics[width=9cm]{b_a_resnet_fe}
+    \includegraphics[width=9cm]{b_a_alexnet_fe}
+    \includegraphics[width=9cm]{b_a_vgg_fe}
+    \includegraphics[width=9cm]{b_a_densenet_fe}
+    \includegraphics[width=9cm]{b_a_inception_fe}
     \caption{Träffsäkerhet för balkonger med feature extraction}
     \label{fig:b_a_1}
   \end{figure}
   
   \begin{figure}[h]
-    \includegraphics[width=7cm]{b_l_resnet_fine}
-    \includegraphics[width=7cm]{b_l_alexnet_fine}
-    \includegraphics[width=7cm]{b_l_vgg_fine}
-    \includegraphics[width=7cm]{b_l_densenet_fine}
-    \includegraphics[width=7cm]{b_l_inception_fine}
+    \includegraphics[width=9cm]{b_l_resnet_fine}
+    \includegraphics[width=9cm]{b_l_alexnet_fine}
+    \includegraphics[width=9cm]{b_l_vgg_fine}
+    \includegraphics[width=9cm]{b_l_densenet_fine}
+    \includegraphics[width=9cm]{b_l_inception_fine}
     \caption{Kostnaden vid varje epoch för balkonger med finetuning}
     \label{fig:b_l_2}
   \end{figure}
   
   \begin{figure}[h]
-    \includegraphics[width=7cm]{b_a_resnet_fine}
-    \includegraphics[width=7cm]{b_a_alexnet_fine}
-    \includegraphics[width=7cm]{b_a_vgg_fine}
-    \includegraphics[width=7cm]{b_a_densenet_fine}
-    \includegraphics[width=7cm]{b_a_inception_fine}
+    \includegraphics[width=9cm]{b_a_resnet_fine}
+    \includegraphics[width=9cm]{b_a_alexnet_fine}
+    \includegraphics[width=9cm]{b_a_vgg_fine}
+    \includegraphics[width=9cm]{b_a_densenet_fine}
+    \includegraphics[width=9cm]{b_a_inception_fine}
     \caption{Träffsäkerhet för balkonger med finetuning}
     \label{fig:b_a_2}
   \end{figure}
 
   \begin{figure}[h]
-    \includegraphics[width=7cm]{f_l_resnet_fe}
-    \includegraphics[width=7cm]{f_l_alexnet_fe}
-    \includegraphics[width=7cm]{f_l_vgg_fe}
-    \includegraphics[width=7cm]{f_l_densenet_fe}
-    \includegraphics[width=7cm]{f_l_inception_fe}
+    \includegraphics[width=9cm]{f_l_resnet_fe}
+    \includegraphics[width=9cm]{f_l_alexnet_fe}
+    \includegraphics[width=9cm]{f_l_vgg_fe}
+    \includegraphics[width=9cm]{f_l_densenet_fe}
+    \includegraphics[width=9cm]{f_l_inception_fe}
     \caption{Kostnaden vid varje epoch för eldstäder med feature extraction}
     \label{fig:f_l_1}
   \end{figure}
   
   \begin{figure}[h]
-    \includegraphics[width=7cm]{f_a_resnet_fe}
-    \includegraphics[width=7cm]{f_a_alexnet_fe}
-    \includegraphics[width=7cm]{f_a_vgg_fe}
-    \includegraphics[width=7cm]{f_a_densenet_fe}
-    \includegraphics[width=7cm]{f_a_inception_fe}
+    \includegraphics[width=9cm]{f_a_resnet_fe}
+    \includegraphics[width=9cm]{f_a_alexnet_fe}
+    \includegraphics[width=9cm]{f_a_vgg_fe}
+    \includegraphics[width=9cm]{f_a_densenet_fe}
+    \includegraphics[width=9cm]{f_a_inception_fe}
     \caption{Träffsäkerhet för eldstäder med feature extraction}
     \label{fig:f_a_1}
   \end{figure}
 
   \begin{figure}[h]
-    \includegraphics[width=7cm]{f_l_resnet_fine}
-    \includegraphics[width=7cm]{f_l_alexnet_fine}
-    \includegraphics[width=7cm]{f_l_vgg_fine}
-    \includegraphics[width=7cm]{f_l_densenet_fine}
-    \includegraphics[width=7cm]{f_l_inception_fine}
+    \includegraphics[width=9cm]{f_l_resnet_fine}
+    \includegraphics[width=9cm]{f_l_alexnet_fine}
+    \includegraphics[width=9cm]{f_l_vgg_fine}
+    \includegraphics[width=9cm]{f_l_densenet_fine}
+    \includegraphics[width=9cm]{f_l_inception_fine}
     \caption{Kostnaden vid varje epoch för eldstäder med finetuning}
     \label{fig:f_l_2}
   \end{figure}
 
   \begin{figure}[h]
-    \includegraphics[width=7cm]{f_a_resnet_fine}
-    \includegraphics[width=7cm]{f_a_alexnet_fine}
-    \includegraphics[width=7cm]{f_a_vgg_fine}
-    \includegraphics[width=7cm]{f_a_densenet_fine}
-    \includegraphics[width=7cm]{f_a_inception_fine}
+    \includegraphics[width=9cm]{f_a_resnet_fine}
+    \includegraphics[width=9cm]{f_a_alexnet_fine}
+    \includegraphics[width=9cm]{f_a_vgg_fine}
+    \includegraphics[width=9cm]{f_a_densenet_fine}
+    \includegraphics[width=9cm]{f_a_inception_fine}
     \caption{Träffsäkerhet för eldstäder med finetuning}
     \label{fig:f_a_2}
   \end{figure}
   
   \begin{figure}[h]
-    \includegraphics[width=7cm]{r_l_resnet_fe}
-    \includegraphics[width=7cm]{r_l_alexnet_fe}
-    \includegraphics[width=7cm]{r_l_vgg_fe}
-    \includegraphics[width=7cm]{r_l_densenet_fe}
-    \includegraphics[width=7cm]{r_l_inception_fe}
+    \includegraphics[width=9cm]{r_l_resnet_fe}
+    \includegraphics[width=9cm]{r_l_alexnet_fe}
+    \includegraphics[width=9cm]{r_l_vgg_fe}
+    \includegraphics[width=9cm]{r_l_densenet_fe}
+    \includegraphics[width=9cm]{r_l_inception_fe}
     \caption{Kostnaden vid varje epoch för rum med feature extraction}
     \label{fig:r_l_1}
   \end{figure}
   
   \begin{figure}[h]
-    \includegraphics[width=7cm]{r_a_resnet_fe}
-    \includegraphics[width=7cm]{r_a_alexnet_fe}
-    \includegraphics[width=7cm]{r_a_vgg_fe}
-    \includegraphics[width=7cm]{r_a_densenet_fe}
-    \includegraphics[width=7cm]{r_a_inception_fe}
+    \includegraphics[width=9cm]{r_a_resnet_fe}
+    \includegraphics[width=9cm]{r_a_alexnet_fe}
+    \includegraphics[width=9cm]{r_a_vgg_fe}
+    \includegraphics[width=9cm]{r_a_densenet_fe}
+    \includegraphics[width=9cm]{r_a_inception_fe}
     \caption{Träffsäkerhet för rum med feature extraction}
     \label{fig:r_a_1}
   \end{figure}
   
   \begin{figure}[h]
-    \includegraphics[width=7cm]{r_l_resnet_fine}
-    \includegraphics[width=7cm]{r_l_alexnet_fine}
-    \includegraphics[width=7cm]{r_l_vgg_fine}
-    \includegraphics[width=7cm]{r_l_densenet_fine}
-    \includegraphics[width=7cm]{r_l_inception_fine}
+    \includegraphics[width=9cm]{r_l_resnet_fine}
+    \includegraphics[width=9cm]{r_l_alexnet_fine}
+    \includegraphics[width=9cm]{r_l_vgg_fine}
+    \includegraphics[width=9cm]{r_l_densenet_fine}
+    \includegraphics[width=9cm]{r_l_inception_fine}
     \caption{Kostnaden vid varje epoch för rum med finetuning}
     \label{fig:r_l_2}
   \end{figure}
   
   \begin{figure}[h]
-    \includegraphics[width=7cm]{r_a_resnet_fine}
-    \includegraphics[width=7cm]{r_a_alexnet_fine}
-    \includegraphics[width=7cm]{r_a_vgg_fine}
-    \includegraphics[width=7cm]{r_a_densenet_fine}
-    \includegraphics[width=7cm]{r_a_inception_fine}
+    \includegraphics[width=9cm]{r_a_resnet_fine}
+    \includegraphics[width=9cm]{r_a_alexnet_fine}
+    \includegraphics[width=9cm]{r_a_vgg_fine}
+    \includegraphics[width=9cm]{r_a_densenet_fine}
+    \includegraphics[width=9cm]{r_a_inception_fine}
     \caption{Träffsäkerhet för rum med finetuning}
     \label{fig:r_a_2}
   \end{figure}
